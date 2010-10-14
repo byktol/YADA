@@ -1,5 +1,6 @@
 <?php
 require_once('Food.php');
+require_once('NutritionFactFactory');
 
 class CompositeFood extends Food
 {
@@ -8,7 +9,7 @@ class CompositeFood extends Food
 	function __construct($name)
 	{
 		parent::__construct($name);
-		$children = array();
+		$this->children = array();
 	}
 	
 	public function getChildren()
@@ -25,6 +26,7 @@ class CompositeFood extends Food
 	{
 		$children = $this->getChildren();
 		$totalNutritionFacts = array();
+		$ret = array();
 		// For each child
 		for($i=0;$i<count($children);$i++)
 		{
@@ -34,6 +36,13 @@ class CompositeFood extends Food
 			{
 				$totalNutritionFacts[$nutritionFacts[$j]->getName()] += $nutritionFacts[$j]->getValue()
 			}
+		}
+		
+		$names = array_keys($totalNutritionFacts);
+		// For each nutrition fact
+		for($i=0;$i<count($names);$i++)
+		{
+			array_push($ret, NutritionFactFactory->create($names[$i], $totalNutritionFacts[$names[$i]]);
 		}
 	}
 }

@@ -1,4 +1,6 @@
 <?php
+require_once('Food.php');
+
 class CompositeFood extends Food
 {
 	private $children;
@@ -19,3 +21,4 @@ class CompositeFood extends Food
 		$this->children = $children;
 	}
 }
+?>

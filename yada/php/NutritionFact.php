@@ -1,5 +1,5 @@
 <?php
-class NutritionFact
+abstract class NutritionFact
 {
 	$name;
 	$value;
@@ -18,6 +18,11 @@ class NutritionFact
 	public function getValue()
 	{
 		return $value;
+	}
+	
+	public function toString()
+	{
+		return null;
 	}
 }
 ?>

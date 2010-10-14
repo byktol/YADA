@@ -22,7 +22,7 @@ class CompositeFood extends Food
 		$this->children = $children;
 	}
 
-		public function getNutritionFacts()
+	public function getNutritionFacts()
 	{
 		$children = $this->getChildren();
 		$totalNutritionFacts = array();
@@ -44,6 +44,11 @@ class CompositeFood extends Food
 		{
 			array_push($ret, NutritionFactFactory->create($names[$i], $totalNutritionFacts[$names[$i]]);
 		}
+	}
+	
+	public function setNutritionFacts()
+	{
+		throw new Exception("Cannot set nutrition facts for composite food");
 	}
 }
 ?>

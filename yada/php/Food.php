@@ -18,11 +18,11 @@ abstract class Food
 		$this->name = $name;
 	}
 	
-	abstract public function getNutritionFacts()
+	public function getNutritionFacts()
 	{
 		return $facts;
 	}
-	abstract public function setNutritionFacts($facts)
+	public function setNutritionFacts($facts)
 	{
 		$this->facts = $facts;
 	}

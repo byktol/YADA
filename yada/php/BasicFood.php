@@ -7,10 +7,5 @@ class BasicFood extends Food
 	{
 		parent::__construct($name);
 	}
-	
-	function setNutritionFacts($nutritionFacts)
-	{
-		$this->nutritionFacts = $nutritionFacts;
-	}
 }
 ?>

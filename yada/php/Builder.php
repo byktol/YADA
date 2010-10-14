@@ -1,6 +1,8 @@
 <?php
 interface Builder {
 
-  public function construct();
-  public function getResult();
+  function construct($arrayOfFood);
+  function getResult();
+  function buildBasicFood();
+  function buildCompositeFood();
 }

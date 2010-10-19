@@ -2,26 +2,32 @@
 require_once('Food.php');
 require_once('NutritionFactFactory');
 
+// A food that is composed of other foods
 class CompositeFood extends Food
 {
+	// The foods that make up this composite food
 	private $children;
 	
+	// Constructs a new instance of the CompositeFood class
 	function __construct($name)
 	{
 		parent::__construct($name);
 		$this->children = array();
 	}
 	
+	// Gets the foods that this food is composed of
 	public function getChildren()
 	{
-		return $children;
+		return $this->children;
 	}
 	
+	// Sets the foods that compose this food
 	public function setChildren($children)
 	{
 		$this->children = $children;
 	}
 
+	// Gets the nutrition facts for this food
 	public function getNutritionFacts()
 	{
 		$children = $this->getChildren();
@@ -46,6 +52,7 @@ class CompositeFood extends Food
 		}
 	}
 	
+	// Sets the nutrition facts for this food
 	public function setNutritionFacts()
 	{
 		throw new Exception("Cannot set nutrition facts for composite food");

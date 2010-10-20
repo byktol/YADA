@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 include 'NutritionFact.php'
 
 // A factory to create nutrition facts

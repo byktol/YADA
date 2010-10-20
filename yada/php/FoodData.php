@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 include 'FoodReader.php'; // TODO: whatever file will be reading foods
 include 'Food.php';
 

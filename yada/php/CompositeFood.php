@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 require_once('Food.php');
 require_once('NutritionFactFactory');
 

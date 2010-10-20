@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 // A simple data type for a nutrition fact
 abstract class NutritionFact
 {

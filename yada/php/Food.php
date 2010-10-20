@@ -1,4 +1,6 @@
 <?php
+require_once 'config.php';
+
 // A simple data type that abstracts a food
 abstract class Food
 {

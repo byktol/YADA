@@ -3,7 +3,7 @@ require_once('Builder.php');
 require_once('BasicFood.php');
 require_once('CompositeFood.php');
 require_once('NutritionFact.php');
-require_once('Calorie.php');
+require_once('nutrition_facts/Calorie.php');
 
 class JsonBuilder implements Builder {
 
@@ -17,11 +17,15 @@ class JsonBuilder implements Builder {
   public function buildBasicFood($food = null) {
     if ($food == null) {
 
-      foreach ($this->arrayOfFood as $food) {
-
+      $count = count($this->arrayOfFood);
+      for ($i = 0; $i < $count; $i++) {
+        $food = $this->arrayOfFood[$i];
         if ($food instanceof BasicFood) {
           $this->text .= $this->buildBasicFood($food);
 
+          if ($i < $count-1) {
+            $this->text .= ",\r\n";
+          }
         }//endif
 
       }// endforeach
@@ -29,7 +33,7 @@ class JsonBuilder implements Builder {
     }//endif
 
     $text  = "{\r\n";
-    $text .= "  'Name': '". $food->name . "',\r\n";
+    $text .= "  'Name': '". $food->getName(). "',\r\n";
     $text .= "  'NutritionFacts':\r\n";
     $text .= "  [\r\n";
     $text .= $this->buildNutritionFactsFor($food);
@@ -38,19 +42,26 @@ class JsonBuilder implements Builder {
     return $text;
   }
 
-  public function buildNutritionFactsFor($food) {
+  protected function buildNutritionFactsFor($food) {
     $text = '';
-    foreach ($food->nutritionFacts as $fact) {
-      $text .= $this->buildNutritionFact($fact);
+
+    $arrayOfFacts = $food->getNutritionFacts();
+    $count = count($arrayOfFacts);
+    for ($i = 0; $i < $count ; $i++) {
+      $text .= $this->buildNutritionFact($arrayOfFacts[$i]);
+
+      if ($i < $count-1) {
+        $text .= "  ,\r\n";
+      }
     }
 
     return $text;
   }
 
-  public function buildNutritionFact($fact) {
+  protected function buildNutritionFact($fact) {
     $text  = "  {\r\n";
     $text .= "    'Name': '". $fact->getName() . "',\r\n";
-    $text .= "    'Quantity': " . $fact->getQuantity() . "\r\n";
+    $text .= "    'Quantity': " . $fact->getValue() . "\r\n";
     $text .= "  }\r\n";
     return $text;
   }
@@ -59,9 +70,15 @@ class JsonBuilder implements Builder {
     //This is what happens when this method is invoked with no parameters
     if ($food == null) {
 
-      foreach ($this->arrayOfFood as $food) {
+      $count = count($this->arrayOfFood);
+      for ($i = 0; $i < $count; $i++) {
+        $food = $this->arrayOfFood[$i];
         if ($food instanceof CompositeFood) {
           $this->text .= $this->buildCompositeFood($food);
+
+          if ($i < $count-1) {
+            $this->text .= ",\r\n";
+          }
         }
       }
 
@@ -71,27 +88,35 @@ class JsonBuilder implements Builder {
     // This is what happens when this method's parameter is an array.
     if (is_array($food)) {
 
-      return $this->selector($food);
+      return $this->compositeBuild($food);
     }
 
     // This is normal operation.
     $text  = "{\r\n";
-    $text .= "  Name: '" . $food->name . "',\r\n";
+    $text .= "  Name: '" . $food->getName() . "',\r\n";
     $text .= "  Children:\r\n";
     $text .= "  [\r\n";
-    $text .= $this->selector($food->children);
+    $text .= $this->compositeBuild($food->getChildren());
     $text .= "  ]\r\n";
     $text .= "}\r\n";
     return $text;
   }
 
-  protected function selector($array) {
+  protected function compositeBuild($array) {
     $text = '';
-    foreach ($array as $food) {
+    $count = count($array);
+    for( $i = 0; $i < $count; $i++ ) {
+      $food = $array[$i];
+
       if ($food instanceof BasicFood) {
         $text .= $this->buildBasicFood($food);
+
       } else if ($food instanceof CompositeFood) {
         $text .= $this->buildCompositeFood($food);
+      }
+
+      if ($i < $count-1) {
+        $text .= ",\r\n";
       }
     }
 
@@ -103,16 +128,27 @@ class JsonBuilder implements Builder {
   }
 }
 
-echo "Hello world";
-$f = new BasicFood();
-$f->name = 'Pineapple';
-$a = array(new Calorie());
-$f->setNutritionFacts($a);
+//Test
+//echo "Hello world";
+//test();
 
-$arrayOfFood = array($f);
-$builder = new JsonBuilder();
-$builder->construct($arrayOfFood);
-$builder->buildBasicFood();
-echo '<pre>';
-echo $builder->getResult();
+function test() {
+  $f1 = new BasicFood('Pineapple');
+  $a = array(new Calorie(5), new Calorie(8));
+  $f1->setNutritionFacts($a);
+
+  $f2 = new CompositeFood('PinappleSammich');
+  $f2->setChildren(array($f1, $f1));
+
+  $f3 = new CompositeFood('PinappleSub');
+  $f3->setChildren(array($f2, $f2, $f2));
+
+  $arrayOfFood = array($f1, $f2, $f3);
+  $builder = new JsonBuilder();
+  $builder->construct($arrayOfFood);
+  $builder->buildBasicFood();
+  $builder->buildCompositeFood();
+  echo '<pre>';
+  echo $builder->getResult();
+}
 ?>

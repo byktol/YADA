@@ -8,7 +8,7 @@ abstract class NutritionFact
 	private $value;
 	
 	// Constructs a new instance of the NutritionFact class
-	function __construct($name, value)
+	function __construct($name, $value)
 	{
 		$this->name = $name;
 		$this->value = $value;
@@ -39,9 +39,6 @@ abstract class NutritionFact
 	}
 	
 	// Returns a string representation of the NutritionFact instance
-	public abstract function toString()
-	{
-		return null;
-	}
+	public abstract function toString();
 }
 ?>

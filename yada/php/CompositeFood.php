@@ -1,6 +1,6 @@
 <?php
 require_once('Food.php');
-require_once('NutritionFactFactory');
+require_once('NutritionFactFactory.php');
 
 // A food that is composed of other foods
 class CompositeFood extends Food
@@ -36,11 +36,11 @@ class CompositeFood extends Food
 		// For each child
 		for($i=0;$i<count($children);$i++)
 		{
-			$nutritionFacts = $children[$i]->getNutritionFacts
+			$nutritionFacts = $children[$i]->getNutritionFacts;
 			// For each nutrition fact
 			for($j=0;$j<count($nutritionFacts);$j++)
 			{
-				$totalNutritionFacts[$nutritionFacts[$j]->getName()] += $nutritionFacts[$j]->getValue()
+				$totalNutritionFacts[$nutritionFacts[$j]->getName()] += $nutritionFacts[$j]->getValue();
 			}
 		}
 		
@@ -48,7 +48,7 @@ class CompositeFood extends Food
 		// For each nutrition fact
 		for($i=0;$i<count($names);$i++)
 		{
-			array_push($ret, NutritionFactFactory->create($names[$i], $totalNutritionFacts[$names[$i]]);
+			array_push($ret, NutritionFactFactory::create($names[$i], $totalNutritionFacts[$names[$i]]));
 		}
 	}
 	

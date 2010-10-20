@@ -1,15 +1,19 @@
 <?php
-include 'NutitionFact';
+include 'NutritionFact.php';
 
 // Represents a calorie
-class Calorie implements NutritionFact 
+class Calorie extends NutritionFact
 {
-	private const $NAME = 'Calories';
+	const NAME = 'Calorie';
 
 	// Constructs a new instance of the Calorie class
-	function __construct($value)
+	public function __construct($value)
 	{
-		parent::__construct($NAME, $value);
+		parent::__construct(Calorie::NAME, $value);
 	}
+
+  public function toString() {
+    return Calorie::NAME;
+  }
 }
 ?>

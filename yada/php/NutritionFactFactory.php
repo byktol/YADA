@@ -1,5 +1,5 @@
 <?php
-include 'NutritionFact.php'
+include 'NutritionFact.php';
 
 // A factory to create nutrition facts
 class NutritionFactFactory

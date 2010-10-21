@@ -1,33 +1,19 @@
 <?php include_once('includes/header.php'); ?>
 <table class="datatable">
-    <tr><th colspan="2" align="left">:: Please specify the info below to save your </th></tr>
+    <tr><th colspan="2" align="left">:: Please specify the info below to add a new food</th></tr>
+    <tr><td width="25%">Type</td>
+        <td>
+            <label><input type="radio" name="foot_type" id="basic_food"/>Basic Food</label>
+            <label><input type="radio" name="foot_type" id="composite_food"/>Composite Food</label>
+        </td>
+    </tr>
     <tr>
         <td>Name:</td>
-        <td><input type="text" name="name" id="name" size="40"/></td>
-    </tr>
-    <tr><td width="25%">Gender</td>
-        <td>
-            <label><input type="radio" name="gender" id="male"/>Male</label>
-            <label><input type="radio" name="gender" id="female"/>Female</label>
-        </td>
+        <td><input type="text" name="food_name" id="food_name" size="40"/></td>
     </tr>
     <tr>
-        <td>Height:</td>
-        <td><input type="text" name="height" id="height" size="10"/><span class="tips"> (Please specify in cm (E.g. 185cm)</span></td>
-    </tr>
-    <tr>
-        <td>Weight:</td>
-        <td><input type="text" name="weight" id="weight" size="10"/><span class="tips"> (Please specify in kg (E.g. 75kg)</span></td>
-    </tr>
-    <tr>
-        <td>Activity Level:</td>
-        <td>
-            <select name="activity_level" id="activity_level">
-                <option>
-
-                </option>
-            </select>
-        </td>
+        <td>Keyword:</td>
+        <td><input type="text" name="keywords" id="keywords" size="60"/><span class="tips"> (Please use comma to separate the keywords (E.g. potato, tomato)</span></td>
     </tr>
     <tr id="composite">
         <td>Select Basic Foods</td>
@@ -37,7 +23,7 @@
                 <option>Basic Food 3</option>
                 <option>Basic Food 4</option>
                 <option>Basic Food 5</option>
-            </select>
+            </select> 
             Servings
             <input type="text" name="serving" id="serving" size="4"/><br/>
             <select name="basic_foods" id="basic_foods">
@@ -46,7 +32,7 @@
                 <option>Basic Food 3</option>
                 <option>Basic Food 4</option>
                 <option>Basic Food 5</option>
-            </select>
+            </select> 
             Servings
             <input type="text" name="serving" id="serving" size="4"/>
         </td>

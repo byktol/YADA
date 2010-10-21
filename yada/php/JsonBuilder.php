@@ -1,4 +1,6 @@
 <?php
+require_once('config.php');
+
 require_once('Builder.php');
 require_once('BasicFood.php');
 require_once('CompositeFood.php');
@@ -10,7 +12,7 @@ class JsonBuilder implements Builder {
   private $text = '';
   private $arrayOfFood;
 
-  public function construct($arrayOfFood) {
+  public function __construct($arrayOfFood) {
     $this->arrayOfFood = $arrayOfFood;
   }
 

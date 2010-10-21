@@ -1,4 +1,6 @@
 <?php
+require_once('config.php');
+
 require_once 'CalorieCalculationStrategy.php';
 
 class MiffinJerrorStrategy implements CalorieCalculationStrategy {

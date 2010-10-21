@@ -1,0 +1,185 @@
+a { color: #069; text-decoration: none; }
+a:hover { color: #bc9806; text-decoration: none; }
+
+p { line-height: 1em; }
+body { font-family: Tahoma, "Trebuchet MS", Arial; font-size: 12px; color: #333; width: 100%; line-height: 1.6;  background:#fbfcfe;}
+body *, #header *, #footer * { line-height: 1.6; }
+
+hr { height: 1px; border-style: solid; border-color: #ddd; border-width: 0 0 1px 0; }
+
+h1, h2, h3, h4, h5, h6 { font: bold 1em/1.5em Georgia, 'Times New Roman', Times, serif; color: #444; padding: 0; }
+
+h1 { font-size: 2.2em; font-weight: normal; }
+h2 { font-size: 2em; font-weight: normal; }
+h3 { font-size: 1.7em; font-weight: normal; }
+h4 { font-size: 1.4em; font-weight: normal; }
+h5 { font-size: 1.3em; font-weight: normal;}
+h6 { font-size: 1.2em; font-weight: normal;}
+
+#header, #body, #footer { width: 98%; position: relative; left: 1%; }
+
+#header { height: 80px; background-color: #9FB86C; margin-bottom: 8px;}
+#header * { color: #fff; }
+#body { min-height: 425px; _height: 425px; }
+#footer { border-top: 1px solid #ececec; margin-top: 10px; padding-top: 5px; }
+
+#apps-info { float: left; }
+.icon-nepal-gov { background: transparent url(../images/gov-of-nepal-logo.png) no-repeat; height: 110px; padding-left: 150px; }
+.doi { font-size: 1.3em; }
+
+#user-info { float: right; padding-top: 30px; }
+#user-info * { text-align: right; color: #eee; }
+#user-info a:hover { color: #fc0; }
+#user-info a:hover, #apps-info a:hover { color: #fc0; }
+
+.info { margin: 5px 0; padding:0 5px; color: #666; font-weight: normal; }
+.info p { margin: 5px 0; }
+
+#index-content-wrapper {display: inline-block; width: 100%; margin-top: 10px;}
+
+#quick-links{ width: 19%; float: left; }
+.quick-actions li { padding: 10px; display: inline-block; margin-bottom: 10px;}
+
+#main-content {width: 100%; float: right; }
+
+.top-content { margin-bottom: 10px; display: inline-block; width: 70%; }
+.content { margin-bottom: 10px; display: inline-block; width: 100%; }
+.content-row { margin-bottom: 10px; }
+
+#fiscal-year-badge { position: absolute; top: -20px; right: 0; }
+#fiscal-year-badge .fy-head { border-bottom: 1px solid #ddd; padding: 0 10px; font-size: .95em; background-color: #d94949; color: #fff; }
+#fiscal-year-badge .fy-body { font-size: 1.5em; padding: 0 10px; text-align: center; background: #eee; }
+
+.breadcrumb { border-bottom: 1px solid #ececec; padding-bottom: 4px; margin-bottom: 5px; }
+.login { margin: 0 auto; width: 32%; margin-top: 50px; }
+
+ol.numeric { list-style-type:decimal; margin-left: 25px; }
+ol.roman { list-style-type:lower-roman; margin-left: 15px; }
+
+ul.disc { list-style: disc; margin-left: 25px; color: #666; }
+ul.bordered { border-top: 3px solid #ccc; background-color: #f0f0f0; }
+ul.bordered li { border-top: 1px solid #ddd; padding-bottom: 5px; padding:5px;}
+
+.theme-color { color:#069; }
+.btn-hilight { color:#fff; }
+.left { float: left; }
+.right { float: right; }
+
+ul#icons { margin-top: 0.5em; }
+ul#icons li {margin: 2px; position: relative;  cursor: pointer; float: left;  list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 4px;}
+
+.icon-content { padding: 0.3em;}
+
+.btn_link { float: left; padding:1.2em 0.6em 1.2em 0; position:relative; text-decoration:none; }
+a.btn_link:hover {text-decoration: none; }
+
+.datatable { margin-top: 5px; border: 1px solid #e7e7bf; }
+table.tbl-login { margin-bottom: 10px; }
+table.tbl-login th, .datatable tr td, .datatable tr th{ vertical-align: middle; padding:3px; border: 1px solid #e7e7bf;  }
+.datatable tr th { color: #069; background-color: #f4f4e0; }
+.datatable tr td.alt { background-color: #ddefef; }
+
+.btn-add { background: transparent url(../images/apps/add.png) no-repeat center left; height: 20px; width: 20px; padding: 3px 0 0 20px; }
+.btn-edit { background: transparent url(../images/apps/edit.png) no-repeat center left; height: 20px; width: 20px; padding: 3px 0 0 20px; }
+.btn-view { background: transparent url(../images/apps/view.png) no-repeat center left; height: 20px; width: 20px; padding: 3px 0 0 20px; }
+.btn-delete{ background: transparent url(../images/apps/delete.png) no-repeat left center; height: 16px; width: 16px; padding: 0 0 0 20px; }
+
+.icon-home { background: transparent url(../images/apps/home.png) no-repeat center left; padding: 5px 0px 5px 30px; }
+.icon-invt { background: transparent url(../images/apps/inventory.png) no-repeat center left; padding: 5px 0; }
+.icon-user { background: transparent url(../images/apps/user.png) no-repeat center left; padding: 5px 0px 5px 30px; height: 24px; width: 24px; }
+.icon-invt-item { background: transparent url(../images/apps/invt-item.gif) no-repeat center left; padding: 5px 0px 5px 30px; height: 24px; width: 24px; }
+
+.icon-warning { background: url("../images/apps/warning.png") no-repeat 5px center #fde9c9; padding: 5px 5px 5px 30px; border: 1px solid #fdc369; color: #666; }
+.icon-success { background: url("../images/apps/success.png") no-repeat 5px center #E6FADA; padding: 5px 5px 5px 30px; border: 1px solid #9FB86C; color: #666; }
+.icon-error { background: url(../images/apps/error.png) no-repeat 5px center #fbe9e9; padding: 5px 5px 5px 30px; border: 1px solid #c66; color: #666; margin-top: 5px; }
+
+.icon-reset-pwd { background: url(../images/apps/reset-pwd.png) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-invalid-req { background: url(../images/apps/invalid-req.png) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-disable-login { background: url(../images/apps/disable-login.png) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-enable-login { background: url(../images/apps/enable-login.png) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-related-actions { background: url(../images/apps/related-actions.gif) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-follow-up-actions { background: url(../images/apps/follow-action.gif) no-repeat left center; padding: 5px 0 5px 25px; }
+.icon-instruction { background: url(../images/apps/instruction.gif) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-chk-available { background: url(../images/apps/chk-available.png) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-busy { background: url(../images/apps/busy.gif) no-repeat left center; padding: 5px 0 5px 30px; }
+.icon-bill { background: url(../images/apps/bill.gif) no-repeat left center; padding: 5px 0 5px 30px; }
+.icon-tips { background: url(../images/apps/bulb.png) no-repeat left center; padding: 5px 0 5px 20px; }
+
+.icon-word { background: url(../images/apps/ms-word-2010.gif) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-pdf { background: url(../images/apps/pdf.jpg) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-xls{ background: url(../images/apps/ms-excel-icon.gif) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-chart { background: url(../images/apps/chart.gif) no-repeat left center; padding: 5px 0 5px 20px; }
+.icon-visa { background: url(../images/apps/visa.gif) no-repeat left center; padding: 5px 0 5px 25px; }
+.icon-site-inspection { background: url(../images/apps/site-inspection.gif) no-repeat left center; padding: 5px 0 5px 20px; }
+
+
+.main-title { padding-left: 45px; color: #fff; }
+.option-bar { padding: 10px 0; color: #999; font-size: .95em; }
+
+.tbl-header { color: #333; }
+
+.red-color { color: red; }
+.gray-color { color: #999; }
+.small-text { font-size: 0.9em; }
+.link-color { color: #069; }
+.tips { color: #666; font-size: .9em; font-weight: normal; padding-left: 15px;}
+.help { color: #999; font-size: .9em; }
+.bold { font-weight: bold; }
+.italics { font-style: italic; }
+.stress { font-weight: bold; }
+.block {display: block; }
+label.error { color: red; padding: 0 10px; font-size: .85em; }
+label.success { color: green; padding: 0 10px; font-size: .85em; }
+p.instruction { padding-top: 5px; font-family: Georgia, "Times New Roman"; }
+
+.success { }
+.datebox { width:100px; background:#fff url(../images/apps/cal.png) 82px 0 no-repeat; border: solid 1px #aaa;}
+
+#top-menu { border-width: 1px 0 1px 1px; border-style: solid; border-color:  #d2d280; display: inline-block; background-color: #E7E7BF; }
+#top-menu li { float: left; padding: 5px 20px;  border-left: 1px solid #9FB86C; }
+#top-menu li.last { border-right: 1px solid #9FB86C; }
+
+.round-corner-all { -moz-border-radius: 4px; }
+
+#chart-container { width: 90%; margin: 0 auto; }
+
+.warning { color: #c00; }
+
+
+.content-col-1 { width: 27%; float: left; display: inline-block; }
+.content-col-2 { width: 71%; float: right; display: inline-block; }
+.content-box { padding-bottom: 10px; }
+.content-box .cb-head-g { padding: 2px 10px; border-bottom: 3px solid #390; background-color: #dcf6cf; text-transform: uppercase; font-size: 1.2em; }
+.content-box .cb-head-r { padding: 2px 10px; border-bottom: 3px solid #390; background-color: #dcf6cf; text-transform: uppercase; font-size: 1.2em; }
+.content-box .cb-head-b { padding: 2px 10px; border-bottom: 3px solid #039; background-color: #c0c7ec; text-transform: uppercase; font-size: 1.2em; }
+.content-box .cb-body { padding: 5px 10px; background-color: #eee; }
+
+.project-info {  }
+blockquote {
+    background: url('../images/apps/quote.gif') no-repeat 0 2px;
+    border-bottom: 1px dashed #E0E0D4;
+    color: #332;
+    display: block;
+    margin: 0.6em 0 1em;
+    padding: 0.8em 1em 1em 30px;
+    line-height: 1.7; font-size: 1.2em; font-style: italic;
+}
+
+.paging li{
+    float:left;
+    padding:0 2px;
+}
+.mini-charts { width: 48%; float: left; padding-right: 10px; }
+.ajax-load { background: url(../images/apps/blue-loader.gif) no-repeat left center; padding: 5px 0 5px 20px; margin-left: 5px; }
+.ajax-success { background: url(../images/apps/ajax-success.png) no-repeat left center; padding: 8px 6px; position: absolute; margin-left: 5px; }
+.ajax-error { background: url(../images/apps/ajax-error.png) no-repeat left center; padding: 8px 6px; position: absolute; margin-left: 5px; }
+
+/**** form elements *****/
+input, textarea, select, textarea { font-family: Tahoma, "Trebuchet MS", Arial; font-size: 12px; }
+.btn { padding: 2px 3px; color: #333; background: #cece8d; border-width: 1px; border-style: solid; border-color: #9c9c68 #dddda4 #dddda4 #9c9c68; cursor: pointer; }
+.btn:hover { ;border-color: #dddda4 #9c9c68 #9c9c68 #dddda4; }
+/**** form elements *****/
+
+
+

@@ -1,7 +1,7 @@
 <?php
 
 define('DOMAIN', "http://" . $_SERVER['HTTP_HOST']);
-define('PATH', 'yada/yada/');
+define('PATH', 'new_yada/yada/yada/');
 define('PROJECT_CODE', 'YADA');
 define('PROJECT_NAME', 'Yet Another Diet Assistant');
 define('APPS_SALT', md5('c@$@8lanca'));    // casablanca

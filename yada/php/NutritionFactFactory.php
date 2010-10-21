@@ -1,7 +1,7 @@
 <?php
 require_once 'config.php';
 
-include 'NutritionFact.php'
+require_once 'NutritionFact.php'
 
 // A factory to create nutrition facts
 class NutritionFactFactory

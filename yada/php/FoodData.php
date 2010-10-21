@@ -44,5 +44,22 @@ class FoodData
 				array_push($newFoods, $this->foods[$i]);
 		$this->foods = $newFoods;
 	}
+	
+	// Sums all of the values of the given nutrition fact and returns the sum
+	public function getSummedNutritionFact($nameOfNutritionFact)
+	{
+		$sum = 0;
+		for($i=0;$i<count($this->foods);$i++)
+		{
+			$nutritionFacts = $this->foods[$i]->getNutritionFacts();
+			for($j=0;$j<count($nutritionFacts);$j++)
+			{
+				if($nutritionFacts[$j]->getName() == $nameOfNutritionFact)
+				{
+					$sum += $nutritionFacts[$j]->getValue();
+				}
+			}
+		}
+	}
 }
 ?>

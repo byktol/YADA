@@ -2,7 +2,7 @@
 require_once 'config.php';
 
 // A simple data type for a nutrition fact
-abstract class NutritionFact
+class NutritionFact
 {
 	// The name of the nutrition fact
 	private $name;
@@ -39,8 +39,5 @@ abstract class NutritionFact
 	{
 		$this->value = $value;
 	}
-	
-	// Returns a string representation of the NutritionFact instance
-	public abstract function toString();
 }
 ?>

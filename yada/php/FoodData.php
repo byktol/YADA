@@ -1,8 +1,11 @@
 <?php
 require_once 'config.php';
 
-include 'FoodReader.php'; // TODO: whatever file will be reading foods
-include 'Food.php';
+//require_once 'FoodReader.php'; // TODO: whatever file will be reading foods
+require_once 'Food.php';
+require_once 'NutritionFactFactory.php';
+
+FoodData::getPopulatedFoodData('test_json.json');
 
 // Holds all the foods from our database
 class FoodData
@@ -59,6 +62,51 @@ class FoodData
 					$sum += $nutritionFacts[$j]->getValue();
 				}
 			}
+		}
+	}
+	
+	public static function getPopulatedFoodData($filename)
+	{
+		$foodData = new FoodData();
+		$fileContents = file_get_contents($filename);
+		if(empty($fileContents) || $fileContents === false)
+		{
+			echo "Could not read $filename";
+			return null;
+		}
+		$data = json_decode($fileContents);
+		for($i=0;count($data);$i++)
+		{
+			createFood($data[$i]);
+		}
+	}
+	
+	public static function createFood($foodData)
+	{
+		// If the food is a composite food
+		if(!empty($foodData['Children']))
+		{
+			$c = new CompositeFood($foodData['Name']);
+			$foodArr = array();
+			// Loop through the children and add them to this composite
+			for($i=0;$i<count($foodData['Children']);$i++)
+			{
+				// Recurse
+				array_push($foodArr, createFood($foodData['Children'][$i]));
+			}
+			$c->setChildren($foodArr);
+		}
+		else
+		{
+			$b = new BasicFood($foodData['Name']);
+			$nutritionFactsArr = array();
+			// Loop through the nutrition facts and add them to the basic food
+			for($i=0;$i<count($foodData['NutritionFacts']);$i++)
+			{
+				$nutFact = NutritionFactFactory::create($foodData['NutritionFacts'][$i]['Name'], $foodData['NutritionFacts'][$i]['Quantity']);
+				array_push($nutritionFactsArr, $nutFact);
+			}
+			$b->setNutritionFacts($nutritionFactsArr);
 		}
 	}
 }

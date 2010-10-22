@@ -131,8 +131,8 @@ class JsonBuilder implements Builder {
 }
 
 //Test
-//echo "Hello world";
-//test();
+echo "Hello world";
+test();
 
 function test() {
   $f1 = new BasicFood('Pineapple');
@@ -152,5 +152,7 @@ function test() {
   $builder->buildCompositeFood();
   echo '<pre>';
   echo $builder->getResult();
+  //$f = file('test_json.json');
+  //fwrite($f, 
 }
 ?>

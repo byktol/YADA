@@ -31,6 +31,26 @@ abstract class Food
 		$this->name = $name;
 	}
 	
+	public function getId()
+	{
+		return $this->id;
+	}
+	
+	public function setId($id)
+	{
+		$this->id = $id;
+	}
+	
+	public function getEnabled()
+	{
+		return $this->enabled;
+	}
+	
+	public function setEnabled($enabled)
+	{
+		$this->enabled = $enabled;
+	}
+	
 	// Gets the nutrition facts for this food
 	public function getNutritionFacts($countDisabled)
 	{

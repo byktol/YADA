@@ -8,7 +8,7 @@ class MiffinJerrorStrategy implements CalorieCalculationStrategy {
     private $MALE_CONSTANT = 5;
     private $FEMALE_CONSTANT = -161;
 
-    public function calculateCalories(CalorieMetrics $calMetrics) {
+    public function calculateNutrition(CalorieMetrics $calMetrics) {
         $w = $calMetrics->getWeight();  // in kg
         $h = $calMetrics->getHeight();  // in cm
         $a = $calMetrics->getAge();     // in years

@@ -8,7 +8,7 @@ class BenedictStrategy implements CalorieCalculationStrategy {
     private $MALE_CONSTANT = 66.4730;
     private $FEMALE_CONSTANT = 655.0955;
 
-    public function calculateCalories(CalorieMetrics $calMetrics) {
+    public function calculateNutrition(CalorieMetrics $calMetrics) {
         $w = $calMetrics->getWeight();  // in kg
         $h = $calMetrics->getHeight();  // in cm
         $a = $calMetrics->getAge();     // in years

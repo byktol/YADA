@@ -1,4 +1,5 @@
 <?php
+
 require_once('config.php');
 
 class CalorieMetrics {
@@ -6,12 +7,16 @@ class CalorieMetrics {
     private $age;
     private $height;
     private $weight;
+    private $activityLevel;
+    private $calorieCalStategy;
 
-    public function CalorieMetrics($gender, $age, $height, $weight) {
+    public function CalorieMetrics($gender, $age, $height, $weight, $activityLevel) {
         $this->setAge($age);
         $this->setGender($gender);
         $this->setHeight($height);
         $this->setWeight($weight);
+        $this->setActivityLevel($activityLevel);
+        $this->setCalorieCalcStrategy($calorieCalcStrategy);
     }
 
     public function getGender() {
@@ -44,6 +49,22 @@ class CalorieMetrics {
 
     public function setWeight($weight) {
         $this->weight = $weight;
+    }
+
+    public function getActivityLevel() {
+        return $this->activityLevel;
+    }
+
+    public function setActivityLevel($activityLevel) {
+        $this->activityLevel = $activityLevel;
+    }
+
+    public function getCalorieCalcStrategy() {
+        return $this->activityLevel;
+    }
+
+    public function setCalorieCalcStrategy(CalorieCalculationStrategy $calorieCalcStrategy) {
+        $this->calorieCalStategy = $calorieCalcStrategy;
     }
 
 }

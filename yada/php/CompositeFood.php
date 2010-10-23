@@ -80,8 +80,9 @@ if($DEBUG)
 	  $builder->buildCompositeFood();
 	  echo '<pre>';
 	  echo $builder->getResult();
-	  //$f = file('test_json.json');
-	  //fwrite($f, 
+	  $f = fopen('test_json.json', 'w');
+	  fwrite($f, $builder->getResult());
+	  fflush($f);
 	}
 	
 	require_once('BasicFood.php');

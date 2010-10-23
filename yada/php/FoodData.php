@@ -3,7 +3,7 @@ require_once 'config.php';
 
 //require_once 'FoodReader.php'; // TODO: whatever file will be reading foods
 require_once 'Food.php';
-require_once 'NutritionFactFactory.php';
+require_once 'NutritionFact.php';
 
 FoodData::getPopulatedFoodData('test_json.json');
 

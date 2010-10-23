@@ -2,7 +2,7 @@
 require_once 'config.php';
 
 require_once('Food.php');
-require_once('NutritionFactFactory.php');
+require_once('NutritionFact.php');
 
 // A food that is composed of other foods
 class CompositeFood extends Food
@@ -72,28 +72,47 @@ class CompositeFood extends Food
 
 if($DEBUG)
 {
+	require_once 'JsonBuilder.php';
+
+	function test($arrFood) {
+	  $builder = new JsonBuilder($arrFood);
+	  $builder->buildBasicFood();
+	  $builder->buildCompositeFood();
+	  echo '<pre>';
+	  echo $builder->getResult();
+	  //$f = file('test_json.json');
+	  //fwrite($f, 
+	}
+	
 	require_once('BasicFood.php');
 	$burger = new CompositeFood('Burger');
 	$bun = new BasicFood('Bun');
 	$bunFacts = array(new NutritionFact('calories', 60));
 	$bun->setNutritionFacts($bunFacts);
+	$bun->createUniqueId();
 	echo $bun->toString().'<br>';
 	$pattie = new BasicFood('Pattie');
 	$pattieFacts = array(new NutritionFact('calories', 200));
 	$pattie->setNutritionFacts($pattieFacts);
+	$pattie->createUniqueId();
 	echo $pattie->toString().'<br>';
 	$lettuce = new BasicFood('Lettuce');
 	$lettuceFacts = array(new NutritionFact('calories', 40));
 	$lettuce->setNutritionFacts($lettuceFacts);
+	$lettuce->createUniqueId();
 	echo $lettuce->toString().'<br>';
 	$burgerFoods = array();
 	array_push($burgerFoods, $bun);
 	array_push($burgerFoods, $pattie);
 	array_push($burgerFoods, $lettuce);
 	$burger->setChildren($burgerFoods);
+	$burger->createUniqueId();
 	echo $burger->toString().'<br><br>';
 	$twoBurgers = new CompositeFood('TwoBurgers and a lettuce');
 	$twoBurgers->setChildren(array($burger, $burger, $lettuce));
+	$twoBurgers->createUniqueId();
 	echo $twoBurgers->toString().'<br>';
+	
+	test(array($bun, $pattie, $lettuce, $burger, $twoBurgers));
 }
 ?>

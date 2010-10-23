@@ -41,6 +41,11 @@ abstract class Food
 		$this->id = $id;
 	}
 	
+	public function createUniqueId()
+	{
+		$this->id = microtime();
+	}
+	
 	public function getEnabled()
 	{
 		return $this->enabled;

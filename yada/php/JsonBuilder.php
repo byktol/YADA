@@ -5,7 +5,6 @@ require_once('Builder.php');
 require_once('BasicFood.php');
 require_once('CompositeFood.php');
 require_once('NutritionFact.php');
-require_once('nutrition_facts/Calorie.php');
 
 class JsonBuilder implements Builder {
 
@@ -36,6 +35,7 @@ class JsonBuilder implements Builder {
 
     $text  = "{\r\n";
     $text .= "  'Name': '". $food->getName(). "',\r\n";
+    $text .= "  'Id': '". $food->getId() . "',\r\n";
     $text .= "  'NutritionFacts':\r\n";
     $text .= "  [\r\n";
     $text .= $this->buildNutritionFactsFor($food);
@@ -47,7 +47,7 @@ class JsonBuilder implements Builder {
   protected function buildNutritionFactsFor($food) {
     $text = '';
 
-    $arrayOfFacts = $food->getNutritionFacts();
+    $arrayOfFacts = $food->getNutritionFacts(true);
     $count = count($arrayOfFacts);
     for ($i = 0; $i < $count ; $i++) {
       $text .= $this->buildNutritionFact($arrayOfFacts[$i]);
@@ -109,13 +109,7 @@ class JsonBuilder implements Builder {
     $count = count($array);
     for( $i = 0; $i < $count; $i++ ) {
       $food = $array[$i];
-
-      if ($food instanceof BasicFood) {
-        $text .= $this->buildBasicFood($food);
-
-      } else if ($food instanceof CompositeFood) {
-        $text .= $this->buildCompositeFood($food);
-      }
+      $text .= "    " . $food->getId() . "\r\n";
 
       if ($i < $count-1) {
         $text .= ",\r\n";
@@ -128,31 +122,5 @@ class JsonBuilder implements Builder {
   public function getResult() {
     return $this->text;
   }
-}
-
-//Test
-echo "Hello world";
-test();
-
-function test() {
-  $f1 = new BasicFood('Pineapple');
-  $a = array(new Calorie(5), new Calorie(8));
-  $f1->setNutritionFacts($a);
-
-  $f2 = new CompositeFood('PinappleSammich');
-  $f2->setChildren(array($f1, $f1));
-
-  $f3 = new CompositeFood('PinappleSub');
-  $f3->setChildren(array($f2, $f2, $f2));
-
-  $arrayOfFood = array($f1, $f2, $f3);
-  $builder = new JsonBuilder();
-  $builder->construct($arrayOfFood);
-  $builder->buildBasicFood();
-  $builder->buildCompositeFood();
-  echo '<pre>';
-  echo $builder->getResult();
-  //$f = file('test_json.json');
-  //fwrite($f, 
 }
 ?>

@@ -4,8 +4,9 @@ require_once 'config.php';
 //require_once 'FoodReader.php'; // TODO: whatever file will be reading foods
 require_once 'Food.php';
 require_once 'NutritionFact.php';
+require_once 'BasicFood.php';
+require_once 'CompositeFood.php';
 
-FoodData::getPopulatedFoodData('test_json.json');
 
 // Holds all the foods from our database
 class FoodData
@@ -71,14 +72,23 @@ class FoodData
 		$fileContents = file_get_contents($filename);
 		if(empty($fileContents) || $fileContents === false)
 		{
-			echo "Could not read $filename";
+			echo "Could not read $filename<br>";
 			return null;
 		}
-		$data = json_decode($fileContents);
-		for($i=0;count($data);$i++)
+		echo $fileContents . '<br><br>';
+		$data = json_decode($fileContents, true);
+		if($data == null)
 		{
-			createFood($data[$i]);
+			echo "Could not parse JSON<br>";
+			return null;
 		}
+		print_r($data);
+		for($i=0;$i<count($data);$i++)
+		{
+			$f = FoodData::createFood($data[$i]);
+			$foodData->addFood($f);
+		}
+		return $foodData;
 	}
 	
 	public static function createFood($foodData)
@@ -92,9 +102,10 @@ class FoodData
 			for($i=0;$i<count($foodData['Children']);$i++)
 			{
 				// Recurse
-				array_push($foodArr, createFood($foodData['Children'][$i]));
+				array_push($foodArr, FoodData::createFood($foodData['Children'][$i]));
 			}
 			$c->setChildren($foodArr);
+			return $c;
 		}
 		else
 		{
@@ -103,11 +114,22 @@ class FoodData
 			// Loop through the nutrition facts and add them to the basic food
 			for($i=0;$i<count($foodData['NutritionFacts']);$i++)
 			{
-				$nutFact = NutritionFactFactory::create($foodData['NutritionFacts'][$i]['Name'], $foodData['NutritionFacts'][$i]['Quantity']);
+				$nutFact = new NutritionFact($foodData['NutritionFacts'][$i]['Name'], $foodData['NutritionFacts'][$i]['Quantity']);
 				array_push($nutritionFactsArr, $nutFact);
 			}
 			$b->setNutritionFacts($nutritionFactsArr);
+			return $b;
 		}
+	}
+}
+
+if($DEBUG)
+{
+	$fData = FoodData::getPopulatedFoodData('test_json.json');
+	$foods = $fData->getFoods();
+	for($i=0;$i<count($foods);$i++)
+	{
+		echo $foods[$i]->toString() . '<br>';
 	}
 }
 ?>

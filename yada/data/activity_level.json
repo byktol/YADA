@@ -1,0 +1,7 @@
+[
+    {"activity_level": "sedentary", "activity_index": "1.2" },
+    {"activity_level": "lightly-active", "activity_index": "1.375"},
+    {"activity_level": "moderately-active", "activity_index": "1.55"},
+    {"activity_level": "very-active", "activity_index": "1.725"},
+    {"activity_level": "extra-active", "activity_index": "1.9"}
+]

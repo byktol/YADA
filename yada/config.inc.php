@@ -18,6 +18,11 @@ define('CONFIG', DOMAIN . '/config.php');
 define('HEADER', DOMAIN . '/includes/header.php');
 define('FOOTER', DOMAIN . '/includes/footer.php');
 
+// classes
+define('CLASSES', DOMAIN . '/php');
+define('USER', CLASSES. 'User.php');
+define('CAL_METRICS', CLASSES. 'Calmetrics.php');
+
 define('JS', HOST . 'js/');
 define('JQUERY', JS . 'jquery-1.4.2.min.js');
 define('JQUERY_UI', JS . 'ui/blitzer/jquery-ui-1.7.3.min.js');

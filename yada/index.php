@@ -1,4 +1,30 @@
-<?php include_once('includes/header.php'); ?>
+<?php
+$path = "./";
+include_once($path.'includes/header.php');
+
+$calCalcTemplate = new HarrisBenedictTemplate();
+$calCalcTemplate = new MifflinJerrorTemplate();
+
+$user = new User();
+$user->setName("abhishek");
+
+$calMetrics = new CalorieMetrics();
+$calMetrics->setAge(26);
+$calMetrics->setGender("MALE");
+$calMetrics->setWeight(55);
+$calMetrics->setHeight(150);
+$calMetrics->setActivityLevel(1.2);
+$calMetrics->setCalorieCalcTpl($calCalcTemplate);
+$cal = $calCalcTemplate->calculateNutritionFact($calMetrics);
+
+echo "cal: ".$cal;
+
+$userDao = new UserDAO();
+$user = $userDao->getUser('');
+echo "<pre>";
+print_r($user);
+
+?>
 <table class="datatable">
     <tr><th colspan="2" align="left">:: Please specify the info below to save your profile</th></tr>
     <tr>

@@ -1,14 +1,16 @@
 <?php
+
 require_once('config.php');
 
 class User {
 
     private $name;
-    private $gender;
-    private $height;
-    private $age;
-    private $weight;
-    private $activityLevel;
+    private $calMetric;
+    /* private $gender;
+      private $height;
+      private $age;
+      private $weight;
+     */
 
     public function User() {
 
@@ -22,46 +24,45 @@ class User {
         $this->name = $name;
     }
 
-    public function getGender() {
-        return $this->gender;
+    public function getCalorieMetrics() {
+        return $this->calMetric;
     }
 
-    public function setGender($gender) {
-        $this->gender = $gender;
+    public function setCalorieMetrics(CalorieMetrics $calMetric) {
+        $this->calMetric = $calMetric;
     }
 
-    public function getHeight() {
-        return $this->height;
-    }
+    /* public function getGender() {
+      return $this->gender;
+      }
 
-    public function setHeight($height) {
-        $this->height = $height;
-    }
+      public function setGender($gender) {
+      $this->gender = $gender;
+      }
 
-    public function getAge() {
-        return $this->age;
-    }
+      public function getHeight() {
+      return $this->height;
+      }
 
-    public function setAge($age) {
-        $this->age = $age;
-    }
+      public function setHeight($height) {
+      $this->height = $height;
+      }
 
-    public function getWeight() {
-        return $this->weight;
-    }
+      public function getAge() {
+      return $this->age;
+      }
 
-    public function setWeight($weight) {
-        $this->weight = $weight;
-    }
+      public function setAge($age) {
+      $this->age = $age;
+      }
 
-    public function getActivityLevel() {
-        return $this->activityLevel;
-    }
+      public function getWeight() {
+      return $this->weight;
+      }
 
-    public function setActivityLevel($activityLevel) {
-        $this->activityLevel = $activityLevel;
-    }
-
+      public function setWeight($weight) {
+      $this->weight = $weight;
+      } */
 }
 
 ?>

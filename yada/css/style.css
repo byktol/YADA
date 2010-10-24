@@ -113,6 +113,9 @@ table.tbl-login th, .datatable tr td, .datatable tr th{ vertical-align: middle; 
 .icon-visa { background: url(../images/apps/visa.gif) no-repeat left center; padding: 5px 0 5px 25px; }
 .icon-site-inspection { background: url(../images/apps/site-inspection.gif) no-repeat left center; padding: 5px 0 5px 20px; }
 
+.icon-download { background: url(../images/download.png) no-repeat left center; padding: 5px 0 5px 30px; }
+.icon-edit { background: url(../images/edit.png) no-repeat left center; padding: 5px 0 5px 30px; }
+.icon-delete { background: url(../images/delete.png) no-repeat left center; padding: 5px 0 5px 30px; }
 
 .main-title { padding-left: 45px; color: #fff; }
 .option-bar { padding: 10px 0; color: #999; font-size: .95em; }
@@ -183,3 +186,4 @@ input, textarea, select, textarea { font-family: Tahoma, "Trebuchet MS", Arial; 
 
 
 
+.link-btn { background-color: #cece8d; padding: 3px 8px; font-size: 8pt; font-weight: bold; }

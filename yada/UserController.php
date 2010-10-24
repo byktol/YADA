@@ -70,13 +70,6 @@ class UserController {
 
           $udao = new UserDAO();
           $udao->save($user);
-//          $f = fopen($userDir . 'profile.json', 'w');
-//          fclose($f);
-//          $f = fopen($userDir . 'foods.json', 'w');
-//          fclose($f);
-//          $f = fopen($userDir . 'log.json', 'w');
-//          fclose($f);
-
 
           SessionManager::getInstance()->setUser($user);
           SessionManager::getInstance()->info('Welcome to YADA, ' . $user->getUsername());
@@ -97,7 +90,17 @@ class UserController {
     $user = SessionManager::getInstance()->getUser();
     if ($_POST) {
       $udao = new UserDAO();
-//      $udao->save($user);
+      $user->setFirstname($_POST['firstname']);
+      $user->setLastname($_POST['lastname']);
+      $user->setAge($_POST['age']);
+      $user->setWeight($_POST['weight']);
+      $user->setHeight($_POST['height']);
+      $user->setActivityLevel($_POST['activity_level']);
+      $user->setGender($_POST['gender']);
+      $user->setCalculatorId($_POST['calculator_id']);
+      $udao->save($user);
+
+      SessionManager::getInstance()->info('Your profile has been updated.');
     }
     include 'views/profile.php';
   }

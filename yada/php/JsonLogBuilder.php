@@ -1,43 +1,45 @@
 <?php
+
 class JsonLogBuilder implements LogBuilder {
 
-    private $date;
-    private $consumption;
-    private $jsonLog;
+    private $log; // instance of Log
+    private $arrJson = array();
 
-    public function JsonLogBuilder($date='', $consumption=NULL) {
-        $this->date = $date;
-        $this->consumption = $consumption;
-        $this->jsonLog = new JsonLog();
+    public function JsonLogBuilder(Log $log) {
+        $this->log = $log;
     }
 
     public function buildDate() {
-        $this->jsonLog->setDate($this->date);
+        $this->arrJson[] = array('date' => $this->log->getDate());
     }
 
     public function buildConsumption() {
-        foreach ($this->consumption as $consumption) {
-            $this->jsonLog->setConsumption($consumption);
-        }
+        $this->arrJson[] = array('consumption' => $this->log->getConsumption());
     }
 
-    // returns a concrete product JsonLog
+    // returns a concrete product String
     public function getResult() {
-        return $this->jsonLog;
+        return json_encode($this->arrJson);
     }
 
 }
 
 // implementation
-//$arrConsumption = array(
-//    new Consumption(new BasicFood('cheese'), 1),
-//    new Consumption(new BasicFood('cheese1'), 1),
-//    new Consumption(new BasicFood('cheese2'), 1),
-//);
+//$log = new Log();
+//$log->setDate('10/20/2010');
 //
-//$jsonLogBuilder = new JsonLogBuilder('', $arrConsumption);
+//$con = new Consumption(new BasicFood('cheese1'), 1);
+//$log->setConsumption($con);
+//$con = new Consumption(new BasicFood('cheese2'), 1);
+//$log->setConsumption($con);
+//$con = new Consumption(new BasicFood('cheese3'), 1);
+//$log->setConsumption($con);
+//$con = new Consumption(new BasicFood('cheese3'), 1);
+//$log->setConsumption($con);
+//
+//$jsonLogBuilder = new JsonLogBuilder($log);
 //$jsonLogBuilder->buildDate();
 //$jsonLogBuilder->buildConsumption();
 //$jsonString = $jsonLogBuilder->getResult();
-//echo "hjereis the log:".$jsonString->toString();
+//echo "hjereis the log:" . $jsonString;
 ?>

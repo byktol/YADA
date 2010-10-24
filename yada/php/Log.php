@@ -1,12 +1,32 @@
 <?php
 
-interface Log {
+class Log {
 
-    public function getDate();
+    private $date;
+    private $arrConsumption; // Consumption class
 
-    public function getConsumption();
+    public function Log() {
 
-    public function toString();
+    }
+
+    public function getDate() {
+        return $this->date;
+    }
+
+    public function setDate($date='') {
+        $this->date = ($date == '') ? date('mm/dd/yyyy') : $date;
+    }
+
+    public function setConsumption($consumption) {
+        $this->arrConsumption[] = array(
+            'food_id' => $consumption->getFood()->getId(),
+            'qty' => $consumption->getQuantity()
+        );
+    }
+
+    public function getConsumption() {
+        return $this->arrConsumption;
+    }
 }
 
 ?>

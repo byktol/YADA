@@ -15,6 +15,7 @@
             <?php endif ?>
         </div>
         <div id="body">
+            <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
             <ul id="top-menu">
                 <li><a href="<?php echo HOST . 'index.php?food=list_food' ?>">Food Entry</a></li>
                 <li><a href="<?php echo HOST . 'index.php?user=profile' ?>">My Profile</a></li>
@@ -23,6 +24,7 @@
                 <li><a href="<?php echo HOST . 'index.php?user=calendar' ?>">My Food Log</a></li>
                 <li class="last"><a href="<?php echo HOST . 'index.php?user=logout' ?>">Logout</a></li>
             </ul>
+            <?php endif ?>
           <?php if (SessionManager::getInstance()->errorCount() > 0) : ?>
             <div class="error">
               <ul>

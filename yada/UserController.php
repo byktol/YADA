@@ -21,14 +21,19 @@ class UserController {
     $username = '';
     if ($_POST) {
       $username = $_POST['username'];
+      $password = $_POST['password'];
 
       if ($username != '' && $this->userExists($username)) {
 
         $udao = new UserDAO();
         $user = $udao->getUser($username);
-        SessionManager::getInstance()->setUser($user);
-        Utils::getInstance()->redirect('index.php?user=profile');
-        return;
+        if ($password != $user->getPassword()) {
+          SessionManager::getInstance()->error('Password invalid!');
+        } else {
+          SessionManager::getInstance()->setUser($user);
+          Utils::getInstance()->redirect('index.php?user=profile');
+          return;
+        }
 
       } else {
 
@@ -61,6 +66,7 @@ class UserController {
         if (true || $success) {
           $user = new User();
           $user->setUsername($username);
+          $user->setPassword($password);
 
           $udao = new UserDAO();
           $udao->save($user);

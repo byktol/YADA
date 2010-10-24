@@ -2,7 +2,7 @@
 
 require_once('config.php');
 
-class CalorieMetrics {
+class CalorieMetric {
 
     private $age;
     private $height;

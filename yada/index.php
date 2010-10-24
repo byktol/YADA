@@ -1,78 +1,74 @@
 <?php
-$path = "./";
-include_once($path.'includes/header.php');
 
-$calCalcTemplate = new HarrisBenedictTemplate();
-$calCalcTemplate = new MifflinJerrorTemplate();
+define('DOMAIN', "http://" . $_SERVER['HTTP_HOST']);
+define('PATH', '/YADA/yada/');
+define('PROJECT_CODE', 'YADA');
+define('PROJECT_NAME', 'Yet Another Diet Assistant');
+define('APPS_SALT', md5('c@$@8lanca'));    // casablanca
 
-$user = new User();
-$user->setName("abhishek");
+/* database constants */
+define('DB_HOST', 'localhost');
+//define('DB_HOST', '192.168.0.9');
 
-$calMetrics = new CalorieMetrics();
-$calMetrics->setAge(26);
-$calMetrics->setGender("MALE");
-$calMetrics->setWeight(55);
-$calMetrics->setHeight(150);
-$calMetrics->setActivityLevel(1.2);
-$calMetrics->setCalorieCalcTpl($calCalcTemplate);
-$cal = $calCalcTemplate->calculateNutritionFact($calMetrics);
+define('HOST', DOMAIN . PATH);
+define('BASE', $_SERVER['DOCUMENT_ROOT'] . '/' . PATH);
+define('PHPSELF', $_SERVER['PHP_SELF']);
 
-echo "cal: ".$cal;
+define('CONFIG', BASE . '/config.php');
+define('HEADER', BASE . 'views/header.php');
+define('FOOTER', BASE . 'views/footer.php');
 
-$userDao = new UserDAO();
-$user = $userDao->getUser('');
-echo "<pre>";
-print_r($user);
+// classes
+define('CLASSES', HOST . '/php/');
+define('USER', CLASSES . 'User.php');
+define('CAL_METRICS', CLASSES . 'Calmetrics.php');
+
+define('JS', HOST . 'js/');
+define('JQUERY', JS . 'jquery-1.4.2.min.js');
+define('JQUERY_UI', JS . 'ui/redmond/jquery-ui-1.8.5.min.js');
+define('TBL_SORTER', JS . 'tablesorter/jquery.tablesorter.min.js');
+define('CSS_PATH', HOST . 'css/');
+define('JQUERY_CSS', JS . 'ui/redmond/jquery-ui-1.8.5.css');
+define('TBL_SORTER_BLUE', JS . 'tablesorter/blue/style.css');
+
+// database files
+define('DATA', BASE . 'data/');
+define('DATA_USERS', DATA . 'users.json');
+
+function __autoload($classname) {
+    //$file = str_replace('_', '/', $classname);
+    $file = './' . $classname . '.php';
+    if (file_exists($file)) {
+      require_once($file);
+
+    } else {
+      $file = './php/' . $classname . '.php';
+      if (file_exists($file)) {
+        require_once($file);
+
+      } else {
+        $file = './views/' . $classname . '.php';
+        if (file_exists($file)) {
+          require_once($file);
+        }
+      }
+
+    }
+}
+
+session_start();
+$userController = UserController::getInstance();
+$foodController = FoodController::getInstance();
+
+if (isset($_GET['user'])) {
+  $userController->$_GET['user']();
+
+} else if (isset($_GET['food'])) {
+  $foodController->$_GET['food']();
+
+} else {
+  $userController->login();
+
+}
 
 ?>
-<table class="datatable">
-    <tr><th colspan="2" align="left">:: Please specify the info below to save your profile</th></tr>
-    <tr>
-        <td>Name:</td>
-        <td><input type="text" name="name" id="name" size="40"/></td>
-    </tr>
-    <tr><td width="25%">Gender</td>
-        <td>
-            <label><input type="radio" name="gender" id="male" checked />Male</label>
-            <label><input type="radio" name="gender" id="female"/>Female</label>
-        </td>
-    </tr>
-    <tr>
-        <td>Height:</td>
-        <td><input type="text" name="height" id="height" size="10"/><span class="tips"> (Please specify in cm (E.g. 185cm)</span></td>
-    </tr>
-    <tr>
-        <td>Weight:</td>
-        <td><input type="text" name="weight" id="weight" size="10"/><span class="tips"> (Please specify in kg (E.g. 75kg)</span></td>
-    </tr>
-    <tr>
-        <td>Activity Level:</td>
-        <td>
-            <select name="activity_level" id="activity_level">
-                <option value="0">--Choose Activity Level--</option>
-                <option value="1">Highly Active</option>
-                <option value="2">Active</option>
-                <option value="3">Sedentary</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>Calorie Calculation Method:</td>
-        <td>
-            <select name="activity_level" id="activity_level">
-                <option value="0">--Choose Method--</option>
-                <option value="1">Harris-Benedict</option>
-                <option value="2">Miffin-Jerror</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>
-            <input type="submit" id="btnSaveProfile" name="btnSaveProfile" value="Save Profile"/>
-            <input type="button" id="btnCalcCalorie" name="btnCalcCalorie" value="Calcualte Calorie"/>
-            <input type="reset" id="btnReset" name="btnReset" value="Reset"/>
-        </td>
-    </tr>
-</table>
-<?php include_once('includes/footer.php'); ?>

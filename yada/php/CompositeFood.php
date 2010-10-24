@@ -44,13 +44,16 @@ class CompositeFood extends Food
 		// For each child
 		for($i=0;$i<count($children);$i++)
 		{
-			$nutritionFacts = $children[$i]->getNutritionFacts($countDisabled);
-			// For each nutrition fact
-			for($j=0;$j<count($nutritionFacts);$j++)
+			if($children[$i] != BasicFood::$Undefined)
 			{
-				if(empty($totalNutritionFacts[$nutritionFacts[$j]->getName()]))
-					$totalNutritionFacts[$nutritionFacts[$j]->getName()] = 0;
-				$totalNutritionFacts[$nutritionFacts[$j]->getName()] += $nutritionFacts[$j]->getValue();
+				$nutritionFacts = $children[$i]->getNutritionFacts($countDisabled);
+				// For each nutrition fact
+				for($j=0;$j<count($nutritionFacts);$j++)
+				{
+					if(empty($totalNutritionFacts[$nutritionFacts[$j]->getName()]))
+						$totalNutritionFacts[$nutritionFacts[$j]->getName()] = 0;
+					$totalNutritionFacts[$nutritionFacts[$j]->getName()] += $nutritionFacts[$j]->getValue();
+				}
 			}
 		}
 		
@@ -70,7 +73,8 @@ class CompositeFood extends Food
 	}
 }
 
-if($DEBUG)
+// Only run this debug script if we actually requested this page
+if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'compositefood.php') === false))
 {
 	require_once 'JsonBuilder.php';
 

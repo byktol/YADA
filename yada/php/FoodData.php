@@ -85,24 +85,30 @@ class FoodData
 		print_r($data);
 		for($i=0;$i<count($data);$i++)
 		{
-			$f = FoodData::createFood($data[$i]);
+			$f = FoodData::createFood($foodData, $data[$i]);
 			$foodData->addFood($f);
 		}
 		return $foodData;
 	}
 	
-	public static function createFood($foodData)
+	public static function createFood($foodDat, $foodData)
 	{
 		// If the food is a composite food
 		if(!empty($foodData['Children']))
 		{
 			$c = new CompositeFood($foodData['Name']);
+			$c->setId($foodData['Id']);
+			$c->setEnabled($foodData['Enabled']);
 			$foodArr = array();
 			// Loop through the children and add them to this composite
 			for($i=0;$i<count($foodData['Children']);$i++)
 			{
 				// Recurse
-				array_push($foodArr, FoodData::createFood($foodData['Children'][$i]));
+				$foodRef = FoodData::findFood($foodDat, $foodData['Children'][$i]);
+				if($foodRef != null)
+					array_push($foodArr, $foodRef);
+				else
+					array_push($foodArr, BasicFood::$Undefined);
 			}
 			$c->setChildren($foodArr);
 			return $c;
@@ -110,6 +116,8 @@ class FoodData
 		else
 		{
 			$b = new BasicFood($foodData['Name']);
+			$b->setId($foodData['Id']);
+			$b->setEnabled($foodData['Enabled']);
 			$nutritionFactsArr = array();
 			// Loop through the nutrition facts and add them to the basic food
 			for($i=0;$i<count($foodData['NutritionFacts']);$i++)
@@ -120,6 +128,20 @@ class FoodData
 			$b->setNutritionFacts($nutritionFactsArr);
 			return $b;
 		}
+	}
+	
+	public static function findFood($foodData, $id)
+	{
+		$foods = $foodData->getFoods();
+		for($i=0;$i<count($foods);$i++)
+		{
+			if($foods[$i]->getId() == $id)
+			{
+				$ret = &$foods[$i];
+				return $ret;
+			}
+		}
+		return null;
 	}
 }
 

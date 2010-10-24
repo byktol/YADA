@@ -109,5 +109,13 @@ class FoodData
 			$b->setNutritionFacts($nutritionFactsArr);
 		}
 	}
+
+  public function createMemento() {
+
+  }
+
+  public function setMemento($memento) {
+    
+  }
 }
 ?>

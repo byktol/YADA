@@ -9,10 +9,10 @@ class FoodController {
   private function __construct() { }
 
   public static function getInstance() {
-    if ( !isset(FoodController::$instance) ) {
-      FoodController::$instance = new FoodController();
+    if ( !isset(self::$instance) ) {
+      self::$instance = new FoodController();
     }
-    return FoodController::$instance;
+    return self::$instance;
   }
 
   public function list_food() {

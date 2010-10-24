@@ -9,7 +9,10 @@
     </head>
     <body>
         <div id="header">            
-            <h2>Welcome to you diet assistant! It's a beautiful day!</h2>
+            <h2>Welcome to your diet assistant! It's a beautiful day!</h2>
+            <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
+            Hello, <strong><?php echo SessionManager::getInstance()->getUser()->getName() ?></strong>
+            <?php endif ?>
         </div>
         <div id="body">
             <ul id="top-menu">
@@ -19,6 +22,33 @@
                 <li><a href="<?php echo HOST . 'index.php?user=log' ?>">New Log Entry</a></li>
                 <li class="last"><a href="<?php echo HOST . 'index.php?user=calendar' ?>">My Food Log</a></li>
             </ul>
+          <?php if (SessionManager::getInstance()->errorCount() > 0) : ?>
+            <div class="error">
+              <ul>
+              <?php foreach (SessionManager::getInstance()->getErrors() as $e) : ?>
+                <li><?php echo $e ?></li>
+              <?php endforeach ?>
+              </ul>
+            </div>
+          <?php endif; ?>
+          <?php if (SessionManager::getInstance()->warningCount() > 0) : ?>
+            <div class="warning">
+              <ul>
+              <?php foreach (SessionManager::getInstance()->getWarnings() as $w) : ?>
+                <li><?php echo $w ?></li>
+              <?php endforeach ?>
+              </ul>
+            </div>
+          <?php endif; ?>
+          <?php if (SessionManager::getInstance()->infoCount() > 0) : ?>
+            <div class="info">
+              <ul>
+              <?php foreach (SessionManager::getInstance()->getInfos() as $i) : ?>
+                <li><?php echo $i ?></li>
+              <?php endforeach ?>
+              </ul>
+            </div>
+          <?php endif; ?>
 
 
 

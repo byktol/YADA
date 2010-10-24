@@ -2,7 +2,7 @@
 
 /**
  * The caretaker of the memento design pattern.
- * Hold a list of memento objets and is reponsible for managing them.
+ * Holds a list of memento objets and is reponsible for managing them.
  */
 class FoodCareTaker {
   private $mementos;
@@ -13,10 +13,10 @@ class FoodCareTaker {
   }
 
   public static function getInstance() {
-    if (FoodCareTaker::$instance == null) {
-      FoodCareTaker::$instance = new FoodCareTaker();
+    if (self::$instance == null) {
+      self::$instance = new FoodCareTaker();
     }
-    return FoodCareTaker::$instance;
+    return self::$instance;
   }
 }
 ?>

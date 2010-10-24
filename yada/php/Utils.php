@@ -208,7 +208,7 @@ class Utils {
 
     public function redirect($location='') {
         header('Location: ' . HOST . $location);
-        exit();
+//        exit();
     }
 
     public function debug($arr) {

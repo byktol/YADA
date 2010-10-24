@@ -56,6 +56,7 @@ function __autoload($classname) {
     }
 }
 
+session_start();
 $userController = UserController::getInstance();
 $foodController = FoodController::getInstance();
 

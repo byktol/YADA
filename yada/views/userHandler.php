@@ -6,30 +6,6 @@ require_once(BASE . 'controller_funcs.php');
 $task = $_POST['task'];
 
 switch ($task) {
-    case 'register':
-        // TODO: check for unique username
-        $username = $_POST['user_name'];
-        $password = $_POST['password'];
-
-        $userExists = userExists($username);
-
-        if ($userExists) {
-            $sessMgr->set('e_user_name', $_POST['user_name']);
-            $utils->redirect('register.php');
-        } else {
-            // try to save to the users.json
-            $isRegSuccess = register($username, $password);
-            if ($isRegSuccess) {
-                $sessMgr->set('reg_succes', TRUE);
-                $sessMgr->set('user_name', $username);
-                $utils->redirect('profile.php');
-            } else {
-                $sessMgr->set('reg_succes', FALSE);
-                $utils->redirect('register.php');
-            }
-        }
-
-        break;
 
     case 'login':
         $username = $_POST['user_name'];

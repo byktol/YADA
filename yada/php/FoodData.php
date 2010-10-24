@@ -171,5 +171,13 @@ if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'fooddata.php') === f
 	{
 		echo $foods[$i]->toString() . '<br>';
 	}
+
+  public function createMemento() {
+
+  }
+
+  public function setMemento($memento) {
+    
+  }
 }
 ?>

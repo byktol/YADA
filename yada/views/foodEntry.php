@@ -1,4 +1,4 @@
-<?php include_once('includes/header.php'); ?>
+<?php include_once HEADER; ?>
 <script type="text/javascript">
     $(function(){
         $('#tabs').tabs();
@@ -81,4 +81,4 @@
         </table>
     </div>
 </div>
-<?php include_once('includes/footer.php'); ?>
+<?php include_once FOOTER; ?>

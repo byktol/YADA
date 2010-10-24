@@ -4,7 +4,10 @@ require_once('config.php');
 
 class User {
 
-    private $name;
+    private $username;
+    private $firstname;
+    private $lastname;
+    private $password;
     private $calMetric;
     /* private $gender;
       private $height;
@@ -12,16 +15,38 @@ class User {
       private $weight;
      */
 
-    public function User() {
+    public function User() { }
 
+    public function getUsername() {
+        return $this->username;
     }
 
-    public function getName() {
-        return $this->name;
+    public function setUsername($username) {
+        $this->username = $username;
     }
 
-    public function setName($name) {
-        $this->name = $name;
+    public function getFirstname() {
+        return $this->firstname;
+    }
+
+    public function setFirstname($firstname) {
+        $this->firstname = $firstname;
+    }
+
+    public function getLastname() {
+        return $this->lastname;
+    }
+
+    public function setLastname($lastname) {
+        $this->lastname = $lastname;
+    }
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
     }
 
     public function getCalorieMetrics() {

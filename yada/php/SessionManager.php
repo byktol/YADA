@@ -11,19 +11,32 @@ class SessionManager {
 
     private static $instance;
 
-    private function SessionManager() {
-        session_start();
+    private function __construct() { }
+
+    public static function getInstance() {
+        if (is_null(self::$instance)){
+          self::$instance = new SessionManager();
+        }
+        return self::$instance;
     }
 
-    public function getInstance() {
-        return (is_null(self::$instance)) ? new SessionManager() : self::$instance;
+    public function isLoggedIn() {
+      return !is_null($this->get('user'));
     }
 
-    public function get($key) {
+    public function setUser($user) {
+      $this->set('user', $user);
+    }
+
+    public function getUser() {
+      return $this->get('user');
+    }
+
+    private function get($key) {
         return isset($_SESSION[PROJECT_CODE][$key]) ? $_SESSION[PROJECT_CODE][$key] : NULL;
     }
 
-    public function set($key, $value) {
+    private function set($key, $value) {
         $_SESSION[PROJECT_CODE][$key] = $value;
     }
 
@@ -62,6 +75,66 @@ class SessionManager {
         return $key;
     }
 
+    private function flash($type) {
+      $r = null;
+      switch($type) {
+        case 'errors' :
+          $r = $this->get('errors');
+          $this->set('errors', array());
+          break;
+        case 'warnings' :
+          $r = $this->get('warnings');
+          $this->set('warnings', array());
+          break;
+        case 'infos' :
+          $r = $this->get('infos');
+          $this->set('infos', array());
+          break;
+      }
+      return $r;
+    }
+
+    public function error($error) {
+      $e = $this->get('errors');
+      $e[] = $error;
+      $this->set('errors', $e);
+    }
+
+    public function warn($warning) {
+      $w = $this->get('warnings');
+      $w[] = $warning;
+      $this->set('warnings', $w);
+    }
+
+    public function info($info) {
+      $i = $this->get('infos');
+      $i[] = $info;
+      $this->set('infos', $i);
+    }
+
+    public function getErrors() {
+      return $this->flash('errors');
+    }
+
+    public function getInfos() {
+      return $this->flash('infos');
+    }
+
+    public function getWarnings() {
+      return $this->flash('warnings');
+    }
+
+    public function errorCount() {
+      return count($this->get('errors'));
+    }
+
+    public function warningCount() {
+      return count($this->get('errors'));
+    }
+
+    public function infoCount() {
+      return count($this->get('infos'));
+    }
 }
 
 ?>

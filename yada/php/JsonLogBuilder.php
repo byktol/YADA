@@ -1,5 +1,4 @@
 <?php
-include_once '../boot.php';
 class JsonLogBuilder implements LogBuilder {
 
     private $date;

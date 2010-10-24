@@ -99,6 +99,10 @@ class JsonBuilder implements Builder {
     $text .= "  \"Name\": \"" . $food->getName() . "\",\r\n";
     $text .= "  \"Id\": \"". $food->getId() . "\",\r\n";
     $text .= "  \"Enabled\": \"". ($food->getEnabled()?1:0) . "\",\r\n";
+    $text .= "  \"Keywords\": ";
+    $text .= "  [\r\n";
+    $text .= $this->buildKeywordsFor($food) . "\r\n";
+    $text .= "  ]\r\n";
     $text .= "  \"Children\":\r\n";
     $text .= "  [\r\n";
     $text .= $this->compositeBuild($food->getChildren());
@@ -121,7 +125,24 @@ class JsonBuilder implements Builder {
 
     return $text;
   }
+  
+  protected function buildKeywordsFor($food)
+  {
+    $text = "";
+    
+    $keywords = $food->getKeywords();
+    $count = count($keywords);
+    for ($i = 0; $i < $count ; $i++) {
+      $text .= $keywords[$i];
 
+      if ($i < $count-1) {
+        $text .= "  ,\r\n";
+      }
+    }
+
+    return $text;
+  }
+  
   public function getResult() {
     return "[\r\n" . $this->text . "]";
   }

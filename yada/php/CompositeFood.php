@@ -82,6 +82,7 @@ if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'compositefood.php') 
 	require_once 'JsonBuilder.php';
 
 	function test($arrFood) {
+	  echo "hello world";
 	  $builder = new JsonBuilder($arrFood);
 	  $builder->buildBasicFood();
 	  $builder->buildCompositeFood();

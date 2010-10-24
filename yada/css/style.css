@@ -187,3 +187,4 @@ input, textarea, select, textarea { font-family: Tahoma, "Trebuchet MS", Arial; 
 
 
 .link-btn { background-color: #cece8d; padding: 3px 8px; font-size: 8pt; font-weight: bold; cursor: pointer; }
+.span-btn { cursor: pointer; }

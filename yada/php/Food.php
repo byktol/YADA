@@ -12,6 +12,8 @@ abstract class Food
 	private $enabled = true;
 	// The id of the food
 	private $id;
+	// Keywords for this food
+	private $keywords;
 
 	// Constructs a new instance of the Food class
 	function __construct($name)
@@ -56,6 +58,16 @@ abstract class Food
 		$this->enabled = $enabled;
 	}
 	
+	public function getKeywords()
+	{
+		return $this->keywords;
+	}
+	
+	public function setKeywords($keywords)
+	{
+		$this->keywords = $keywords;
+	}
+	
 	// Gets the nutrition facts for this food
 	public function getNutritionFacts($countDisabled)
 	{
@@ -82,6 +94,18 @@ abstract class Food
 			}
 		}
 		return 0;
+	}
+	
+	public function setNutritionFact($name, $value)
+	{
+		$facts = $this->getNutritionFacts($countDisabled);
+		for($i=0;$i<count($facts);$i++)
+		{
+			if($facts[$i]->getName() == $name)
+			{
+				$facts[$i]->setValue($value);
+			}
+		}
 	}
 	
 	public abstract function hasChildren();

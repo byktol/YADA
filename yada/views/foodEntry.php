@@ -13,6 +13,19 @@
     		$('.addCompositeForm').toggle('slow');
     		$('.addCompositePlus').text($('.addCompositePlus').text() == '+' ? '-' : '+');
         });
+        $('.editBtn').click(function(){
+            $('.editting').hide();
+            $('.non-edit').show();
+            var id = $(this).attr('id');
+            $('#'+id+'Submit').show();
+            $('#'+id+'NameSpan').hide();
+            $('#'+id+'NameInput').show();
+            $('#'+id+'KeywordsSpan').hide();
+            $('#'+id+'KeywordsInput').show();
+            $('#'+id+'CaloriesSpan').hide();
+            $('#'+id+'CaloriesInput').show();
+            $(this).hide();
+        });
     });
 </script>
 <div id="tabs">
@@ -25,7 +38,7 @@
     <div id="b_food" style="width: 80%;">
         <table id="bfood_list" class="datatable tablesorter" width="70%">
             <thead>
-                <tr><th>S.N.</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th>Actions</th></tr>
+                <tr><th>S.N.</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th style="width:100px">Actions</th></tr>
             </thead>
             <?php 
             	// Iterate through the foods
@@ -36,7 +49,26 @@
             		if($food->getEnabled())
             		{
             ?>
-            <tr><td><?php echo ($i+1); ?>.</td><td><?php echo $food->getName(); ?></td><td>//TODO: put keywords here</td><td><?php echo $food->getNutritionFact('calories', false); ?></td><td align="center"><a href="#" class="icon-edit"></a><a href="<?php echo $this->getDisableUri($food->getId()); ?>" class="icon-delete"></a></td></tr>
+            <form action="" method="post">
+	            <tr><td>
+	            	<?php echo ($i+1); ?>.
+	            </td><td>
+	            	<input id="editBtn<?php echo $i; ?>NameInput" class="editting" type="text" name="foodName" value="<?php echo $food->getName(); ?>" style="display:none">
+	            	<span id="editBtn<?php echo $i; ?>NameSpan" class="non-edit"><?php echo $food->getName(); ?></span>
+	            </td><td>
+	            	<input id="editBtn<?php echo $i; ?>KeywordsInput" class="editting" type="text" name="keywords" value="TODO: put keywords here" style="display:none">
+	            	<span id="editBtn<?php echo $i; ?>KeywordsSpan" class="non-edit">TODO: put keywords here</span>
+	            </td><td>
+	            	<input id="editBtn<?php echo $i; ?>CaloriesInput" class="editting" type="text" name="calories" value="<?php echo $food->getNutritionFact('calories', false); ?>" style="display:none">
+	            	<span id="editBtn<?php echo $i; ?>CaloriesSpan" class="non-edit"><?php echo $food->getNutritionFact('calories', false); ?></span>
+	            </td><td align="center">
+	            <input id="editBtn<?php echo $i; ?>Submit" class="editting" type="submit" value="done" style="display:none;margin-right:10px">
+	            <span id="editBtn<?php echo $i; ?>" class="icon-edit editBtn span-btn non-edit" title="edit"></span>
+	            <a href="<?php echo $this->getDisableUri($food->getId()); ?>" class="icon-delete" title="delete"></a>
+	            </td></tr>
+	            <input type="hidden" name="foodId" value="<?php echo $food->getId(); ?>">
+	            <input type="hidden" name="editBasic" value="true">
+            </form>
             <?php
             		}
             	} 

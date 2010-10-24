@@ -37,6 +37,10 @@ class FoodController {
   	{
   	  self::addBasic();
   	}
+  	if(!empty($_POST['editBasic']))
+  	{
+  	  self::editBasic();
+  	}
     include ('views/foodEntry.php');
     self::getFoodData()->save('php/test_json.json');
   }
@@ -83,6 +87,19 @@ class FoodController {
   	$nutFacts = array(new NutritionFact('calories', $_POST['calories']));
   	$b->setNutritionFacts($nutFacts);
   	$foodData->addFood($b);
+  }
+  
+  private static function editBasic()
+  {
+    $foods = &self::getFoodData()->getFoods();
+    for($i=0;$i<count($foods);$i++)
+    {
+      if($foods[$i]->getId() == $_POST['foodId'])
+      {
+        $foods[$i]->setName($_POST['foodName']);
+        $foods[$i]->setNutritionFact('calories', $_POST['calories']);
+      }
+    }
   }
 }
 ?>

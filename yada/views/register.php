@@ -1,20 +1,20 @@
 <?php
-include_once('includes/header.php');
-require_once(BASE . 'controller_funcs.php');
-
-$userExists = $sessMgr->get('e_user_name');
-//$sessMgr->reset();
-$sessMgr->display();
-$alreadyRegistered = FALSE;
-if (isset($userExists)) {
-    // first check if the user is already registered throught he controller method
-    if (userExists($username)) {
-        $alreadyRegistered = TRUE;
-        echo $msg = '<div class="error">The username you chose <b>' . $username . '</b> already exists! Please select another one.</div>';
-    }
-}
+include_once HEADER;
+//require_once(BASE . 'controller_funcs.php');
+//
+//$userExists = $sessMgr->get('e_user_name');
+////$sessMgr->reset();
+//$sessMgr->display();
+//$alreadyRegistered = FALSE;
+//if (isset($userExists)) {
+//    // first check if the user is already registered throught he controller method
+//    if (userExists($username)) {
+//        $alreadyRegistered = TRUE;
+//        echo $msg = '<div class="error">The username you chose <b>' . $username . '</b> already exists! Please select another one.</div>';
+//    }
+//}
 ?>
-<form name="frmRegister" id="frmRegister" method="post" action="userHandler.php">
+<form id="frmRegister" method="post" action="<?php echo HOST . 'index.php?user=register'?>">
     <table class="datatable">
         <tr><th colspan="2" align="left">:: Please specify the info below to register</th></tr>
         <tr>
@@ -34,9 +34,8 @@ if (isset($userExists)) {
             <td>
                 <input type="submit" id="btnRegister" name="btnRegister" value="Save Profile"/>
                 <input type="reset" id="btnReset" name="btnReset" value="Reset"/>
-                <input type="hidden" name="task" value="register" />
             </td>
         </tr>
     </table>
 </form>
-<?php include_once('includes/footer.php'); ?>
+<?php include_once FOOTER; ?>

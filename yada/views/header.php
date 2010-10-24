@@ -1,4 +1,3 @@
-<?php require_once $path . 'config.inc.php'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -10,13 +9,15 @@
     </head>
     <body>
         <div id="header">            
-            <h2>Welcome to you diet assistant! Its a beautiful day!</h2>
+            <h2>Welcome to you diet assistant! It's a beautiful day!</h2>
         </div>
         <div id="body">
             <ul id="top-menu">
-                <li><a href="foodEntry.php">Food Entry</a></li>
-                <li><a href="profile.php">My Profile</a></li>
-                <li class="last"><a href="foodLog.php">My Food Log</a></li>
+                <li><a href="<?php echo HOST . 'index.php?food=list_food' ?>">Food Entry</a></li>
+                <li><a href="<?php echo HOST . 'index.php?user=profile' ?>">My Profile</a></li>
+                <li><a href="<?php echo HOST . 'index.php?user=today' ?>">Daily Log</a></li>
+                <li><a href="<?php echo HOST . 'index.php?user=log' ?>">New Log Entry</a></li>
+                <li class="last"><a href="<?php echo HOST . 'index.php?user=calendar' ?>">My Food Log</a></li>
             </ul>
 
 

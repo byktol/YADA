@@ -1,10 +1,10 @@
-<?php include_once('includes/header.php'); ?>
+<?php include_once HEADER; ?>
 <script type="text/javascript">
     $(function(){
         $('#log_date').datepicker({date_format:'yyyy-mm-dd'});
     });
 </script>
-<form action="<?php echo HOST . 'foodHandler.php'; ?>" name="frmLogEntry" id="frmLogEntry" method="post">
+<form action="<?php echo HOST . 'foodHandler.php'; ?>" id="frmLogEntry" method="post">
     <table class="datatable">
         <tr><th colspan="2">Please provide the foods for your entry below:</th></tr>
         <tr><td>Date</td><td><input type="text" name="log_date" id="log_date"/></td></tr>
@@ -29,4 +29,4 @@
         </tr>
     </table>
 </form>
-<?php include_once('includes/footer.php'); ?>
+<?php include_once FOOTER; ?>

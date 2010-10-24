@@ -1,4 +1,4 @@
-<?php include_once('includes/header.php'); ?>
+<?php include_once HEADER; ?>
 <script type="text/javascript">
     $(function(){
         $('#daily_log').tablesorter();
@@ -16,4 +16,4 @@
     <tr><td>6.</td><td>2010-10-06</td><td>Zheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
     <tr><td>7.</td><td>2010-10-07</td><td>Rheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
 </table>
-<?php include_once('includes/footer.php'); ?>
+<?php include_once FOOTER; ?>

@@ -6,6 +6,7 @@ require_once 'Food.php';
 require_once 'NutritionFact.php';
 require_once 'BasicFood.php';
 require_once 'CompositeFood.php';
+require_once 'JsonBuilder.php';
 
 
 // Holds all the foods from our database
@@ -32,7 +33,7 @@ class FoodData
 		$this->foods = $foods;
 	}
 	
-	// Adds the given food to the collection
+	// Adds the given food to the collection. Note changes are not made to the file until save is called.
 	public function addFood($food)
 	{
 		array_push($this->foods, $food);
@@ -66,6 +67,20 @@ class FoodData
 		}
 	}
 	
+	// Saves the food database as a json format file with the given name
+	public function save($filename)
+	{
+		$builder = new JsonBuilder($this->getFoods());
+	  	$builder->buildBasicFood();
+	  	$builder->buildCompositeFood();
+	  	$builder->getResult();
+	  	$f = fopen('test_json.json', 'w');
+	  	fwrite($f, $builder->getResult());
+	  	fflush($f);
+	  	fclose($f);
+	}
+	
+	// Returns a fooddata object populated with the foods from the given file
 	public static function getPopulatedFoodData($filename)
 	{
 		$foodData = new FoodData();
@@ -91,7 +106,8 @@ class FoodData
 		return $foodData;
 	}
 	
-	public static function createFood($foodDat, $foodData)
+	// Creates a food from a json outputted array
+	private static function createFood($foodDat, $foodData)
 	{
 		// If the food is a composite food
 		if(!empty($foodData['Children']))
@@ -103,10 +119,12 @@ class FoodData
 			// Loop through the children and add them to this composite
 			for($i=0;$i<count($foodData['Children']);$i++)
 			{
-				// Recurse
+				// Find the food with the child's id. We will grab a reference to the food and store it
 				$foodRef = FoodData::findFood($foodDat, $foodData['Children'][$i]);
+				// If we found the food with the given id, store it
 				if($foodRef != null)
 					array_push($foodArr, $foodRef);
+				// Otherwise, push an undefined food
 				else
 					array_push($foodArr, BasicFood::$Undefined);
 			}
@@ -115,6 +133,7 @@ class FoodData
 		}
 		else
 		{
+			// Create a new basic food
 			$b = new BasicFood($foodData['Name']);
 			$b->setId($foodData['Id']);
 			$b->setEnabled($foodData['Enabled']);
@@ -130,7 +149,8 @@ class FoodData
 		}
 	}
 	
-	public static function findFood($foodData, $id)
+	// Finds the food with the given id and returns a reference to it
+	private static function findFood($foodData, $id)
 	{
 		$foods = $foodData->getFoods();
 		for($i=0;$i<count($foods);$i++)
@@ -145,7 +165,8 @@ class FoodData
 	}
 }
 
-if($DEBUG)
+// Simple debug script that reads 'test_json.json', parses it and outputs some debug text
+if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'fooddata.php') === false))
 {
 	$fData = FoodData::getPopulatedFoodData('test_json.json');
 	$foods = $fData->getFoods();

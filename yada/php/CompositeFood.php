@@ -87,6 +87,7 @@ if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'compositefood.php') 
 	  $f = fopen('test_json.json', 'w');
 	  fwrite($f, $builder->getResult());
 	  fflush($f);
+	  fclose($f);
 	}
 	
 	require_once('BasicFood.php');

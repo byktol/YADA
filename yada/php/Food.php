@@ -60,7 +60,7 @@ abstract class Food
 	public function getNutritionFacts($countDisabled)
 	{
 		// If the food is disabled and we don't want to count disabled foods
-		if(!$this->enabled && !$countDisabled)
+		if(!$this->getEnabled() && !$countDisabled)
 			return array();
 		return $this->facts;
 	}
@@ -78,9 +78,10 @@ abstract class Food
 		{
 			if($facts[$i]->getName() == $name)
 			{
-				return $facts[$i]->getValue();
+				return $facts[$i]->getValue() != 0 ? $facts[$i]->getValue() : 0;
 			}
 		}
+		return 0;
 	}
 	
 	public abstract function hasChildren();

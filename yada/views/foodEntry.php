@@ -1,8 +1,18 @@
 <?php include_once HEADER; ?>
 <script type="text/javascript">
     $(function(){
-        $('#tabs').tabs();
-        $('#bfood_list').tablesorter();
+        //$('#tabs').tabs();
+        //$('#bfood_list').tablesorter();
+    });
+    $(document).ready(function(){
+        $('.addBasicButton').click(function(){
+    		$('.addBasicForm').toggle('slow');
+    		$('.addBasicPlus').text($('.addBasicPlus').text() == '+' ? '-' : '+');
+        });
+        $('.addCompositeButton').click(function(){
+    		$('.addCompositeForm').toggle('slow');
+    		$('.addCompositePlus').text($('.addCompositePlus').text() == '+' ? '-' : '+');
+        });
     });
 </script>
 <div id="tabs">
@@ -10,52 +20,76 @@
         <li><a href="#b_food">Basic Food</a></li>
         <li><a href="#c_food">Composite</a></li>
     </ul>
+    <br>
+    <h2>Basic Foods</h2>
     <div id="b_food" style="width: 80%;">
         <table id="bfood_list" class="datatable tablesorter" width="70%">
             <thead>
                 <tr><th>S.N.</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th>Actions</th></tr>
             </thead>
-            <tr><td>1.</td><td>Cheese</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-            <tr><td>2.</td><td>Dheese</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-            <tr><td>3.</td><td>Eheese</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-            <tr><td>4.</td><td>Pheese</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-            <tr><td>5.</td><td>Hheese</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-            <tr><td>6.</td><td>Zheese</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-            <tr><td>7.</td><td>Rheese</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
+            <?php 
+            	// Iterate through the foods
+            	$foods = $this->getFoodData()->getBasicFoods();
+            	for($i=0;$i<count($foods);$i++)
+            	{
+            		$food = $foods[$i];
+            		if($food->getEnabled())
+            		{
+            ?>
+            <tr><td><?php echo ($i+1); ?>.</td><td><?php echo $food->getName(); ?></td><td>//TODO: put keywords here</td><td><?php echo $food->getNutritionFact('calories', false); ?></td><td align="center"><a href="#" class="icon-edit"></a><a href="<?php echo $this->getDisableUri($food->getId()); ?>" class="icon-delete"></a></td></tr>
+            <?php
+            		}
+            	} 
+            ?>
         </table>
-        <div><a href="#" class="ui-corner-all link-btn">(+) Add New Basic Food</a></div>
-        <table class="datatable">
-            <tr><th colspan="2" align="left">:: Please specify the info below to add a new food</th></tr>
-            <tr>
-                <td width="15%">Name:</td>
-                <td><input type="text" name="food_name" id="food_name" size="40"/></td>
-            </tr>
-            <tr>
-                <td>Keyword:</td>
-                <td><input type="text" name="keywords" id="keywords" size="60"/><span class="tips"> (Please use comma to separate the keywords (E.g. potato, tomato)</span></td>
-            </tr>
-            <tr>
-                <td>Calories:</td>
-                <td><input type="text" name="calories" id="calories" size="5"/></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" id="btnFoodEntry" name="foodEntry" value="Add Food"/></td>
-            </tr>            
-        </table>
+        <div class="addBasicButton"><span class="ui-corner-all link-btn">(<span class="addBasicPlus">+</span>) Add New Basic Food</span></div>
+        <form action="" method="post">
+	        <table class="datatable addBasicForm" style="display:none">
+	            <tr><th colspan="2" align="left">:: Please specify the info below to add a new food</th></tr>
+	            <tr>
+	                <td width="15%">Name:</td>
+	                <td><input type="text" name="foodName" id="foodName" size="40"/></td>
+	            </tr>
+	            <tr>
+	                <td>Keyword:</td>
+	                <td><input type="text" name="keywords" id="keywords" size="60"/><span class="tips"> (Please use comma to separate the keywords (E.g. potato, tomato)</span></td>
+	            </tr>
+	            <tr>
+	                <td>Calories:</td>
+	                <td><input type="text" name="calories" id="calories" size="5"/></td>
+	            </tr>
+	            <tr>
+	                <td></td>
+	                <td><input type="submit" id="btnFoodEntry" name="foodEntry" value="Add Food"/></td>
+	            </tr> 
+	            <input type="hidden" name="addBasic" value="true">          
+	        </table>
+        </form>
     </div>
+    <br><br>
+    <h2>Composite Foods</h2>
     <div id="c_food" >
         <table id="cfood_list" class="datatable tablesorter" width="70%">
             <thead>
                 <tr><th>S.N.</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th>Actions</th></tr>
             </thead>
-            <tr><td>1.</td><td>Burger</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-            <tr><td>2.</td><td>Sandwich</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-            <tr><td>3.</td><td>Pizza</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-            <tr><td>4.</td><td>Cheese-Macaroni</td><td>yak cheese, powered cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>            
+            <?php 
+            	// Iterate through the foods
+            	$foods = $this->getFoodData()->getCompositeFoods();
+            	for($i=0;$i<count($foods);$i++)
+            	{
+            		$food = $foods[$i];
+            		if($food->getEnabled())
+            		{
+            ?>
+            <tr><td><?php echo ($i+1); ?>.</td><td><?php echo $food->getName(); ?></td><td>TODO: put keywords here</td><td><?php echo $food->getNutritionFact('calories', false); ?></td><td align="center"><a href="#" class="icon-edit"></a><a href="<?php echo $this->getDisableUri($food->getId()); ?>" class="icon-delete"></a></td></tr>
+            <?php
+            		} 
+            	}
+            ?>         
         </table>
-        <div><a href="#" class="ui-corner-all link-btn">(+) Add New Composite Food</a></div>
-        <table class="datatable">
+        <div class="addCompositeButton"><span class="ui-corner-all link-btn">(<span class="addCompositePlus">+</span>) Add New Composite Food</span></div>
+        <table class="datatable addCompositeForm" style="display:none">
             <tr id="composite">
                 <td>Select Basic Foods</td>
                 <td><select name="basic_foods" id="basic_foods">
@@ -81,4 +115,6 @@
         </table>
     </div>
 </div>
+<br>
+<br>
 <?php include_once FOOTER; ?>

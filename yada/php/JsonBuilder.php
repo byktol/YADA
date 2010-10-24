@@ -36,7 +36,7 @@ class JsonBuilder implements Builder {
     $text  = "{\r\n";
     $text .= "  \"Name\": \"". $food->getName(). "\",\r\n";
     $text .= "  \"Id\": \"". $food->getId() . "\",\r\n";
-    $text .= "  \"Enabled\": \"". $food->getEnabled() . "\",\r\n";
+    $text .= "  \"Enabled\": \"". ($food->getEnabled()?1:0) . "\",\r\n";
     $text .= "  \"NutritionFacts\":\r\n";
     $text .= "  [\r\n";
     $text .= $this->buildNutritionFactsFor($food);
@@ -98,7 +98,7 @@ class JsonBuilder implements Builder {
     $text  = "{\r\n";
     $text .= "  \"Name\": \"" . $food->getName() . "\",\r\n";
     $text .= "  \"Id\": \"". $food->getId() . "\",\r\n";
-    $text .= "  \"Enabled\": \"". $food->getEnabled() . "\",\r\n";
+    $text .= "  \"Enabled\": \"". ($food->getEnabled()?1:0) . "\",\r\n";
     $text .= "  \"Children\":\r\n";
     $text .= "  [\r\n";
     $text .= $this->compositeBuild($food->getChildren());

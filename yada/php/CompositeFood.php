@@ -38,6 +38,9 @@ class CompositeFood extends Food
 	// Gets the nutrition facts for this food
 	public function getNutritionFacts($countDisabled)
 	{
+		// If the food is disabled and we don't want to count disabled foods
+		if(!$this->getEnabled() && !$countDisabled)
+			return array();
 		$children = $this->getChildren();
 		$totalNutritionFacts = array();
 		$ret = array();

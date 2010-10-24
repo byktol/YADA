@@ -1,18 +1,12 @@
 <?php
-require_once('config.php');
 
-class CalorieCalculator {
+abstract class CalorieCalculator {
 
-    private $stategy;
-
-    public function CalorieCalculator(CalorieCalculationStrategy $strategy) {
-        $this->stategy = $strategy;
+    public function calculateNutritionFact(User $user) {
+        return $this->doCalculateBMR($user) * $user->getActivityLevel();
     }
 
-    public function getCalories(CalorieMetrics $calMetrics) {
-        $this->stategy->calculateCalories($calMetrics);
-    }
-
+    abstract protected function doCalculateBMR(User $user);
 }
 
 ?>

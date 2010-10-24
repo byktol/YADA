@@ -1,14 +1,14 @@
 <?php
-require_once('config.php');
+require_once("config.php");
 
-require_once('Builder.php');
-require_once('BasicFood.php');
-require_once('CompositeFood.php');
-require_once('NutritionFact.php');
+require_once("Builder.php");
+require_once("BasicFood.php");
+require_once("CompositeFood.php");
+require_once("NutritionFact.php");
 
 class JsonBuilder implements Builder {
 
-  private $text = '';
+  private $text = "";
   private $arrayOfFood;
 
   public function __construct($arrayOfFood) {
@@ -34,9 +34,10 @@ class JsonBuilder implements Builder {
     }//endif
 
     $text  = "{\r\n";
-    $text .= "  'Name': '". $food->getName(). "',\r\n";
-    $text .= "  'Id': '". $food->getId() . "',\r\n";
-    $text .= "  'NutritionFacts':\r\n";
+    $text .= "  \"Name\": \"". $food->getName(). "\",\r\n";
+    $text .= "  \"Id\": \"". $food->getId() . "\",\r\n";
+    $text .= "  \"Enabled\": \"". $food->getEnabled() . "\",\r\n";
+    $text .= "  \"NutritionFacts\":\r\n";
     $text .= "  [\r\n";
     $text .= $this->buildNutritionFactsFor($food);
     $text .= "  ]\r\n";
@@ -45,7 +46,7 @@ class JsonBuilder implements Builder {
   }
 
   protected function buildNutritionFactsFor($food) {
-    $text = '';
+    $text = "";
 
     $arrayOfFacts = $food->getNutritionFacts(true);
     $count = count($arrayOfFacts);
@@ -62,8 +63,8 @@ class JsonBuilder implements Builder {
 
   protected function buildNutritionFact($fact) {
     $text  = "  {\r\n";
-    $text .= "    'Name': '". $fact->getName() . "',\r\n";
-    $text .= "    'Quantity': " . $fact->getValue() . "\r\n";
+    $text .= "    \"Name\": \"". $fact->getName() . "\",\r\n";
+    $text .= "    \"Quantity\": \"" . $fact->getValue() . "\"\r\n";
     $text .= "  }\r\n";
     return $text;
   }
@@ -87,7 +88,7 @@ class JsonBuilder implements Builder {
       return;
     }//endif
 
-    // This is what happens when this method's parameter is an array.
+    // This is what happens when this method"s parameter is an array.
     if (is_array($food)) {
 
       return $this->compositeBuild($food);
@@ -95,8 +96,10 @@ class JsonBuilder implements Builder {
 
     // This is normal operation.
     $text  = "{\r\n";
-    $text .= "  Name: '" . $food->getName() . "',\r\n";
-    $text .= "  Children:\r\n";
+    $text .= "  \"Name\": \"" . $food->getName() . "\",\r\n";
+    $text .= "  \"Id\": \"". $food->getId() . "\",\r\n";
+    $text .= "  \"Enabled\": \"". $food->getEnabled() . "\",\r\n";
+    $text .= "  \"Children\":\r\n";
     $text .= "  [\r\n";
     $text .= $this->compositeBuild($food->getChildren());
     $text .= "  ]\r\n";
@@ -105,11 +108,11 @@ class JsonBuilder implements Builder {
   }
 
   protected function compositeBuild($array) {
-    $text = '';
+    $text = "";
     $count = count($array);
     for( $i = 0; $i < $count; $i++ ) {
       $food = $array[$i];
-      $text .= "    " . $food->getId() . "\r\n";
+      $text .= "    \"" . $food->getId() . "\"\r\n";
 
       if ($i < $count-1) {
         $text .= ",\r\n";
@@ -120,7 +123,7 @@ class JsonBuilder implements Builder {
   }
 
   public function getResult() {
-    return $this->text;
+    return "[\r\n" . $this->text . "]";
   }
 }
 ?>

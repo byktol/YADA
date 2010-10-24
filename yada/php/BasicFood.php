@@ -6,6 +6,8 @@ require_once 'Food.php';
 // TODO
 class BasicFood extends Food
 {
+	public static $Undefined = null;
+
 	// Constructs a new instance of the BasicFood class
 	function __construct($name)
 	{

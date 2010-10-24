@@ -13,7 +13,7 @@ abstract class Food
 	// The id of the food
 	private $id;
 	// Keywords for this food
-	private $keywords;
+	private $keywords = null;
 
 	// Constructs a new instance of the Food class
 	function __construct($name)
@@ -98,7 +98,7 @@ abstract class Food
 	
 	public function setNutritionFact($name, $value)
 	{
-		$facts = $this->getNutritionFacts($countDisabled);
+		$facts = $this->getNutritionFacts(true);
 		for($i=0;$i<count($facts);$i++)
 		{
 			if($facts[$i]->getName() == $name)

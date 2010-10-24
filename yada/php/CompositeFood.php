@@ -77,12 +77,11 @@ class CompositeFood extends Food
 }
 
 // Only run this debug script if we actually requested this page
-if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'compositefood.php') === false))
+if(DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'compositefood.php') === false))
 {
 	require_once 'JsonBuilder.php';
 
 	function test($arrFood) {
-	  echo "hello world";
 	  $builder = new JsonBuilder($arrFood);
 	  $builder->buildBasicFood();
 	  $builder->buildCompositeFood();

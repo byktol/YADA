@@ -197,7 +197,7 @@ class FoodData
 }
 
 // Simple debug script that reads 'test_json.json', parses it and outputs some debug text
-if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'fooddata.php') === false))
+if(DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'fooddata.php') === false))
 {
 	$fData = FoodData::getPopulatedFoodData('test_json.json');
 	$foods = $fData->getFoods();

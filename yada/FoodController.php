@@ -41,6 +41,10 @@ class FoodController {
   	{
   	  self::editBasic();
   	}
+    if(!empty($_POST['editComposite']))
+  	{
+  	  self::editComposite();
+  	}
     include ('views/foodEntry.php');
     self::getFoodData()->save('php/test_json.json');
   }
@@ -97,7 +101,21 @@ class FoodController {
       if($foods[$i]->getId() == $_POST['foodId'])
       {
         $foods[$i]->setName($_POST['foodName']);
+        $foods[$i]->setKeywords(explode(', ', $_POST['keywords']));
         $foods[$i]->setNutritionFact('calories', $_POST['calories']);
+      }
+    }
+  }
+  
+  private static function editComposite()
+  {
+    $foods = &self::getFoodData()->getFoods();
+    for($i=0;$i<count($foods);$i++)
+    {
+      if($foods[$i]->getId() == $_POST['foodId'])
+      {
+        $foods[$i]->setName($_POST['foodName']);
+        $foods[$i]->setKeywords(explode(', ', $_POST['keywords']));
       }
     }
   }

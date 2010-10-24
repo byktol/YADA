@@ -42,11 +42,11 @@ include_once HEADER;
     </tr>
     <tr>
         <td>Height:</td>
-        <td><input type="text" name="height" id="height" size="10" value="<?php echo $user->getCalorieMetrics()->getHeight() ?>" /><span class="tips"> (Please specify in cm (E.g. 185cm)</span></td>
+        <td><input type="text" name="height" id="height" size="10" value="<?php echo $user->getHeight() ?>" /><span class="tips"> (Please specify in cm (E.g. 185cm)</span></td>
     </tr>
     <tr>
         <td>Weight:</td>
-        <td><input type="text" name="weight" id="weight" size="10" value="<?php echo $user->getCalorieMetrics()->getWeight() ?>"/><span class="tips"> (Please specify in kg (E.g. 75kg)</span></td>
+        <td><input type="text" name="weight" id="weight" size="10" value="<?php echo $user->getWeight() ?>"/><span class="tips"> (Please specify in kg (E.g. 75kg)</span></td>
     </tr>
     <tr>
         <td>Activity Level:</td>

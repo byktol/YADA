@@ -26,6 +26,32 @@ class FoodData
 		return $this->foods;
 	}
 	
+	// Returns all the basic foods in this food data
+	public function getBasicFoods()
+	{
+		$retArr = array();
+		$foods = $this->getFoods();
+		for($i=0;$i<count($foods);$i++)
+		{
+			if(!$foods[$i]->hasChildren())
+				array_push($retArr, $foods[$i]);
+		}
+		return $retArr;
+	}
+	
+	// Returns all the composite foods in this food data
+	public function getCompositeFoods()
+	{
+		$retArr = array();
+		$foods = $this->getFoods();
+		for($i=0;$i<count($foods);$i++)
+		{
+			if($foods[$i]->hasChildren())
+				array_push($retArr, $foods[$i]);
+		}
+		return $retArr;
+	}
+	
 	// Sets the collection of foods
 	public function setFoods($foods)
 	{
@@ -73,7 +99,7 @@ class FoodData
 	  	$builder->buildBasicFood();
 	  	$builder->buildCompositeFood();
 	  	$builder->getResult();
-	  	$f = fopen('test_json.json', 'w');
+	  	$f = fopen($filename, 'w');
 	  	fwrite($f, $builder->getResult());
 	  	fflush($f);
 	  	fclose($f);
@@ -83,7 +109,7 @@ class FoodData
 	public static function getPopulatedFoodData($filename)
 	{
 		$foodData = new FoodData();
-		$fileContents = file_get_contents($filename);
+		$fileContents = file_get_contents($filename, true);
 		if(empty($fileContents) || $fileContents === false)
 		{
 			echo "Could not read $filename<br>";
@@ -160,24 +186,32 @@ class FoodData
 		}
 		return null;
 	}
+	
+	public function createMemento() {
 
- public function createMemento() {
-         
-         }
+	}
 
-  public function setMemento($memento) {
-
-  }
+	public function setMemento($memento) {
+    
+	}
 }
 
 // Simple debug script that reads 'test_json.json', parses it and outputs some debug text
-//if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'fooddata.php') === false))
-//{
-//	$fData = FoodData::getPopulatedFoodData('test_json.json');
-//	$foods = $fData->getFoods();
-//	for($i=0;$i<count($foods);$i++)
-//	{
-//		echo $foods[$i]->toString() . '<br>';
-//	}
-//}
+if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'fooddata.php') === false))
+{
+	$fData = FoodData::getPopulatedFoodData('test_json.json');
+	$foods = $fData->getFoods();
+	for($i=0;$i<count($foods);$i++)
+	{
+		echo $foods[$i]->toString() . '<br>';
+	}
+
+  public function createMemento() {
+
+  }
+
+  public function setMemento($memento) {
+    
+  }
+}
 ?>

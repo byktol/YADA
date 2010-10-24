@@ -1,23 +1,88 @@
 <?php
+require_once 'php/config.php';
+
+require_once 'FoodData.php';
 
 /**
  * Description of FoodController
  */
 class FoodController {
   protected static $instance;
+  
+  private static $foodData = null;
 
   private function __construct() { }
 
   public static function getInstance() {
     if ( !isset(self::$instance) ) {
       self::$instance = new FoodController();
+      if(!empty($_SESSION['FOOD_DATA']))
+        self::$foodData = $_SESSION['FOOD_DATA'];
     }
     return self::$instance;
   }
 
   public function list_food() {
+    if(!empty($_GET['reset']))
+  	{
+  	  self::resetSession();
+  	}
+    if(self::getFoodData() == null)
+      self::populateFoodData();
+  	if(!empty($_GET['disable']))
+  	{
+  	  self::disableFood($_GET['disable']);
+  	}
+  	if(!empty($_POST['addBasic']))
+  	{
+  	  self::addBasic();
+  	}
     include ('views/foodEntry.php');
+    self::getFoodData()->save('php/test_json.json');
   }
-
+  
+  public function populateFoodData()
+  {
+    self::$foodData = FoodData::getPopulatedFoodData('test_json.json');
+    $_SESSION['FOOD_DATA'] = self::$foodData;
+  }
+  
+  public static function getFoodData()
+  {
+  	return self::$foodData;
+  }
+  
+  public function getDisableUri($id)
+  {
+  	return 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'].'?food=list_food&disable='.$id;
+  }
+  
+  private static function disableFood($id)
+  {
+    $foods = &self::getFoodData()->getFoods();
+    for($i=0;$i<count($foods);$i++)
+    {
+      if($foods[$i]->getId() == $_GET['disable'])
+      {
+        $foods[$i]->setEnabled(false);
+      }
+    }
+  }
+  
+  private static function resetSession()
+  {
+    self::$foodData = null;
+  	$_SESSION['FOOD_DATA'] = null;
+  }
+  
+  private static function addBasic()
+  {
+  	$foodData = &self::getFoodData();
+  	$b = new BasicFood($_POST['foodName']);
+  	$b->createUniqueId();
+  	$nutFacts = array(new NutritionFact('calories', $_POST['calories']));
+  	$b->setNutritionFacts($nutFacts);
+  	$foodData->addFood($b);
+  }
 }
 ?>

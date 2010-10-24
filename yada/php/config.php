@@ -1,8 +1,9 @@
 <?php
-$DEBUG = true;
-$INCLUDE_PATH = getcwd();
+define('$DEBUG', true);
+$INCLUDE_PATH = dirname(dirname(__FILE__));
+$INCLUDE_PATH_2 = dirname(__FILE__);
 
-set_include_path(get_include_path() . PATH_SEPARATOR . $INCLUDE_PATH);
+set_include_path(get_include_path() . PATH_SEPARATOR . $INCLUDE_PATH . PATH_SEPARATOR . $INCLUDE_PATH_2);
 
 if($DEBUG)
 {

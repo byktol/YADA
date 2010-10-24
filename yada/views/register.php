@@ -17,7 +17,7 @@
         <tr>
             <td></td>
             <td>
-                <input type="submit" id="btnRegister" name="btnRegister" value="Save Profile"/>
+                <input type="submit" id="btnRegister" name="btnRegister" value="Register!"/>
                 <input type="reset" id="btnReset" name="btnReset" value="Reset"/>
             </td>
         </tr>

@@ -27,8 +27,12 @@ include_once HEADER;
 <table class="datatable">
     <tr><th colspan="2" align="left">:: Please specify the info below to save your profile</th></tr>
     <tr>
-        <td>Name:</td>
-        <td><input type="text" name="name" id="name" size="40"/></td>
+        <td>Firstname:</td>
+        <td><input type="text" name="name" id="firstname" size="40" value="<?php echo $user->getFirstname() ?>" /></td>
+    </tr>
+    <tr>
+        <td>Lastname:</td>
+        <td><input type="text" name="name" id="lastname" size="40" value="<?php echo $user->getLastname() ?>" /></td>
     </tr>
     <tr><td style="width: 25%">Gender</td>
         <td>
@@ -38,11 +42,11 @@ include_once HEADER;
     </tr>
     <tr>
         <td>Height:</td>
-        <td><input type="text" name="height" id="height" size="10"/><span class="tips"> (Please specify in cm (E.g. 185cm)</span></td>
+        <td><input type="text" name="height" id="height" size="10" value="<?php echo $user->getCalorieMetrics()->getHeight() ?>" /><span class="tips"> (Please specify in cm (E.g. 185cm)</span></td>
     </tr>
     <tr>
         <td>Weight:</td>
-        <td><input type="text" name="weight" id="weight" size="10"/><span class="tips"> (Please specify in kg (E.g. 75kg)</span></td>
+        <td><input type="text" name="weight" id="weight" size="10" value="<?php echo $user->getCalorieMetrics()->getWeight() ?>"/><span class="tips"> (Please specify in kg (E.g. 75kg)</span></td>
     </tr>
     <tr>
         <td>Activity Level:</td>

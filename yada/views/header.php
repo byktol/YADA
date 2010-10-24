@@ -8,10 +8,10 @@
         <script type="text/javascript" src="<?php echo JQUERY; ?>"></script>
     </head>
     <body>
-        <div id="header">            
+        <div id="header">
             <h2>Welcome to your diet assistant! It's a beautiful day!</h2>
             <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
-            Hello, <strong><?php echo SessionManager::getInstance()->getUser()->getName() ?></strong>
+            Hello, <strong><?php echo SessionManager::getInstance()->getUser()->getUsername() ?></strong>
             <?php endif ?>
         </div>
         <div id="body">
@@ -20,7 +20,8 @@
                 <li><a href="<?php echo HOST . 'index.php?user=profile' ?>">My Profile</a></li>
                 <li><a href="<?php echo HOST . 'index.php?user=today' ?>">Daily Log</a></li>
                 <li><a href="<?php echo HOST . 'index.php?user=log' ?>">New Log Entry</a></li>
-                <li class="last"><a href="<?php echo HOST . 'index.php?user=calendar' ?>">My Food Log</a></li>
+                <li><a href="<?php echo HOST . 'index.php?user=calendar' ?>">My Food Log</a></li>
+                <li class="last"><a href="<?php echo HOST . 'index.php?user=logout' ?>">Logout</a></li>
             </ul>
           <?php if (SessionManager::getInstance()->errorCount() > 0) : ?>
             <div class="error">

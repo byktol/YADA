@@ -6,11 +6,6 @@ require_once(BASE . 'controller_funcs.php');
 $task = $_POST['task'];
 
 switch ($task) {
-    case 'register':
-        // TODO: check for unique username
-        
-
-        break;
 
     case 'login':
         $username = $_POST['user_name'];

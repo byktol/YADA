@@ -18,18 +18,25 @@ class UserController {
   }
 
   public function login() {
+    $username = '';
     if ($_POST) {
       $username = $_POST['username'];
 
       if ($username != '' && $this->userExists($username)) {
 
-        header( 'Location: /YADA/yada/index.php?user=welcome' );
-      }
-      include 'views/login.php';
+        $udao = new UserDAO();
+        $user = $udao->getUser($username);
+        SessionManager::getInstance()->setUser($user);
+        Utils::getInstance()->redirect('index.php?user=profile');
+        return;
 
-    } else {
-      include 'views/login.php';
+      } else {
+
+        SessionManager::getInstance()->error("Dude, you're doing it wrong!");
+      }
+
     }
+    include 'views/login.php';
   }
 
   public function register() {
@@ -50,8 +57,13 @@ class UserController {
 
         // Registers a new user.
         $userDir = DATA . $username . '/';
-//        $success = mkdir($userDir, 0777);
+        $success = mkdir($userDir, 0777);
         if (true || $success) {
+          $user = new User();
+          $user->setUsername($username);
+
+          $udao = new UserDAO();
+          $udao->save($user);
 //          $f = fopen($userDir . 'profile.json', 'w');
 //          fclose($f);
 //          $f = fopen($userDir . 'foods.json', 'w');
@@ -59,14 +71,11 @@ class UserController {
 //          $f = fopen($userDir . 'log.json', 'w');
 //          fclose($f);
 
-          $user = new User();
-          $user->setName($username);
 
           SessionManager::getInstance()->setUser($user);
-          SessionManager::getInstance()->info('Yay');
+          SessionManager::getInstance()->info('Welcome to YADA, ' . $user->getUsername());
 
-          echo (int) SessionManager::getInstance()->isLoggedIn();
-//          Utils::getInstance()->redirect('index.php?user=profile');
+          Utils::getInstance()->redirect('index.php?user=profile');
           return;
 
         } else {
@@ -79,6 +88,11 @@ class UserController {
   }
 
   public function profile() {
+    $user = SessionManager::getInstance()->getUser();
+    if ($_POST) {
+      $udao = new UserDAO();
+//      $udao->save($user);
+    }
     include 'views/profile.php';
   }
 

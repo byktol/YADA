@@ -1,7 +1,6 @@
 <?php
 require_once 'config.php';
 
-//require_once 'FoodReader.php'; // TODO: whatever file will be reading foods
 require_once 'Food.php';
 require_once 'NutritionFact.php';
 require_once 'BasicFood.php';
@@ -90,14 +89,12 @@ class FoodData
 			echo "Could not read $filename<br>";
 			return null;
 		}
-		echo $fileContents . '<br><br>';
 		$data = json_decode($fileContents, true);
 		if($data == null)
 		{
 			echo "Could not parse JSON<br>";
 			return null;
 		}
-		print_r($data);
 		for($i=0;$i<count($data);$i++)
 		{
 			$f = FoodData::createFood($foodData, $data[$i]);

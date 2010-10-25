@@ -140,9 +140,44 @@ class UserController {
         }
     }
 
-    public function log() {
-        include 'views/logEntry.php';
-    }
+  public function log() {
+   if(SessionManager::getInstance()->getFoodData() == null)
+   	FoodController::populateFoodData();
+   if(!empty($_POST['addLogEntry']))
+   {
+   self::addLogEntry();
+   }
+    include 'views/logEntry.php';
+  }
+  
+  public static function addLogEntry()
+  {
+	$l = new Log();
+    if(!empty($_POST['logDate']))
+    	$l->setDate($_POST['logDate']);
+    else
+      	$l->setDate(date('Y-m-d'));
+    $arrConsumptions = array();
+    $maxIndex = (int) $_POST['maxIndex'];
+    $foodData = SessionManager::getInstance()->getFoodData();
+    for ($i = 0; $i < $maxIndex; $i++) {
+            if (!empty($_POST['id' . ($i + 1)])) {
+                $f = FoodData::findFood($foodData, $_POST['id' . ($i + 1)]);
+                if ($f != null) {
+                    if (!empty($_POST['servings' . ($i + 1)])) {
+                    	$consum = new Consumption();
+                    	$consum->setFood($f);
+                    	$consum->setQuantity($_POST['servings' . ($i + 1)]);
+                    	array_push($arrConsumptions, $consum);
+                    }
+                }
+            }
+        }
+       $l->setConsumption($arrConsumptions);
+       //print_r($l);
+       $dao = new UserDAO();
+       $dao->saveLog(SessionManager::getInstance()->getUser()->getUsername(), $l);
+  }
 
     public function saveLog() {
         // TODO: save

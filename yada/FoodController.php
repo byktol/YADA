@@ -142,14 +142,12 @@ class FoodController {
                             array_push($childs, $f);
                         }
                     }
-                    $c->setChildren($childs);
-                    self::getFoodData()->addFood($c);
                 }
-                $c->setChildren($childs);
-                self::getFoodData()->addFood($c);
-                self::$tab = true;
             }
         }
+        $c->setChildren($childs);
+        self::getFoodData()->addFood($c);
+        self::$tab = true;
     }
 
 }

@@ -15,10 +15,15 @@ class JSONDatabase implements TextDatabase {
     public function getData($filePath) {
         $file = file($filePath);
         $jsonData = '';
+        echo count($file).'<br>';
+        if(count($file)==0)
+        	return null;
         foreach ($file as $line) {
             $jsonData .= $line;
         }
         $arr = json_decode($jsonData, 1);
+        
+        print_r($arr);
 
         return $arr;
     }

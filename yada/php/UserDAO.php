@@ -69,6 +69,8 @@ class UserDAO {
 
     public function getLog($username) {
         $logPath = DATA . $username . '/log.json';
+        if(!is_file($logPath))
+        	return null;
         $db = JSONDatabase::getInstance();
 
         return $db->getData($logPath);
@@ -77,11 +79,21 @@ class UserDAO {
     public function saveLog($username, Log $log) {
         // first read the whole of the log
         $arrExsitingLog = $this->getLog($username);
-        $newLog = array_push($arrExsitingLog, $log->toArray());
+        print_r($arrExsitingLog);
+        if(!is_array($arrExsitingLog))
+        	$arrExsitingLog = $log->toArray();
+        else
+        	array_push($arrExsitingLog, $log->toArray());
 
         $db = JSONDatabase::getInstance();
 
-        return $db->saveData($filePath, $newLog);
+        $filepath = DATA.'/'.$username.'/log.json';
+        if(!is_file($filepath))
+        {
+        	$f = fopen($filepath, 'w');
+        	fclose($f);
+        }
+        return $db->saveData($filepath, $arrExsitingLog);
     }
 
     public function updateLog($username, Log $log) {

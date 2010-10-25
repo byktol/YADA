@@ -83,6 +83,7 @@ abstract class Food
 		$this->facts = $facts;
 	}
 	
+	// $countDisabled - true if we want to count the nutrition facts of disabled foods false if we want to ignore
 	public function getNutritionFact($name, $countDisabled)
 	{
 		$facts = $this->getNutritionFacts($countDisabled);

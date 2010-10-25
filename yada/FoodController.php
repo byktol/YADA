@@ -106,6 +106,7 @@ class FoodController {
   	$foodData = &self::getFoodData();
   	$b = new BasicFood($_POST['foodName']);
   	$b->createUniqueId();
+  	$b->setKeywords(explode(', ', $_POST['keywords']));
   	$nutFacts = array(new NutritionFact('calories', $_POST['calories']));
   	$b->setNutritionFacts($nutFacts);
   	$foodData->addFood($b);

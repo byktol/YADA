@@ -122,40 +122,16 @@ class UserController {
   }
 
   public function log() {
+  	if(!empty($_POST['addLogEntry']))
+  	{
+  	  self::addLogEntry();
+  	}
     include 'views/logEntry.php';
   }
-
-  public function memento() {
-    $arrayOfood = array(new BasicFood('pickle'));
-
-    $data = new FoodData();
-    $data->setFoods($arrayOfood);
-
-    $data->addFood(new BasicFood('tomato'));
-    $composite = new CompositeFood('picklemato');
-    $composite->setChildren(array(new BasicFood('tomato'), new BasicFood('pickle')));
-    FoodCareTaker::getInstance()->record($data->createMemento());
-    $data->addFood($composite);
-    FoodCareTaker::getInstance()->record($data->createMemento());
-
-    echo '<pre>FIRST';
-    print_r($data);
-    echo '<br />Undo 1: ';
-    echo FoodCareTaker::getInstance()->countUndo();
-    echo '<br />';
-    print_r(FoodCareTaker::getInstance()->undo());
-    echo '<br />Undo 2: ';
-    echo FoodCareTaker::getInstance()->countUndo();
-    echo '<br />';
-    print_r(FoodCareTaker::getInstance()->undo());
-    echo '<br />Redo<br />';
-    echo 'Count: ' . FoodCareTaker::getInstance()->countRedo();
-    print_r(FoodCareTaker::getInstance()->redo());
-    echo 'Count: ' . FoodCareTaker::getInstance()->countRedo();
-    print_r(FoodCareTaker::getInstance()->redo());
-    echo '<br />Forward<br />';
-    FoodCareTaker::getInstance()->record($data->createMemento());
-    FoodCareTaker::getInstance()->countRedo();
+  
+  public static function addLogEntry()
+  {
+    $l = new Log()
   }
 
   public function logout() {

@@ -25,7 +25,6 @@
                 <li><a href="<?php echo HOST . 'index.php?user=profile' ?>">My Profile</a></li>
                 <li><a href="<?php echo HOST . 'index.php?user=today' ?>">Daily Log</a></li>
                 <li><a href="<?php echo HOST . 'index.php?user=log' ?>">New Log Entry</a></li>
-                <li><a href="<?php echo HOST . 'index.php?user=calendar' ?>">My Food Log</a></li>
                 <li class="last"><a href="<?php echo HOST . 'index.php?user=logout' ?>">Logout</a></li>
             </ul>
             <?php endif ?>

@@ -14,7 +14,7 @@ class Log {
     }
 
     public function setDate($date='') {
-        $this->date = ($date == '') ? date('mm/dd/yyyy') : $date;
+        $this->date = ($date == '') ? date('yyyy-mm-dd') : $date;
     }
 
     public function setConsumption($consumption) {

@@ -1,7 +1,9 @@
 <?php
 
-define('DOMAIN', "http://" . $_SERVER['HTTP_HOST']);
-define('PATH', '/YADA/yada/');
+require_once 'php/config.php';
+
+define('DOMAIN', "http://" . $_SERVER['SERVER_NAME']);
+define('PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 define('PROJECT_CODE', 'YADA');
 define('PROJECT_NAME', 'Yet Another Diet Assistant');
 define('APPS_SALT', md5('c@$@8lanca'));    // casablanca
@@ -10,9 +12,10 @@ define('APPS_SALT', md5('c@$@8lanca'));    // casablanca
 define('DB_HOST', 'localhost');
 //define('DB_HOST', '192.168.0.9');
 
-define('HOST', DOMAIN . PATH);
-define('BASE', $_SERVER['DOCUMENT_ROOT'] . '/' . PATH);
+
+define('BASE', PATH);
 define('PHPSELF', $_SERVER['PHP_SELF']);
+define('HOST', DOMAIN . dirname(PHPSELF) . '/');
 
 define('CONFIG', BASE . '/config.php');
 define('HEADER', BASE . 'views/header.php');

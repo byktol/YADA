@@ -109,6 +109,10 @@ class FoodData
 	public static function getPopulatedFoodData($filename)
 	{
 		$foodData = new FoodData();
+		if(!file_exists($filename))
+		{
+			return $foodData;
+		}
 		$fileContents = file_get_contents($filename, true);
 		if(empty($fileContents) || $fileContents === false)
 		{

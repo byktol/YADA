@@ -21,8 +21,8 @@
 	}
 
     $(function(){
-        //$('#tabs').tabs();
-        //$('#bfood_list').tablesorter();
+        $('#tabs').tabs({"selected":<?php echo (FoodController::$tab?'1':'0'); ?>});
+        $('#bfood_list').tablesorter();
     });
     $(document).ready(function(){
         $('.addBasicButton').click(function(){
@@ -80,11 +80,11 @@
 <div id="tabs">
     <ul>
         <li><a href="#b_food">Basic Food</a></li>
-        <li><a href="#c_food">Composite</a></li>
+        <li><a href="#c_food">Composite Food</a></li>
     </ul>
-    <br>
-    <h2>Basic Foods</h2>
     <div id="b_food" style="width: 80%;">
+        <h2>Basic Foods&nbsp;&nbsp;&nbsp;&nbsp;<a href="?food=list_food&save=true" style="font-size:17pt;color:#999999">save</a></h2>
+        <br>
         <table id="bfood_list" class="datatable tablesorter" width="70%">
             <thead>
                 <tr><th>Entry</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th style="width:100px">Actions</th></tr>
@@ -93,14 +93,15 @@
             	// Iterate through the foods
             	$foods = self::getFoodData()->getBasicFoods();
             	$entry = 0;
-            	for($i=0;$i<count($foods);$i++)
+            	if(!empty($foods))
             	{
-            		$food = $foods[$i];
-            		if($food->getEnabled())
-            		{
+	            	for($i=0;$i<count($foods);$i++)
+	            	{
+	            		$food = $foods[$i];
+	            		if($food->getEnabled())
+	            		{
             ?>
-            <form action="" method="post">
-	            <tr><td>
+	            <tr><form action="?food=list_food" method="post"><td>
 	            	<?php echo ($entry+1); ?>.
 	            </td><td>
 	            	<input id="editBtn<?php echo $i; ?>NameInput" class="editting" type="text" name="foodName" value="<?php echo $food->getName(); ?>" style="display:none">
@@ -115,18 +116,25 @@
 	            <input id="editBtn<?php echo $i; ?>Submit" class="editting" type="submit" value="done" style="display:none;margin-right:10px">
 	            <span id="editBtn<?php echo $i; ?>" class="icon-edit editBtn span-btn non-edit" title="edit"></span>
 	            <a href="<?php echo $this->getDisableUri($food->getId()); ?>" class="icon-delete" title="delete"></a>
-	            </td></tr>
+	            </td>
 	            <input type="hidden" name="foodId" value="<?php echo $food->getId(); ?>">
 	            <input type="hidden" name="editBasic" value="true">
-            </form>
+	            </form></tr>
             <?php
-            			$entry++;
-            		}
+	            			$entry++;
+	            		}
+	            	} 
+            	}
+            	else
+            	{
+            ?>
+            	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+            <?php
             	} 
             ?>
         </table>
         <div><span class="ui-corner-all link-btn addBasicButton">(<span class="addBasicPlus">+</span>) Add New Basic Food</span></div>
-        <form action="" method="post">
+        <form action="?food=list_food" method="post">
 	        <table class="datatable addBasicForm" style="display:none">
 	            <tr><th colspan="2" align="left">:: Please specify the info below to add a new food</th></tr>
 	            <tr>
@@ -149,9 +157,9 @@
 	        </table>
         </form>
     </div>
-    <br><br>
-    <h2>Composite Foods</h2>
     <div id="c_food" >
+    	<h2>Composite Foods&nbsp;&nbsp;&nbsp;&nbsp;<a href="?food=list_food&save=true" style="font-size:17pt;color:#999999">save</a></h2>
+    	<br>
         <table id="cfood_list" class="datatable tablesorter" width="70%">
             <thead>
                 <tr><th>Entry</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th style="width:100px">Actions</th></tr>
@@ -160,13 +168,15 @@
             	// Iterate through the foods
             	$foods = self::getFoodData()->getCompositeFoods();
             	$entry = 0;
-            	for($i=0;$i<count($foods);$i++)
+            	if(!empty($foods))
             	{
-            		$food = $foods[$i];
-            		if($food->getEnabled())
-            		{
+	            	for($i=0;$i<count($foods);$i++)
+	            	{
+	            		$food = $foods[$i];
+	            		if($food->getEnabled())
+	            		{
             ?>
-            <form action="" method="post">
+            <form action="?food=list_food" method="post">
 	            <tr><td>
 	            	<?php echo ($entry+1); ?>.
 	            </td><td>
@@ -186,14 +196,21 @@
 	            <input type="hidden" name="editComposite" value="true">
             </form>
             <?php
-            			$entry++;
-            		} 
+	            			$entry++;
+	            		} 
+	            	}
             	}
-            ?>         
+            	else
+            	{
+            ?>
+            	<tr><td></td><td></td><td></td><td></td><td></td></tr>
+            <?php
+            	} 
+            ?>        
         </table>
         <div><span class="ui-corner-all link-btn addCompositeButton">(<span class="addCompositePlus">+</span>) Add New Composite Food</span></div>
         <div class="addCompositeForm" style="display:none">
-        	<form action="" method="post">
+        	<form action="?food=list_food" method="post">
 		        <table class="datatable" width="70%">
 		        	<tr><td>Name:</td><td colspan="2"><input type="text" name="foodName" id="foodNameC" size="40"></td></tr>
 		        	<tr><td>Keywords:</td><td colspan="2"><input type="text" name="keywords" id="keywordsC" size="60"/><span class="tips"> (Please use comma to separate the keywords (E.g. potato, tomato)</span></td></tr>
@@ -204,16 +221,19 @@
 				            <?php 
 				            	// Iterate through the foods
 				            	$foods = self::getFoodData()->getFoods();
-				            	for($i=0;$i<count($foods);$i++)
-				            	{
-				            		$food = $foods[$i];
-				            		if($food->getEnabled())
-				            		{
+				            	if(!empty($foods))
+            					{
+					            	for($i=0;$i<count($foods);$i++)
+					            	{
+					            		$food = $foods[$i];
+					            		if($food->getEnabled())
+					            		{
 				            ?>
 		                        <option <?php echo ($i==0?'selected="selected"':''); ?> value="<?php echo $food->getId(); ?>"><?php echo $food->getName(); ?></option>
 		                    <?php 
-				            		}
-				            	}
+					            		}
+					            	}
+            					}
 		                    ?>
 		                    </select>
 		                </td>

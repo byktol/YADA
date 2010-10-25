@@ -102,16 +102,6 @@ class FoodController {
   	self::$tab = false;
   }
 
-    private static function addBasic() {
-        $foodData = &self::getFoodData();
-        $b = new BasicFood($_POST['foodName']);
-        $b->createUniqueId();
-        $nutFacts = array(new NutritionFact('calories', $_POST['calories']));
-        $b->setNutritionFacts($nutFacts);
-        $foodData->addFood($b);
-        self::$tab = false;
-    }
-
     private static function editBasic() {
         $foods = &self::getFoodData()->getFoods();
         for ($i = 0; $i < count($foods); $i++) {

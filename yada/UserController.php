@@ -131,7 +131,7 @@ class UserController {
         if (isset($_GET['for']) && $_GET['for'] != '') {
             $date = $_GET['for'];
             $log = $userDao->getLogByDate($user->getUsername(), $date, $foodData);
-
+            
             include 'views/editLog.php';
         } else {
             $arrLogs = $userDao->getAllLog($user->getUsername(), $foodData);

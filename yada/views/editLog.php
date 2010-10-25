@@ -1,6 +1,7 @@
 <?php
 include_once HEADER;
 $sessMgr = SessionManager::getInstance();
+print_r($log);
 
 $arrConsumptions = $log->getConsumption();
 

@@ -61,7 +61,7 @@ class UserDAO {
             $user->setActivityLevel($data->activity_level);
         }
         if (isset($data->calculator_id)) {
-          $user->setCalculatorId($data->calculator_id);
+            $user->setCalculatorId($data->calculator_id);
         }
 
         return $user;
@@ -69,8 +69,8 @@ class UserDAO {
 
     public function getLog($username) {
         $logPath = DATA . $username . '/log.json';
-        if(!is_file($logPath))
-        	return null;
+        if (!is_file($logPath))
+            return null;
         $db = JSONDatabase::getInstance();
 
         return $db->getData($logPath);
@@ -79,18 +79,17 @@ class UserDAO {
     public function saveLog($username, Log $log) {
         // first read the whole of the log
         $arrExsitingLog = $this->getLog($username);
-        if(!is_array($arrExsitingLog))
-        	$arrExsitingLog = $log->toArray();
+        if (!is_array($arrExsitingLog))
+            $arrExsitingLog = $log->toArray();
         else
-        	array_push($arrExsitingLog, $log->toArray());
+            array_push($arrExsitingLog, $log->toArray());
 
         $db = JSONDatabase::getInstance();
 
-        $filepath = DATA.'/'.$username.'/log.json';
-        if(!is_file($filepath))
-        {
-        	$f = fopen($filepath, 'w');
-        	fclose($f);
+        $filepath = DATA . '/' . $username . '/log.json';
+        if (!is_file($filepath)) {
+            $f = fopen($filepath, 'w');
+            fclose($f);
         }
         return $db->saveData($filepath, $arrExsitingLog);
     }
@@ -101,8 +100,8 @@ class UserDAO {
         $logDate = $log->getDate();
 
         $newLog = array();
-        $filePath = DATA.'/'.$username.'/log.json';
-        
+        $filePath = DATA . '/' . $username . '/log.json';
+
         // find the key i.e. the date on which the log is to be changed
         foreach ($arrExsitingLog as $oldLog) {
             if ($oldLog['date'] == $logDate) { // we've found the log to change                
@@ -110,7 +109,7 @@ class UserDAO {
             } else {
                 $newLog[] = $oldLog;
             }
-        }       
+        }
 
         $db = JSONDatabase::getInstance();
         return $db->saveData($filePath, $newLog);
@@ -120,23 +119,22 @@ class UserDAO {
         // first read the whole of the log
         $arrExsitingLog = $this->getLog($username);
         $log = null;
-
         // find the key i.e. the date on which the log is to be changed
         foreach ($arrExsitingLog as $oldLog) {
-
             if ($oldLog['date'] == $date) { // we've found the log to change
                 $log = new Log();
                 $log->setDate($date);
 
-                $dao = new DAO();
-
+                $dao = new DAO();                   
                 $arrConsumptioObj = $dao->getComsumption($oldLog['consumption'], $foodData);
                 $log->setConsumption($arrConsumptioObj);
+                
 
                 // we have our Log so just get out!
                 break;
             }
         }
+        
         return $log;
     }
 

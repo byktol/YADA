@@ -188,11 +188,13 @@ class FoodData
 	}
 	
 	public function createMemento() {
-
+    $m = new Memento();
+    $m->setState($this->foods);
+    return $m;
 	}
 
-	public function setMemento($memento) {
-    
+	public function setMemento(Memento $memento) {
+    $this->foods = $memento->getState();
 	}
 }
 

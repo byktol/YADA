@@ -2,7 +2,7 @@
 
 abstract class CalorieCalculator {
 
-    public function calculateNutritionFact(User $user) {
+    public function calculateCalories(User $user) {
         return $this->doCalculateBMR($user) * $user->getActivityLevel();
     }
 

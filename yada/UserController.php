@@ -135,8 +135,26 @@ class UserController {
             include 'views/editLog.php';
         } else {
             $arrLogs = $userDao->getAllLog($user->getUsername(), $foodData);
-            
+
             include 'views/dailyLog.php';
+        }
+    }
+
+    public function deletelog() {
+        $sessMgr = SessionManager::getInstance();
+        $user = $sessMgr->getUser();
+        $foodData = $sessMgr->getFoodData();
+
+        if (isset($_GET['for']) && $_GET['for'] != '') {
+            $date = $_GET['for'];
+        }
+
+        if (isset($_GET['del']) && $_GET['del'] != '') {
+            $consumpFoodId = $_GET['del'];
+        }
+        if (isset($date) && isset($consumpFoodId)) {
+            $userDao = new UserDAO();
+            $userDao->delConsumption($date, $consumpFoodId, $user->getUsername(), $foodData);
         }
     }
 
@@ -194,6 +212,10 @@ class UserController {
      */
     protected function userExists($username) {
         return (bool) realpath('./data/' . $username);
+    }
+
+    public function getDelURI($id, $date) {
+        return '?user=deletelog&for=' . $date . '&del=' . $id;
     }
 
 }

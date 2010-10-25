@@ -12,7 +12,7 @@
     foreach ($arrLogs as $num => $log) {
         $arrCnsmpObj = $log->getConsumption();
 
-        // lets find the total cals
+        // lets find the total cals and all the foods
         $totalCal = 0;
         $foods = array();
 
@@ -23,7 +23,7 @@
         }
         
     ?>
-        <tr><td><?php echo ($num + 1); ?></td><td><?php echo $log->getDate(); ?></td><td><?php echo implode(', ', $foods); ?></td><td><?php echo $totalCal; ?></td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
+        <tr><td><?php echo ($num + 1); ?></td><td><?php echo $log->getDate(); ?></td><td><?php echo implode(', ', $foods); ?></td><td><?php echo $totalCal; ?></td><td align="center"><a href="?user=today&for=<?php echo $log->getDate();?>" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
 <?php } ?>
 
 </table>

@@ -89,15 +89,21 @@ class UserDAO {
         $arrExsitingLog = $this->getLog($username);
         $logDate = $log->getDate();
 
+        $newLog = array();
         // find the key i.e. the date on which the log is to be changed
         foreach ($arrExsitingLog as $oldLog) {
-            if ($arrExsitingLog['date'] == $logDate) { // we've found the log to change
-                $arrExsitingLog['consumption'] = $log->getConsumption(); // update with the new Comsumption
+            if ($oldLog['date'] == $logDate) { // we've found the log to change                
+                $newLog[] = $log->toArray();
+            } else {
+                $newLog[] = $oldLog;
             }
         }
+        echo '<pre>';
+        print_r($newLog);
+        exit;
 
         $db = JSONDatabase::getInstance();
-        return $db->saveData($filePath, $arrExsitingLog);
+        return $db->saveData($filePath, $newLog);
     }
 
     public function getLogByDate($username, $date, $foodData) {
@@ -117,6 +123,7 @@ class UserDAO {
                 $arrConsumptioObj = $dao->getComsumption($oldLog['consumption'], $foodData);
                 $log->setConsumption($arrConsumptioObj);
 
+                // we have our Log so just get out!
                 break;
             }
         }
@@ -137,16 +144,36 @@ class UserDAO {
 
         // find the key i.e. the date on which the log is to be changed
         foreach ($arrExsitingLog as $arrLog) {
-        $log = new Log();
+            $log = new Log();
             echo $arrLog['date'];
             $log->setDate($arrLog['date']);
 
             $arrConsumptioObj = $dao->getComsumption($arrLog['consumption'], $foodData);
-            
+
             $log->setConsumption($arrConsumptioObj);
             $arrLogs[] = $log;
         }
         return $arrLogs;
+    }
+
+    public function delConsumption($date, $consumpFoodId, $username, $foodData) {
+        $log = $this->getLogByDate($username, $date, $foodData);
+
+        $arrConsumptions = $log->getConsumption();
+        $arrRemComsmp = array();
+        // get all the consumption
+        foreach ($arrConsumptions as $cnsmp) {
+
+            // lets jus store everything but the one with the supplied id
+            if ($cnsmp->getFood()->getId() != $consumpFoodId) {
+                $arrRemComsmp[] = $cnsmp;
+            }
+        }
+        $newLog = new Log();
+        $newLog->setDate($date);
+        $newLog->setConsumption($arrRemComsmp);
+
+        $this->updateLog($username, $newLog);
     }
 
 }

@@ -1,9 +1,11 @@
 <?php
 include_once HEADER;
 $sessMgr = SessionManager::getInstance();
-$logDate = $date;
 
 $arrConsumptions = $log->getConsumption();
+
+$foods = SessionManager::getInstance()->getFoodData();
+$foodList = '';
 ?>
 <script type="text/javascript">
     $(function(){
@@ -11,29 +13,30 @@ $arrConsumptions = $log->getConsumption();
     });
 </script>
 <form action="<?php echo HOST . 'foodHandler.php'; ?>" id="frmLogEntry" method="post">
-    <table class="datatable">
-        <tr><th colspan="4">Please provide the foods for your entry below:</th></tr>
-        <tr><td>Date</td><td colspan="3"><input type="text" name="log_date" id="log_date"/></td></tr>
-        <?php foreach ($arrConsumptions as $cnsmp) {
+    <table class="datatable" width="50%">
+        <tr><th colspan="6">Please provide the foods for your entry below:</th></tr>
+        <tr><td>S.N.</td><td>Date</td><td colspan="3"><input type="text" name="log_date" id="log_date" value="<?php echo $date; ?>"/></td><td>Delete</td></tr>
+        <?php foreach ($arrConsumptions as $sn => $cnsmp) {
         ?>
-            <tr><td>Food</td>
+            <tr><td><?php echo ($sn + 1); ?>.</td>
+                <td>Food</td>
                 <td>
-                    <select>
-                        <option value="1">Basic Food 1</option>
-                        <option value="2">Basic Food 2</option>
-                        <option value="3">Basic Food 3</option>
-                        <option value="4">Composite Food 1</option>
-                        <option value="5">Composite Food 2</option>
-                        <option value="6">Composite Food 3</option>
-                        <option value="7">Composite Food 4</option>
-                        <option value="8">Composite Food 5</option>
-                    </select>
-                </td>
-                <td>Servings</td><td><input type="text" name="qty" id="qty" size="10" value="<?php echo $cnsmp->getQuantity(); ?>"/></td>
-            </tr><?php } ?>
+                    <select name="foods" id="food">
+                    <?php
+                    foreach ($foods->getFoods() as $food) {
+                        //$selected = $cnsmp->getFood()->getId();
+                        $selected = ($cnsmp->getFood()->getId() == $food->getId()) ? ' selected' : '';
+                        echo '<option value="' . $food->getId() . '" ' . $selected . '>' . $food->getName() . '</option>';
+                    } ?>
+
+                </select>
+            </td>
+            <td>Servings</td><td><input type="text" name="qty" id="qty" size="10" value="<?php echo $cnsmp->getQuantity(); ?>"/></td>
+            <td align="center"><a href="<?php echo $this->getDelURI($food->getId(), $date);?>" class="icon-delete"></a></td>
+        </tr><?php } ?>
         <tr><td></td>
-            <td colspan="3">
-                <input type="submit" name="btnAddLog" id="btnAddLog" value="Updaet Log"/>
+            <td colspan="5" align="right">
+                <input type="submit" name="btnAddLog" id="btnAddLog" value="Update Log"/>
                 <input type="hidden" name="task" id="task" value="log_entry"/></td>
         </tr>
     </table>

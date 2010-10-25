@@ -48,10 +48,22 @@ class FoodController {
         if (!empty($_POST['editComposite'])) {
             self::editComposite();
         }
+        if (!empty($_POST['undo'])) {
+            $foodData = &self::getFoodData();
+            $foodData->setMemento(FoodCareTaker::getInstance()->undo());
+        }
+        if (!empty($_POST['redo'])) {
+            $foodData = &self::getFoodData();
+            $foodData->setMemento(FoodCareTaker::getInstance()->redo());
+        }
+
+        $undoEnabled = FoodCareTaker::getInstance()->countUndo() > 0;
+        $redoEnabled = FoodCareTaker::getInstance()->countRedo() > 0;
         include ('views/foodEntry.php');
         if (!empty($_GET['save'])) {
             self::getFoodData()->save(self::getFoodDataFilename());
         }
+        echo 'Count: ' . FoodCareTaker::getInstance()->countUndo();
     }
 
     public static function getFoodDataFilename() {
@@ -63,6 +75,7 @@ class FoodController {
         if (empty(self::$foodData))
             self::$foodData = new FoodData();
         SessionManager::getInstance()->setFoodData(self::$foodData);
+        FoodCareTaker::getInstance()->record(self::$foodData->createMemento());
     }
 
     public static function getFoodData() {
@@ -81,6 +94,7 @@ class FoodController {
                 self::$tab = $foods[$i]->hasChildren();
             }
         }
+        FoodCareTaker::getInstance()->record(self::getFoodData()->createMemento());
     }
   
   private static function resetSession()
@@ -100,6 +114,7 @@ class FoodController {
   	$b->setNutritionFacts($nutFacts);
   	$foodData->addFood($b);
   	self::$tab = false;
+    FoodCareTaker::getInstance()->record($foodData->createMemento());
   }
 
     private static function editBasic() {
@@ -112,6 +127,7 @@ class FoodController {
             }
         }
         self::$tab = false;
+        FoodCareTaker::getInstance()->record(self::getFoodData()->createMemento());
     }
 
     private static function editComposite() {
@@ -123,6 +139,7 @@ class FoodController {
             }
         }
         self::$tab = true;
+        FoodCareTaker::getInstance()->record(self::getFoodData()->createMemento());
     }
 
     private static function addComposite() {
@@ -148,6 +165,7 @@ class FoodController {
         $c->setChildren($childs);
         self::getFoodData()->addFood($c);
         self::$tab = true;
+        FoodCareTaker::getInstance()->record(self::getFoodData()->createMemento());
     }
 
 }

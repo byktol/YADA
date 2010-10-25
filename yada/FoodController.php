@@ -63,7 +63,6 @@ class FoodController {
         if (!empty($_GET['save'])) {
             self::getFoodData()->save(self::getFoodDataFilename());
         }
-        echo 'Count: ' . FoodCareTaker::getInstance()->countUndo();
     }
 
     public static function getFoodDataFilename() {

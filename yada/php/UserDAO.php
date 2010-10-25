@@ -14,6 +14,8 @@ class UserDAO {
         $isSaved = FALSE;
 
         $data['username'] = $user->getUsername();
+        $data['firstname'] = $user->getFirstname();
+        $data['lastname'] = $user->getLastname();
         $data['password'] = $user->getPassword();
         $data['gender'] = $user->getGender();
         $data['age'] = $user->getGender();
@@ -45,6 +47,12 @@ class UserDAO {
         $user->setUsername($data->username);
         $user->setPassword($data->password);
 
+        if (isset($data->firstname)) {
+            $user->setUsername($data->firstname);
+        }
+        if (isset($data->lastname)) {
+            $user->setUsername($data->lastname);
+        }
         if (isset($data->gender)) {
             $user->setGender($data->gender);
         }

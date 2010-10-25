@@ -74,6 +74,16 @@ class CompositeFood extends Food
 	{
 		throw new Exception("Cannot set nutrition facts for composite food");
 	}
+
+  public function clones() {
+    $clone = clone $this;
+    $arrayOfClones = array();
+    foreach ($this->children as $child) {
+      $arrayOfClones[] = $child->clones();
+    }
+    $clone->children = $arrayOfClones;
+    return $clone;
+  }
 }
 
 // Only run this debug script if we actually requested this page

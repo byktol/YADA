@@ -3,7 +3,7 @@
 require_once 'config.php';
 
 // A simple data type that abstracts a food
-abstract class Food
+abstract class Food implements Clonable
 {
 	// The name of this food
 	private $name;
@@ -118,6 +118,16 @@ abstract class Food
 	{
 		return $this->name.': id = '.$this->id.', enabled = '.$this->enabled.', calories = '.$this->getNutritionFact('calories', true);
 	}
+
+  public function clones() {
+    $clone = clone $this;
+    $arrayOfFacts = array();
+    foreach ($this->facts as $f) {
+      $arrayOfFacts[] = clone $f;
+    }
+    $clone->facts = $arrayOfFacts;
+    return $clone;
+  }
 }
 
 ?>

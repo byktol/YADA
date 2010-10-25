@@ -178,7 +178,11 @@ class FoodData {
 
     public function createMemento() {
         $m = new Memento();
-        $m->setState($this->foods);
+        $clones = array();
+        foreach ($this->foods as $f) {
+          $clones[] = $f->clones();
+        }
+        $m->setState($clones);
         return $m;
     }
 

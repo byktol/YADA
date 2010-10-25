@@ -14,7 +14,7 @@
     </head>
     <body>
         <div id="header" style="background-color:#6fa7d1;height:100px;background-image:url(<?php echo IMAGES; ?>Hamburger.png);background-position:right;background-repeat:no-repeat">
-            <h2 style="margin-left:25px;">Welcome to your diet assistant! It's a beautiful day!</h2>
+            <h1 style="margin-left:25px;">Welcome to your diet assistant! It's a beautiful day!</h1>
             <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
             	<br>
                 <span style="margin-left:40px;">Hello, <strong><?php echo SessionManager::getInstance()->getUser()->getUsername() ?></strong></span>

@@ -188,30 +188,24 @@ class FoodData
 	}
 	
 	public function createMemento() {
-
+    $m = new Memento();
+    $m->setState($this->foods);
+    return $m;
 	}
 
-	public function setMemento($memento) {
-    
+	public function setMemento(Memento $memento) {
+    $this->foods = $memento->getState();
 	}
 }
 
 // Simple debug script that reads 'test_json.json', parses it and outputs some debug text
-if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'fooddata.php') === false))
-{
-	$fData = FoodData::getPopulatedFoodData('test_json.json');
-	$foods = $fData->getFoods();
-	for($i=0;$i<count($foods);$i++)
-	{
-		echo $foods[$i]->toString() . '<br>';
-	}
-
-  public function createMemento() {
-
-  }
-
-  public function setMemento($memento) {
-    
-  }
-}
+//if($DEBUG && !(strpos(strtolower($_SERVER['REQUEST_URI']), 'fooddata.php') === false))
+//{
+//	$fData = FoodData::getPopulatedFoodData('test_json.json');
+//	$foods = $fData->getFoods();
+//	for($i=0;$i<count($foods);$i++)
+//	{
+//		echo $foods[$i]->toString() . '<br>';
+//	}
+//}
 ?>

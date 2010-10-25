@@ -61,11 +61,7 @@ class UserDAO {
             $user->setActivityLevel($data->activity_level);
         }
         if (isset($data->calculator_id)) {
-<<<<<<< HEAD
           $user->setCalculatorId($data->calculator_id);
-=======
-            $user->setCalculatorLevel($data->calculator_id);
->>>>>>> origin/master
         }
 
         return $user;

@@ -131,7 +131,12 @@ class UserController {
   
   public static function addLogEntry()
   {
-    $l = new Log()
+    $l = new Log();
+    if(!empty($_POST['logDate']))
+      $l->setDate($_POST['logDate']);
+    else
+      $l->setDate(date('Y-m-d'));
+    
   }
 
   public function logout() {

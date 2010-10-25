@@ -38,6 +38,8 @@ define('TBL_SORTER_BLUE', JS . 'tablesorter/blue/style.css');
 define('DATA', BASE . 'data/');
 define('DATA_USERS', DATA . 'users.json');
 
+date_default_timezone_set('America/Indianapolis');
+
 function __autoload($classname) {
     //$file = str_replace('_', '/', $classname);
     $file = './' . $classname . '.php';

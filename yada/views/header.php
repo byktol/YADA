@@ -12,7 +12,7 @@
         <script type="text/javascript" src="<?php echo TBL_SORTER; ?>"></script>
     </head>
     <body>
-        <div id="header" style="margin-right:25px;width:100%;height:100px;background-image:url(<?php echo IMAGES; ?>Hamburger.png);background-position:right;background-repeat:no-repeat">
+        <div id="header" style="height:100px;background-image:url(<?php echo IMAGES; ?>Hamburger.png);background-position:right;background-repeat:no-repeat">
             <h2 style="margin-left:25px;">Welcome to your diet assistant! It's a beautiful day!</h2>
             <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
             	<br>

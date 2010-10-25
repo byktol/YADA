@@ -79,7 +79,6 @@ class UserDAO {
     public function saveLog($username, Log $log) {
         // first read the whole of the log
         $arrExsitingLog = $this->getLog($username);
-        print_r($arrExsitingLog);
         if(!is_array($arrExsitingLog))
         	$arrExsitingLog = $log->toArray();
         else

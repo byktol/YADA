@@ -174,7 +174,6 @@ class UserController {
             }
         }
        $l->setConsumption($arrConsumptions);
-       //print_r($l);
        $dao = new UserDAO();
        $dao->saveLog(SessionManager::getInstance()->getUser()->getUsername(), $l);
   }

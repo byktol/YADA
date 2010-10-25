@@ -16,7 +16,7 @@ h4 { font-size: 1.4em; font-weight: normal; }
 h5 { font-size: 1.3em; font-weight: normal;}
 h6 { font-size: 1.2em; font-weight: normal;}
 
-/*#header, #body, #footer { width: 98%; position: relative; left: 1%; }*/
+#header, #body, #footer { width: 98%; position: relative; left: 1%; }
 
 #header { height: 80px; background-color: #9FB86C; margin-bottom: 8px;}
 #header * { color: #fff; }

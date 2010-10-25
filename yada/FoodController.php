@@ -2,6 +2,7 @@
 require_once 'php/config.php';
 
 require_once 'FoodData.php';
+require_once 'SessionManager.php';
 
 /**
  * Description of FoodController
@@ -16,8 +17,8 @@ class FoodController {
   public static function getInstance() {
     if ( !isset(self::$instance) ) {
       self::$instance = new FoodController();
-      if(!empty($_SESSION['FOOD_DATA']))
-        self::$foodData = $_SESSION['FOOD_DATA'];
+      if(SessionManager::getInstance()->getFoodData() != null)
+        self::$foodData = SessionManager::getInstance()->getFoodData();
     }
     return self::$instance;
   }
@@ -50,13 +51,16 @@ class FoodController {
   	  self::editComposite();
   	}
     include ('views/foodEntry.php');
-    self::getFoodData()->save('php/test_json.json');
+    if(!empty($_GET['save']))
+    {
+      self::getFoodData()->save('php/test_json.json');
+    }
   }
   
   public function populateFoodData()
   {
     self::$foodData = FoodData::getPopulatedFoodData('test_json.json');
-    $_SESSION['FOOD_DATA'] = self::$foodData;
+    SessionManager::getInstance()->setFoodData(self::$foodData);
   }
   
   public static function getFoodData()
@@ -84,7 +88,7 @@ class FoodController {
   private static function resetSession()
   {
     self::$foodData = null;
-  	$_SESSION['FOOD_DATA'] = null;
+  	SessionManager::getInstance()->setFoodData(null);
   }
   
   private static function addBasic()

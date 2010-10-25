@@ -31,6 +31,14 @@ class SessionManager {
     public function getUser() {
       return $this->get('user');
     }
+    
+    public function getFoodData() {
+      return $this->get('FOOD_DATA');
+    }
+    
+    public function setFoodData($foodData) {
+      $this->set('FOOD_DATA', $foodData);
+    }
 
     private function get($key) {
         return isset($_SESSION[PROJECT_CODE][$key]) ? $_SESSION[PROJECT_CODE][$key] : NULL;

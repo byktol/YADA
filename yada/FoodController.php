@@ -12,6 +12,7 @@ class FoodController {
 
     protected static $instance;
     private static $foodData = null;
+    public static $tab = false;
 
     private function __construct() {
         
@@ -49,13 +50,18 @@ class FoodController {
         }
         include ('views/foodEntry.php');
         if (!empty($_GET['save'])) {
-            self::getFoodData()->save('php/test_json.json');
+            self::getFoodData()->save(self::getFoodDataFilename());
         }
     }
 
-    public function populateFoodData($username) {
-        //self::$foodData = FoodData::getPopulatedFoodData(DATA . $username . '/foods.json');
-        self::$foodData = FoodData::getPopulatedFoodData(DATA .'abhishek/foods.json');
+    public static function getFoodDataFilename() {
+        return 'data' . DIRECTORY_SEPARATOR . SessionManager::getInstance()->getUser()->getUsername() . DIRECTORY_SEPARATOR . 'food.json';
+    }
+
+    public function populateFoodData() {
+        self::$foodData = FoodData::getPopulatedFoodData(self::getFoodDataFilename());
+        if (empty(self::$foodData))
+            self::$foodData = new FoodData();
         SessionManager::getInstance()->setFoodData(self::$foodData);
     }
 
@@ -72,6 +78,7 @@ class FoodController {
         for ($i = 0; $i < count($foods); $i++) {
             if ($foods[$i]->getId() == $_GET['disable']) {
                 $foods[$i]->setEnabled(false);
+                self::$tab = $foods[$i]->hasChildren();
             }
         }
     }
@@ -79,6 +86,7 @@ class FoodController {
     private static function resetSession() {
         self::$foodData = null;
         SessionManager::getInstance()->setFoodData(null);
+        self::$tab = false;
     }
 
     private static function addBasic() {
@@ -88,6 +96,7 @@ class FoodController {
         $nutFacts = array(new NutritionFact('calories', $_POST['calories']));
         $b->setNutritionFacts($nutFacts);
         $foodData->addFood($b);
+        self::$tab = false;
     }
 
     private static function editBasic() {
@@ -99,6 +108,7 @@ class FoodController {
                 $foods[$i]->setNutritionFact('calories', $_POST['calories']);
             }
         }
+        self::$tab = false;
     }
 
     private static function editComposite() {
@@ -109,6 +119,7 @@ class FoodController {
                 $foods[$i]->setKeywords(explode(', ', $_POST['keywords']));
             }
         }
+        self::$tab = true;
     }
 
     private static function addComposite() {
@@ -128,11 +139,14 @@ class FoodController {
                             array_push($childs, $f);
                         }
                     }
+                    $c->setChildren($childs);
+                    self::getFoodData()->addFood($c);
                 }
+                $c->setChildren($childs);
+                self::getFoodData()->addFood($c);
+                self::$tab = true;
             }
         }
-        $c->setChildren($childs);
-        self::getFoodData()->addFood($c);
     }
 
 }

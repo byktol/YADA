@@ -8,12 +8,23 @@
     <thead>
         <tr><th>S.N.</th><th>Date</th><th>Food</th><th>Calories Consumed</th><th>Actions</th></tr>
     </thead>
-    <tr><td>1.</td><td>2010-10-01</td><td>Cheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-    <tr><td>2.</td><td>2010-10-02</td><td>Dheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-    <tr><td>3.</td><td>2010-10-03</td><td>Eheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-    <tr><td>4.</td><td>2010-10-04</td><td>Pheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-    <tr><td>5.</td><td>2010-10-05</td><td>Hheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-    <tr><td>6.</td><td>2010-10-06</td><td>Zheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
-    <tr><td>7.</td><td>2010-10-07</td><td>Rheese</td><td>220</td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
+    <?php
+    foreach ($arrLogs as $num => $log) {
+        $arrCnsmpObj = $log->getConsumption();
+
+        // lets find the total cals
+        $totalCal = 0;
+        $foods = array();
+
+        foreach ($arrCnsmpObj as $cnsmpObj) {
+            $food = $cnsmpObj->getFood();
+            $foods[] = $food->getName();
+            $totalCal += $food->getNutritionFact('calories', TRUE);
+        }
+        
+    ?>
+        <tr><td><?php echo ($num + 1); ?></td><td><?php echo $log->getDate(); ?></td><td><?php echo implode(', ', $foods); ?></td><td><?php echo $totalCal; ?></td><td align="center"><a href="#" class="icon-edit"></a><a href="#" class="icon-delete"></a></td></tr>
+<?php } ?>
+
 </table>
 <?php include_once FOOTER; ?>

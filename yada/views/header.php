@@ -6,11 +6,13 @@
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo CSS_PATH . 'reset.css'; ?>"/>
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo CSS_PATH . 'style.css'; ?>"/>
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo JQUERY_CSS; ?>"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo TBL_SORTER_BLUE; ?>"/>
         <script type="text/javascript" src="<?php echo JQUERY; ?>"></script>
         <script type="text/javascript" src="<?php echo JQUERY_UI; ?>"></script>
+        <script type="text/javascript" src="<?php echo TBL_SORTER; ?>"></script>
     </head>
     <body>
-        <div id="header">
+        <div id="header" style="padding-left:25px;">
             <h2>Welcome to your diet assistant! It's a beautiful day!</h2>
             <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
                 Hello, <strong><?php echo SessionManager::getInstance()->getUser()->getUsername() ?></strong>

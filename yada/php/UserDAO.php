@@ -103,22 +103,50 @@ class UserDAO {
     public function getLogByDate($username, $date, $foodData) {
         // first read the whole of the log
         $arrExsitingLog = $this->getLog($username);
-        
+        $log = null;
+
         // find the key i.e. the date on which the log is to be changed
         foreach ($arrExsitingLog as $oldLog) {
-            echo $oldLog['date']. '   '.$date.'<br/>';
-            if ($oldLog['date'] == $date) { // we've found the log to change
 
+            if ($oldLog['date'] == $date) { // we've found the log to change
                 $log = new Log();
                 $log->setDate($date);
-                
+
                 $dao = new DAO();
 
-                $arrConsumptioObj = $dao->getComsumption($oldLog['consumption']);
+                $arrConsumptioObj = $dao->getComsumption($oldLog['consumption'], $foodData);
                 $log->setConsumption($arrConsumptioObj);
+
+                break;
             }
         }
         return $log;
+    }
+
+    /**
+     * return all of the log entry if the date is provided else jus return of
+     * just the single day
+     * @param <type> $date
+     */
+    public function getAllLog($username, $foodData) {
+        // first read the whole of the log
+        $arrExsitingLog = $this->getLog($username);
+
+        $arrLogs = array();
+        $dao = new DAO();
+
+        // find the key i.e. the date on which the log is to be changed
+        foreach ($arrExsitingLog as $arrLog) {
+        $log = new Log();
+            echo $arrLog['date'];
+            $log->setDate($arrLog['date']);
+
+            $arrConsumptioObj = $dao->getComsumption($arrLog['consumption'], $foodData);
+            
+            $log->setConsumption($arrConsumptioObj);
+            $arrLogs[] = $log;
+        }
+        return $arrLogs;
     }
 
 }

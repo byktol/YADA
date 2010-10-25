@@ -18,7 +18,7 @@ class Log {
     }
 
     public function setConsumption($consumption) {
-        $this->arrConsumption[] = $consumption;
+        $this->arrConsumption = $consumption;
     }
 
     public function getConsumption() {

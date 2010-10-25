@@ -45,9 +45,8 @@ class UserController {
 
         //also load the food data
         $foodCtrl = FoodController::getInstance();
-       
+
         include 'views/login.php';
-        $foodCtrl->populateFoodData($username);
     }
 
     public function register() {
@@ -123,18 +122,20 @@ class UserController {
     public function today() {
         $date = '';
         $log = NULL;
+        $userDao = new UserDAO();
+
+        $sessMgr = SessionManager::getInstance();
+        $user = $sessMgr->getUser();
+        $foodData = $sessMgr->getFoodData();
+
         if (isset($_GET['for']) && $_GET['for'] != '') {
             $date = $_GET['for'];
-
-            $sessMgr = SessionManager::getInstance();
-            $user = $sessMgr->getUser();
-            $foodData = $sessMgr->getFoodData();
-
-            $userDao = new UserDAO();
             $log = $userDao->getLogByDate($user->getUsername(), $date, $foodData);
 
-            include 'views/logEntry.php';
+            include 'views/editLog.php';
         } else {
+            $arrLogs = $userDao->getAllLog($user->getUsername(), $foodData);
+            
             include 'views/dailyLog.php';
         }
     }
@@ -145,8 +146,39 @@ class UserController {
 
     public function saveLog() {
         // TODO: save
+    }
 
-        include 'views/logEntry.php';
+    public function memento() {
+        $arrayOfood = array(new BasicFood('pickle'));
+
+        $data = new FoodData();
+        $data->setFoods($arrayOfood);
+
+        $data->addFood(new BasicFood('tomato'));
+        $composite = new CompositeFood('picklemato');
+        $composite->setChildren(array(new BasicFood('tomato'), new BasicFood('pickle')));
+        FoodCareTaker::getInstance()->record($data->createMemento());
+        $data->addFood($composite);
+        FoodCareTaker::getInstance()->record($data->createMemento());
+
+        echo '<pre>FIRST';
+        print_r($data);
+        echo '<br />Undo 1: ';
+        echo FoodCareTaker::getInstance()->countUndo();
+        echo '<br />';
+        print_r(FoodCareTaker::getInstance()->undo());
+        echo '<br />Undo 2: ';
+        echo FoodCareTaker::getInstance()->countUndo();
+        echo '<br />';
+        print_r(FoodCareTaker::getInstance()->undo());
+        echo '<br />Redo<br />';
+        echo 'Count: ' . FoodCareTaker::getInstance()->countRedo();
+        print_r(FoodCareTaker::getInstance()->redo());
+        echo 'Count: ' . FoodCareTaker::getInstance()->countRedo();
+        print_r(FoodCareTaker::getInstance()->redo());
+        echo '<br />Forward<br />';
+        FoodCareTaker::getInstance()->record($data->createMemento());
+        FoodCareTaker::getInstance()->countRedo();
     }
 
     public function logout() {

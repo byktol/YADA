@@ -1,5 +1,6 @@
 <?php
 require_once 'boot.php';
+
 session_start();
 $userController = UserController::getInstance();
 $foodController = FoodController::getInstance();

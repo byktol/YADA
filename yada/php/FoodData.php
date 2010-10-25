@@ -121,6 +121,12 @@ class FoodData {
             $c = new CompositeFood($foodData['Name']);
             $c->setId($foodData['Id']);
             $c->setEnabled($foodData['Enabled']);
+            $keywords = array();
+            for ($i = 0; $i < count($foodData['Keywords']);$i++)
+            {
+            	array_push($keywords, $foodData['Keywords'][$i]);
+            }
+            $c->setKeywords($keywords);
             $foodArr = array();
             // Loop through the children and add them to this composite
             for ($i = 0; $i < count($foodData['Children']); $i++) {
@@ -141,6 +147,12 @@ class FoodData {
             $b = new BasicFood($foodData['Name']);
             $b->setId($foodData['Id']);
             $b->setEnabled($foodData['Enabled']);
+            $keywords = array();
+            for ($i = 0; $i < count($foodData['Keywords']);$i++)
+            {
+            	array_push($keywords, $foodData['Keywords'][$i]);
+            }
+            $b->setKeywords($keywords);
             $nutritionFactsArr = array();
             // Loop through the nutrition facts and add them to the basic food
             for ($i = 0; $i < count($foodData['NutritionFacts']); $i++) {

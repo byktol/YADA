@@ -17,6 +17,7 @@ class Log {
         $this->date = ($date == '') ? date('yyyy-mm-dd') : $date;
     }
 
+    // Array of consumptions
     public function setConsumption($consumption) {
         $this->arrConsumption = $consumption;
     }
@@ -26,7 +27,12 @@ class Log {
     }
 
     public function toArray() {
-        return array('date' => $this->date, 'consumption' => $this->arrConsumption);
+        $arr = array();
+        for ($i = 0; $i < count($this->arrConsumption); $i++) {
+            $conArr = array("food_id" => $this->arrConsumption[$i]->getFood()->getId(), "qty" => $this->arrConsumption[$i]->getQuantity());
+            array_push($arr, $conArr);
+        }
+        return array('date' => $this->date, 'consumption' => $arr);
     }
 
 }

@@ -211,7 +211,7 @@
         <div><span class="ui-corner-all link-btn addCompositeButton">(<span class="addCompositePlus">+</span>) Add New Composite Food</span></div>
         <div class="addCompositeForm" style="display:none">
         	<form action="?food=list_food" method="post">
-		        <table class="datatable" width="70%">
+		        <table class="datatable" width="80%">
 		        	<tr><td>Name:</td><td colspan="2"><input type="text" name="foodName" id="foodNameC" size="40"></td></tr>
 		        	<tr><td>Keywords:</td><td colspan="2"><input type="text" name="keywords" id="keywordsC" size="60"/><span class="tips"> (Please use comma to separate the keywords (E.g. potato, tomato)</span></td></tr>
 		            <tr id="composite">

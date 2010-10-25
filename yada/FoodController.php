@@ -82,22 +82,25 @@ class FoodController {
             }
         }
     }
-
-    private static function resetSession() {
-        self::$foodData = null;
-        SessionManager::getInstance()->setFoodData(null);
-        self::$tab = false;
-    }
-
-    private static function addBasic() {
-        $foodData = &self::getFoodData();
-        $b = new BasicFood($_POST['foodName']);
-        $b->createUniqueId();
-        $nutFacts = array(new NutritionFact('calories', $_POST['calories']));
-        $b->setNutritionFacts($nutFacts);
-        $foodData->addFood($b);
-        self::$tab = false;
-    }
+  
+  private static function resetSession()
+  {
+    self::$foodData = null;
+  	SessionManager::getInstance()->setFoodData(null);
+  	self::$tab = false;
+  }
+  
+  private static function addBasic()
+  {
+  	$foodData = &self::getFoodData();
+  	$b = new BasicFood($_POST['foodName']);
+  	$b->createUniqueId();
+  	$b->setKeywords(explode(', ', $_POST['keywords']));
+  	$nutFacts = array(new NutritionFact('calories', $_POST['calories']));
+  	$b->setNutritionFacts($nutFacts);
+  	$foodData->addFood($b);
+  	self::$tab = false;
+  }
 
     private static function editBasic() {
         $foods = &self::getFoodData()->getFoods();
@@ -139,14 +142,12 @@ class FoodController {
                             array_push($childs, $f);
                         }
                     }
-                    $c->setChildren($childs);
-                    self::getFoodData()->addFood($c);
                 }
-                $c->setChildren($childs);
-                self::getFoodData()->addFood($c);
-                self::$tab = true;
             }
         }
+        $c->setChildren($childs);
+        self::getFoodData()->addFood($c);
+        self::$tab = true;
     }
 
 }

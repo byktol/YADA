@@ -15,6 +15,8 @@ class JSONDatabase implements TextDatabase {
     public function getData($filePath) {
         $file = file($filePath);
         $jsonData = '';
+        if(count($file)==0)
+        	return null;
         foreach ($file as $line) {
             $jsonData .= $line;
         }

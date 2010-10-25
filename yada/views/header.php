@@ -7,27 +7,28 @@
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo CSS_PATH . 'style.css'; ?>"/>
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo JQUERY_CSS; ?>"/>
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo TBL_SORTER_BLUE; ?>"/>
+        <link href="<?php echo IMAGES; ?>favicon.ico" rel="shortcut icon" type="image/x-icon">
         <script type="text/javascript" src="<?php echo JQUERY; ?>"></script>
         <script type="text/javascript" src="<?php echo JQUERY_UI; ?>"></script>
         <script type="text/javascript" src="<?php echo TBL_SORTER; ?>"></script>
     </head>
     <body>
-        <div id="header" style="padding-left:25px;">
-            <h2>Welcome to your diet assistant! It's a beautiful day!</h2>
+        <div id="header" style="height:100px;background-image:url(<?php echo IMAGES; ?>Hamburger.png);background-position:right;background-repeat:no-repeat">
+            <h2 style="margin-left:25px;">Welcome to your diet assistant! It's a beautiful day!</h2>
             <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
-                Hello, <strong><?php echo SessionManager::getInstance()->getUser()->getUsername() ?></strong>
+            	<br>
+                <span style="margin-left:40px;">Hello, <strong><?php echo SessionManager::getInstance()->getUser()->getUsername() ?></strong></span>
             <?php endif ?>
             </div>
             <div id="body">
             <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
-                    <ul id="top-menu">
-                        <li><a href="<?php echo HOST . 'index.php?food=list_food' ?>">Food Entry</a></li>
-                        <li><a href="<?php echo HOST . 'index.php?user=profile' ?>">My Profile</a></li>
-                        <li><a href="<?php echo HOST . 'index.php?user=today' ?>">Daily Log</a></li>
-                        <li><a href="<?php echo HOST . 'index.php?user=log' ?>">New Log Entry</a></li>
-                        <li><a href="<?php echo HOST . 'index.php?user=calendar' ?>">My Food Log</a></li>
-                        <li class="last"><a href="<?php echo HOST . 'index.php?user=logout' ?>">Logout</a></li>
-                    </ul>
+            <ul id="top-menu">
+                <li><a href="<?php echo HOST . 'index.php?food=list_food' ?>">Food Entry</a></li>
+                <li><a href="<?php echo HOST . 'index.php?user=profile' ?>">My Profile</a></li>
+                <li><a href="<?php echo HOST . 'index.php?user=today' ?>">Daily Log</a></li>
+                <li><a href="<?php echo HOST . 'index.php?user=log' ?>">New Log Entry</a></li>
+                <li class="last"><a href="<?php echo HOST . 'index.php?user=logout' ?>">Logout</a></li>
+            </ul>
             <?php endif ?>
             <?php if (SessionManager::getInstance()->errorCount() > 0) : ?>
                         <div class="error">

@@ -32,6 +32,7 @@ define('TBL_SORTER', JS . 'tablesorter/jquery.tablesorter.min.js');
 define('CSS_PATH', HOST . 'css/');
 define('JQUERY_CSS', JS . 'ui/redmond/jquery-ui-1.8.5.css');
 define('TBL_SORTER_BLUE', JS . 'tablesorter/blue/style.css');
+define('IMAGES', HOST . 'images/');
 
 // database files
 define('DATA', BASE . 'data/');

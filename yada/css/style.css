@@ -9,7 +9,7 @@ hr { height: 1px; border-style: solid; border-color: #ddd; border-width: 0 0 1px
 
 h1, h2, h3, h4, h5, h6 { font: bold 1em/1.5em Georgia, 'Times New Roman', Times, serif; color: #444; padding: 0; }
 
-h1 { font-size: 2.2em; font-weight: normal; }
+h1 { font-size: 3em; font-weight: normal; }
 h2 { font-size: 2em; font-weight: normal; }
 h3 { font-size: 1.7em; font-weight: normal; }
 h4 { font-size: 1.4em; font-weight: normal; }
@@ -18,10 +18,10 @@ h6 { font-size: 1.2em; font-weight: normal;}
 
 #header, #body, #footer { width: 98%; position: relative; left: 1%; }
 
-#header { height: 80px; background-color: #9FB86C; margin-bottom: 8px;}
+#header { margin: 10px 0; background-color:#6fa7d1; height:100px;background-image:url(../images/Hamburger.png); background-position:right; background-repeat:no-repeat; -moz-border-radius:15px;}
 #header * { color: #fff; }
 #body { min-height: 425px; _height: 425px; }
-#footer { border-top: 1px solid #ececec; margin-top: 10px; padding-top: 5px; }
+#footer {margin-top: 10px; padding-top: 5px; background-color:#6fa7d1; -moz-border-radius: 10px; color: #fff; text-align: center; padding: 10px 0; }
 
 #apps-info { float: left; }
 .icon-nepal-gov { background: transparent url(../images/gov-of-nepal-logo.png) no-repeat; height: 110px; padding-left: 150px; }
@@ -88,6 +88,7 @@ table.tbl-login th, .datatable tr td, .datatable tr th{ vertical-align: middle; 
 .icon-home { background: transparent url(../images/apps/home.png) no-repeat center left; padding: 5px 0px 5px 30px; }
 .icon-invt { background: transparent url(../images/apps/inventory.png) no-repeat center left; padding: 5px 0; }
 .icon-user { background: transparent url(../images/apps/user.png) no-repeat center left; padding: 5px 0px 5px 30px; height: 24px; width: 24px; }
+.icon-save { background: transparent url(../images/icon-save.jpg) no-repeat center left; padding: 0px 0px 5px 20px; height: 24px; width: 24px; }
 .icon-invt-item { background: transparent url(../images/apps/invt-item.gif) no-repeat center left; padding: 5px 0px 5px 30px; height: 24px; width: 24px; }
 
 .icon-warning { background: url("../images/apps/warning.png") no-repeat 5px center #fde9c9; padding: 5px 5px 5px 30px; border: 1px solid #fdc369; color: #666; }

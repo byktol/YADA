@@ -13,8 +13,8 @@
         <script type="text/javascript" src="<?php echo TBL_SORTER; ?>"></script>
     </head>
     <body>
-        <div id="header" style="background-color:#6fa7d1;height:100px;background-image:url(<?php echo IMAGES; ?>Hamburger.png);background-position:right;background-repeat:no-repeat">
-            <h1 style="margin-left:25px;">Welcome to your diet assistant! It's a beautiful day!</h1>
+        <div id="header">
+            <h1 style="margin-left:25px;">Welcome to your diet assistant!</h1>
             <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
             	<br>
                 <span style="margin-left:40px;">Hello, <strong><?php echo SessionManager::getInstance()->getUser()->getUsername() ?></strong></span>
@@ -23,8 +23,8 @@
             <div id="body">
             <?php if (SessionManager::getInstance()->isLoggedIn()) : ?>
             <ul id="top-menu">
-                <li><a href="<?php echo HOST . 'index.php?food=list_food' ?>">Food Entry</a></li>
                 <li><a href="<?php echo HOST . 'index.php?user=profile' ?>">My Profile</a></li>
+                <li><a href="<?php echo HOST . 'index.php?food=list_food' ?>">Food Entry</a></li>
                 <li><a href="<?php echo HOST . 'index.php?user=today' ?>">Daily Log</a></li>
                 <li><a href="<?php echo HOST . 'index.php?user=log' ?>">New Log Entry</a></li>
                 <li class="last"><a href="<?php echo HOST . 'index.php?user=logout' ?>">Logout</a></li>

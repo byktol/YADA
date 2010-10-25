@@ -83,7 +83,7 @@
         <li><a href="#c_food">Composite Food</a></li>
     </ul>
     <div id="b_food" style="width: 80%;">
-        <h2>Basic Foods&nbsp;&nbsp;&nbsp;&nbsp;<a href="?food=list_food&save=true" style="font-size:17pt;color:#999999">save</a></h2>
+        <h2>Basic Foods&nbsp;&nbsp;&nbsp;&nbsp;<a href="?food=list_food&save=true" style="font-size:17pt;color:#999999" class="icon-save">save</a></h2>
         <br>
         <table id="bfood_list" class="datatable tablesorter" width="70%">
             <thead>
@@ -164,7 +164,7 @@
         </form>
     </div>
     <div id="c_food" >
-    	<h2>Composite Foods&nbsp;&nbsp;&nbsp;&nbsp;<a href="?food=list_food&save=true" style="font-size:17pt;color:#999999">save</a></h2>
+        <h2>Composite Foods&nbsp;&nbsp;&nbsp;&nbsp;<a href="?food=list_food&save=true" style="font-size:17pt;color:#999999" class="icon-save">save</a></h2>
     	<br>
         <table id="cfood_list" class="datatable tablesorter" width="70%">
             <thead>

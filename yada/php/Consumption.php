@@ -5,7 +5,7 @@ class Consumption {
     private $food; // Component food
     private $qty; // double
 
-    public function Consumption($food, $qty) {
+    public function Consumption($food='', $qty='') {
         $this->food = $food;
         $this->qty = $qty;
     }
@@ -14,8 +14,16 @@ class Consumption {
         return $this->food;
     }
 
+    public function setFood($food) {
+        $this->food = $food;
+    }
+
     public function getQuantity() {
         return $this->qty;
+    }
+
+    public function setQuantity($qty) {
+        $this->qty = $qty;
     }
 
 }

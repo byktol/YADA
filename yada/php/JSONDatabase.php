@@ -19,13 +19,14 @@ class JSONDatabase implements TextDatabase {
             $jsonData .= $line;
         }
         $arr = json_decode($jsonData, 1);
+
         return $arr;
     }
 
     public function saveData($filePath, $data) {
         $isSaved = FALSE;
         $jsonData = json_encode($data);
-        $file = fopen($filePath, 'w');
+        $file = fopen($filePath, 'w'); // replaces the whole content
 
         $data = json_encode($data);
 

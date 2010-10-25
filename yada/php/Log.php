@@ -3,7 +3,7 @@
 class Log {
 
     private $date;
-    private $arrConsumption; // Consumption class
+    private $arrConsumption = array(); // Consumption class
 
     public function Log() {
 
@@ -14,19 +14,21 @@ class Log {
     }
 
     public function setDate($date='') {
-        $this->date = ($date == '') ? date('mm/dd/yyyy') : $date;
+        $this->date = ($date == '') ? date('yyyy-mm-dd') : $date;
     }
 
     public function setConsumption($consumption) {
-        $this->arrConsumption[] = array(
-            'food_id' => $consumption->getFood()->getId(),
-            'qty' => $consumption->getQuantity()
-        );
+        $this->arrConsumption[] = $consumption;
     }
 
     public function getConsumption() {
         return $this->arrConsumption;
     }
+
+    public function toArray() {
+        return array('date' => $this->date, 'consumption' => $this->arrConsumption);
+    }
+
 }
 
 ?>

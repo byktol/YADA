@@ -1,5 +1,7 @@
 <?php
 
+require_once '../boot.php';
+
 class JsonLogBuilder implements LogBuilder {
 
     private $log; // instance of Log

@@ -41,6 +41,10 @@ class FoodController {
   	{
   	  self::editBasic();
   	}
+  	if(!empty($_POST['addComposite']))
+  	{
+  	  self::addComposite();
+  	}
     if(!empty($_POST['editComposite']))
   	{
   	  self::editComposite();
@@ -118,6 +122,36 @@ class FoodController {
         $foods[$i]->setKeywords(explode(', ', $_POST['keywords']));
       }
     }
+  }
+  
+  private static function addComposite()
+  {
+    $c = new CompositeFood($_POST['foodName']);
+    $c->createUniqueId();
+    $c->setKeywords(explode(', ', $_POST['keywords']));
+    $childs = array();
+    $foodData = &self::getFoodData();
+    $maxIndex = (int)$_POST['maxIndex'];
+    for($i=0;$i<$maxIndex;$i++)
+    {
+      if(!empty($_POST['id'.($i+1)]))
+      {
+        $f = FoodData::findFood($foodData, $_POST['id'.($i+1)]);
+        if($f != null)
+        {
+          if(!empty($_POST['servings'.($i+1)]))
+          {
+            $servings = $_POST['servings'.($i+1)];
+            for($j=0;$j<$servings;$j++)
+            {
+              array_push($childs, $f);
+            }
+          }
+        }
+      }
+    }
+    $c->setChildren($childs);
+    self::getFoodData()->addFood($c);
   }
 }
 ?>

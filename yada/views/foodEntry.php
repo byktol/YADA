@@ -1,8 +1,23 @@
 <?php include_once HEADER; ?>
 <script type="text/javascript">
+	var compBuilderIndex = 1;
+	var compBuilderNumArgs = 0;
 	function addCompositeBuilderFoodRow(id, name, servings)
 	{
-		
+		$('#compBuilderTable').show();
+		$('#compBuilderInsertBefore').before('<tr id="compBuilderFoodEntry'+compBuilderIndex+'" class="compBuilderFoodEntry"><td><input type="hidden" name="id'+compBuilderIndex+'" value="'+id+'"><input type="hidden" name="servings'+compBuilderIndex+'" value="'+servings+'">'+name+'</td><td>'+servings+'</td><td style="text-align:center"><a href="javascript:removeCompositeBuilderFoodRow(\'compBuilderFoodEntry'+compBuilderIndex+'\')" class="icon-delete" title="delete"></a></td></tr>');
+		compBuilderNumArgs++;
+		$('#compBuilderNumberOfArgs').val(compBuilderNumArgs);
+		$('#compBuilderMaxIndex').val(compBuilderIndex);
+		compBuilderIndex++;
+	}
+	function removeCompositeBuilderFoodRow(id)
+	{
+		$('#'+id).remove();
+		compBuilderNumArgs--;
+		$('#compBuilderNumberOfArgs').val(compBuilderNumArgs);
+		if(compBuilderNumArgs == 0)
+			$('#compBuilderResetBtn').click();
 	}
 
     $(function(){
@@ -13,10 +28,12 @@
         $('.addBasicButton').click(function(){
     		$('.addBasicForm').toggle();
     		$('.addBasicPlus').text($('.addBasicPlus').text() == '+' ? '-' : '+');
+    		$('#foodName').focus();
         });
         $('.addCompositeButton').click(function(){
     		$('.addCompositeForm').toggle();
     		$('.addCompositePlus').text($('.addCompositePlus').text() == '+' ? '-' : '+');
+    		$('#foodNameC').focus();
         });
         $('.editBtn').click(function(){
             $('.editting').hide();
@@ -50,6 +67,14 @@
             var servings = $('#compBuilderServing').val();
             addCompositeBuilderFoodRow(id, name, servings);
         });
+        $('#compBuilderResetBtn').click(function(){
+        	$('.compBuilderFoodEntry').remove();
+        	$('#compBuilderTable').hide();
+        	compBuilderIndex = 1;
+        	compBuilderNumArgs = 0;
+    		$('#compBuilderNumberOfArgs').val(compBuilderNumArgs);
+    		$('#compBuilderMaxIndex').val(compBuilderIndex);
+        });
     });
 </script>
 <div id="tabs">
@@ -62,11 +87,12 @@
     <div id="b_food" style="width: 80%;">
         <table id="bfood_list" class="datatable tablesorter" width="70%">
             <thead>
-                <tr><th>S.N.</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th style="width:100px">Actions</th></tr>
+                <tr><th>Entry</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th style="width:100px">Actions</th></tr>
             </thead>
             <?php 
             	// Iterate through the foods
-            	$foods = $this->getFoodData()->getBasicFoods();
+            	$foods = self::getFoodData()->getBasicFoods();
+            	$entry = 0;
             	for($i=0;$i<count($foods);$i++)
             	{
             		$food = $foods[$i];
@@ -75,7 +101,7 @@
             ?>
             <form action="" method="post">
 	            <tr><td>
-	            	<?php echo ($i+1); ?>.
+	            	<?php echo ($entry+1); ?>.
 	            </td><td>
 	            	<input id="editBtn<?php echo $i; ?>NameInput" class="editting" type="text" name="foodName" value="<?php echo $food->getName(); ?>" style="display:none">
 	            	<span id="editBtn<?php echo $i; ?>NameSpan" class="non-edit"><?php echo $food->getName(); ?></span>
@@ -94,11 +120,12 @@
 	            <input type="hidden" name="editBasic" value="true">
             </form>
             <?php
+            			$entry++;
             		}
             	} 
             ?>
         </table>
-        <div class="addBasicButton"><span class="ui-corner-all link-btn">(<span class="addBasicPlus">+</span>) Add New Basic Food</span></div>
+        <div><span class="ui-corner-all link-btn addBasicButton">(<span class="addBasicPlus">+</span>) Add New Basic Food</span></div>
         <form action="" method="post">
 	        <table class="datatable addBasicForm" style="display:none">
 	            <tr><th colspan="2" align="left">:: Please specify the info below to add a new food</th></tr>
@@ -127,11 +154,12 @@
     <div id="c_food" >
         <table id="cfood_list" class="datatable tablesorter" width="70%">
             <thead>
-                <tr><th>S.N.</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th style="width:100px">Actions</th></tr>
+                <tr><th>Entry</th><th>Food Name</th><th>Keywords</th><th>Calories</th><th style="width:100px">Actions</th></tr>
             </thead>
             <?php 
             	// Iterate through the foods
-            	$foods = $this->getFoodData()->getCompositeFoods();
+            	$foods = self::getFoodData()->getCompositeFoods();
+            	$entry = 0;
             	for($i=0;$i<count($foods);$i++)
             	{
             		$food = $foods[$i];
@@ -140,7 +168,7 @@
             ?>
             <form action="" method="post">
 	            <tr><td>
-	            	<?php echo ($i+1); ?>.
+	            	<?php echo ($entry+1); ?>.
 	            </td><td>
 	            	<input id="editBtn<?php echo $i; ?>NameInputC" class="editting" type="text" name="foodName" value="<?php echo $food->getName(); ?>" style="display:none">
 	            	<span id="editBtn<?php echo $i; ?>NameSpanC" class="non-edit"><?php echo $food->getName(); ?></span>
@@ -158,45 +186,54 @@
 	            <input type="hidden" name="editComposite" value="true">
             </form>
             <?php
+            			$entry++;
             		} 
             	}
             ?>         
         </table>
-        <div class="addCompositeButton"><span class="ui-corner-all link-btn">(<span class="addCompositePlus">+</span>) Add New Composite Food</span></div>
-        <form action="" method="post">
-	        <table class="datatable addCompositeForm" style="display:none">
-	            <tr id="composite">
-	                <td>Select Basic Foods</td>
-	                <td>
-	                    <select name="basic_foods" id="compBuilderSelect" size="6" style="width:250px;">
-			            <?php 
-			            	// Iterate through the foods
-			            	$foods = $this->getFoodData()->getBasicFoods();
-			            	for($i=0;$i<count($foods);$i++)
-			            	{
-			            		$food = $foods[$i];
-			            		if($food->getEnabled())
-			            		{
-			            ?>
-	                        <option <?php echo ($i==0?'selected="selected"':''); ?> value="<?php echo $food->getId(); ?>"><?php echo $food->getName(); ?></option>
-	                    <?php 
-			            		}
-			            	}
-	                    ?>
-	                    </select>
-	                </td>
-	                <td>
-	                    Servings
-	                    <input type="text" name="serving" id="compBuilderServing"/>&nbsp;&nbsp;&nbsp;&nbsp;
-	                    <button id="compBuilderAddBtn">Add</button>
-	                    <button id="compBuilderResetBtn">Reset</button>
-	                </td>
-	            </tr>
-	            <tr><td>
-	            </td></tr>
-	        </table>
-	        <input type="hidden" name="addComposite" value="true">
-		</form>
+        <div><span class="ui-corner-all link-btn addCompositeButton">(<span class="addCompositePlus">+</span>) Add New Composite Food</span></div>
+        <div class="addCompositeForm" style="display:none">
+        	<form action="" method="post">
+		        <table class="datatable" width="70%">
+		        	<tr><td>Name:</td><td colspan="2"><input type="text" name="foodName" id="foodNameC" size="40"></td></tr>
+		        	<tr><td>Keywords:</td><td colspan="2"><input type="text" name="keywords" id="keywordsC" size="60"/><span class="tips"> (Please use comma to separate the keywords (E.g. potato, tomato)</span></td></tr>
+		            <tr id="composite">
+		                <td>Select Basic Foods</td>
+		                <td>
+		                    <select name="basic_foods" id="compBuilderSelect" size="10" style="width:250px;">
+				            <?php 
+				            	// Iterate through the foods
+				            	$foods = self::getFoodData()->getFoods();
+				            	for($i=0;$i<count($foods);$i++)
+				            	{
+				            		$food = $foods[$i];
+				            		if($food->getEnabled())
+				            		{
+				            ?>
+		                        <option <?php echo ($i==0?'selected="selected"':''); ?> value="<?php echo $food->getId(); ?>"><?php echo $food->getName(); ?></option>
+		                    <?php 
+				            		}
+				            	}
+		                    ?>
+		                    </select>
+		                </td>
+		                <td>
+		                    Servings
+		                    <input type="text" name="serving" id="compBuilderServing" value="1"/>&nbsp;&nbsp;&nbsp;&nbsp;
+		                    <input type="button" id="compBuilderAddBtn" value="Add">
+		                    <input type="button" id="compBuilderResetBtn" value="Reset">
+		                </td>
+		            </tr>
+		        </table>
+		        <table id="compBuilderTable" class="datatable" style="display:none" width="40%">
+		        	<tr><th>Food Name</th><th>Number of Servings</th><th>Action</th></tr>
+		        	<tr id="compBuilderInsertBefore"><td></td><td></td><td style="text-align:center"><input type="submit" value="Add Food"></td></tr>
+		        </table>
+		        <input type="hidden" name="addComposite" value="true">
+		        <input id="compBuilderNumberOfArgs" type="hidden" name="numberOfFoods" value="0">
+		        <input id="compBuilderMaxIndex" type="hidden" name="maxIndex" value="0">
+			</form>
+		</div>
     </div>
 </div>
 <br>

@@ -173,7 +173,7 @@ class FoodData
 	}
 	
 	// Finds the food with the given id and returns a reference to it
-	private static function findFood($foodData, $id)
+	public static function findFood($foodData, $id)
 	{
 		$foods = $foodData->getFoods();
 		for($i=0;$i<count($foods);$i++)

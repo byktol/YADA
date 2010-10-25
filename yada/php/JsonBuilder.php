@@ -137,13 +137,12 @@ class JsonBuilder implements Builder {
     $keywords = $food->getKeywords();
     $count = count($keywords);
     for ($i = 0; $i < $count ; $i++) {
-      $text .= $keywords[$i];
+      $text .= "\"" . $keywords[$i] . "\"";
 
       if ($i < $count-1) {
         $text .= "  ,\r\n";
       }
     }
-
     return $text;
   }
   

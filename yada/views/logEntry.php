@@ -46,7 +46,7 @@
 </script>
         <form action="?user=log" method="post">
 	        <table class="datatable" width="70%">
-	        	<tr><td>Date:</td><td colspan="2"><input type="text" name="logDate" id="log_date"><span class="tips"> (yyyy-mm-dd)</span></td></tr>
+	        	<tr><td>Date:</td><td colspan="2"><input type="text" name="logDate" id="log_date" value="<?php echo date('Y-m-d'); ?>"><span class="tips"> (yyyy-mm-dd)</span></td></tr>
 	            <tr id="composite">
 	                <td>Select Foods</td>
 	                <td>

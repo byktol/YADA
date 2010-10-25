@@ -5,7 +5,9 @@
         <title>YADA: Yet Another Diet Assistant</title>
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo CSS_PATH . 'reset.css'; ?>"/>
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo CSS_PATH . 'style.css'; ?>"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo JQUERY_CSS; ?>"/>
         <script type="text/javascript" src="<?php echo JQUERY; ?>"></script>
+        <script type="text/javascript" src="<?php echo JQUERY_UI; ?>"></script>
     </head>
     <body>
         <div id="header">

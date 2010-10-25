@@ -1,43 +1,23 @@
-<?php
-include_once HEADER;
-
-//$calCalcTemplate = new HarrisBenedictTemplate();
-//$calCalcTemplate = new MifflinJerrorTemplate();
-//
-//$user = new User();
-//$user->setName("abhishek");
-//
-//$calMetrics = new CalorieMetrics();
-//$calMetrics->setAge(26);
-//$calMetrics->setGender("MALE");
-//$calMetrics->setWeight(55);
-//$calMetrics->setHeight(150);
-//$calMetrics->setActivityLevel(1.2);
-//$calMetrics->setCalorieCalcTpl($calCalcTemplate);
-//$cal = $calCalcTemplate->calculateNutritionFact($calMetrics);
-
-//echo "cal: ".$cal;
-
-//$userDao = new UserDAO();
-//$user = $userDao->getUser('');
-//echo "<pre>";
-//print_r($user);
-
-?>
+<?php include_once HEADER; ?>
+<form action="<?php echo HOST . 'index.php?user=profile' ?>" method="post">
 <table class="datatable">
     <tr><th colspan="2" align="left">:: Please specify the info below to save your profile</th></tr>
     <tr>
         <td>Firstname:</td>
-        <td><input type="text" name="name" id="firstname" size="40" value="<?php echo $user->getFirstname() ?>" /></td>
+        <td><input type="text" name="firstname" id="firstname" size="40" value="<?php echo $user->getFirstname() ?>" /></td>
     </tr>
     <tr>
         <td>Lastname:</td>
-        <td><input type="text" name="name" id="lastname" size="40" value="<?php echo $user->getLastname() ?>" /></td>
+        <td><input type="text" name="lastname" id="lastname" size="40" value="<?php echo $user->getLastname() ?>" /></td>
+    </tr>
+    <tr>
+        <td>Age:</td>
+        <td><input type="text" name="age" id="age" size="2" value="<?php echo $user->getAge() ?>" /></td>
     </tr>
     <tr><td style="width: 25%">Gender</td>
         <td>
-            <label><input type="radio" name="gender" id="male" checked="checked" />Male</label>
-            <label><input type="radio" name="gender" id="female"/>Female</label>
+            <label><input type="radio" name="gender" id="male" value="1" <?php echo $user->getGender() ? 'checked="checked"' : '' ?>/>Male</label>
+            <label><input type="radio" name="gender" id="female" value="0" <?php echo $user->getGender() ? '' : 'checked="checked"' ?>/>Female</label>
         </td>
     </tr>
     <tr>
@@ -52,20 +32,18 @@ include_once HEADER;
         <td>Activity Level:</td>
         <td>
             <select name="activity_level" id="activity_level">
-                <option value="0">--Choose Activity Level--</option>
-                <option value="1">Highly Active</option>
-                <option value="2">Active</option>
-                <option value="3">Sedentary</option>
+                <option value="1" <?php echo $user->getActivityLevel() == 1? 'selected="selected"' : '' ?> >Highly Active</option>
+                <option value="2" <?php echo $user->getActivityLevel() == 2? 'selected="selected"' : '' ?> >Active</option>
+                <option value="3" <?php echo $user->getActivityLevel() == 3? 'selected="selected"' : '' ?> >Sedentary</option>
             </select>
         </td>
     </tr>
     <tr>
         <td>Calorie Calculation Method:</td>
         <td>
-            <select name="calculation" id="calculation">
-                <option value="0">--Choose Method--</option>
-                <option value="1">Harris-Benedict</option>
-                <option value="2">Miffin-Jerror</option>
+            <select name="calculator_id" id="calculator_id">
+                <option value="1" <?php echo $user->getCalculatorId() == 1? 'selected="selected"' : '' ?> >Harris-Benedict</option>
+                <option value="2" <?php echo $user->getCalculatorId() == 2? 'selected="selected"' : '' ?> >Miffin-Jerror</option>
             </select>
         </td>
     </tr>
@@ -73,9 +51,9 @@ include_once HEADER;
         <td></td>
         <td>
             <input type="submit" id="btnSaveProfile" name="btnSaveProfile" value="Save Profile"/>
-            <input type="button" id="btnCalcCalorie" name="btnCalcCalorie" value="Calcualte Calorie"/>
             <input type="reset" id="btnReset" name="btnReset" value="Reset"/>
         </td>
     </tr>
 </table>
+</form>
 <?php include_once FOOTER; ?>

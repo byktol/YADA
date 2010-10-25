@@ -5,18 +5,21 @@
  * Holds a list of memento objets and is reponsible for managing them.
  */
 class FoodCareTaker {
-  private $mementos;
-  private $instance;
 
-  private function  __construct() {
-    $this->mementos = array();
-  }
+    private $mementos;
+    private $instance;
 
-  public static function getInstance() {
-    if (self::$instance == null) {
-      self::$instance = new FoodCareTaker();
+    private function __construct() {
+        $this->mementos = array();
     }
-    return self::$instance;
-  }
+
+    public static function getInstance() {
+        if (self::$instance == null) {
+            self::$instance = new FoodCareTaker();
+        }
+        return self::$instance;
+    }
+
 }
+
 ?>

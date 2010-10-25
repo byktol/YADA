@@ -1,60 +1,31 @@
 <?php
 
-class UserDAO extends BaseDAO {
+class UserDAO {
 
     public function getUser($username) {
         $filePath = DATA . $username . '/profile.json';
         $arrUser = $this->loadFromFile($filePath);
-        
-        $user = new User();
-        $user->setUsername($arrUser->username);
 
-        $calMetric = new CalorieMetrics();
-        $calMetric->setAge($arrUser->age);
-        $calMetric->setGender($arrUser->gender);
-        $calMetric->setWeight($arrUser->weight);
-        $calMetric->setHeight($arrUser->height);
-        $calMetric->setActivityLevel($arrUser->activity_level_id);
-        $calMetric->setCalorieCalcTpl(new HarrisBenedictTemplate());
-
-        $user->setCalorieMetrics($calMetric);
-
-        return $user;
+        return $arrUser;
     }
 
-    public function save($user) {
+    public function save(User $user) {
       $filePath = DATA . $user->getUsername() . '/profile.json';
       $isSaved = FALSE;
 
-      if (!is_null($user->getCalorieMetrics())) {
-        $calcMetrics = $user->getCalorieMetrics();
-        $data['gender'] = $calcMetrics->getGender();
-        $data['age'] = $calcMetrics->getGender();
-        $data['height'] = $calcMetrics->getHeight();
-        $data['weight'] = $calcMetrics->getWeight();
-        $data['activity_level_id'] = $calcMetrics->getActivityLevel();
-        $data['cal_cal_sttgy_id'] = $calcMetrics->getCalorieCalcStrategy();
-      }
       $data['username'] = $user->getUsername();
       $data['password'] = $user->getPassword();
+      $data['gender'] = $user->getGender();
+      $data['age'] = $user->getGender();
+      $data['height'] = $user->getHeight();
+      $data['weight'] = $user->getWeight();
+      $data['activity_level'] = $user->getActivityLevel();
+      $data['calculator_id'] = $user->getCalculatorId();
 
       $jsonData = json_encode($data);
       $file = fopen($filePath, 'w');
 
       $data = json_encode($data);
-
-      $json = '{
-            "username" : "Abhishek Shrestha",
-            "firstname" : "",
-            "lastname" : "",
-            "gender" : "MALE",
-            "age" : "25",
-            "height" : "160",
-            "weight" : "55",
-            "activity_level_id" : "1",
-            "cal_calc_sttgy_id" : "1"
-        }';
-
 
       if (fwrite($file, $data)) {
           $isSaved = TRUE;
@@ -62,6 +33,38 @@ class UserDAO extends BaseDAO {
 
       fclose($file);
       return $isSaved;
+    }
+
+    public function loadFromFile($filePath) {
+        $fh = fopen($filePath, 'r');
+        $data = fgets($fh);
+        fclose($fh);
+        $data = json_decode($data);
+
+        $user = new User();
+        $user->setUsername($data->username);
+        $user->setPassword($data->password);
+
+        if (isset($data->gender)) {
+          $user->setGender($data->gender);
+        }
+        if (isset($data->age)) {
+          $user->setGender($data->age);
+        }
+        if (isset($data->height)) {
+          $user->setHeight($data->height);
+        }
+        if (isset($data->weight)) {
+          $user->setWeight($data->weight);
+        }
+        if (isset($data->activity_level)) {
+          $user->setActivityLevel($data->activity_level);
+        }
+        if (isset($data->calculator_id)) {
+          $user->setCalculatorLevel($data->calculator_id);
+        }
+
+        return $user;
     }
 }
 

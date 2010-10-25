@@ -1,4 +1,5 @@
 <?php
+
 require_once 'config.php';
 
 require_once 'Food.php';
@@ -6,7 +7,6 @@ require_once 'NutritionFact.php';
 require_once 'BasicFood.php';
 require_once 'CompositeFood.php';
 require_once 'JsonBuilder.php';
-
 
 // Holds all the foods from our database
 class FoodData

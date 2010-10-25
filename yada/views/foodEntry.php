@@ -134,6 +134,12 @@
             ?>
         </table>
         <div><span class="ui-corner-all link-btn addBasicButton">(<span class="addBasicPlus">+</span>) Add New Basic Food</span></div>
+        <?php if ($undoEnabled) : ?>
+        <div style="display: inline"><form action="?food=list_food" method="post"><input type="submit" value="Undo" name="undo" /></form></div>
+        <?php endif ?>
+        <?php if ($redoEnabled) : ?>
+        <div style="display: inline"><form action="?food=list_food" method="post"><input type="submit" value="Redo" name="redo" /></form></div>
+        <?php endif ?>
         <form action="?food=list_food" method="post">
 	        <table class="datatable addBasicForm" style="display:none">
 	            <tr><th colspan="2" align="left">:: Please specify the info below to add a new food</th></tr>
@@ -209,6 +215,12 @@
             ?>        
         </table>
         <div><span class="ui-corner-all link-btn addCompositeButton">(<span class="addCompositePlus">+</span>) Add New Composite Food</span></div>
+        <?php if ($undoEnabled) : ?>
+        <div style="display: inline"><form action="?food=list_food" method="post"><input type="submit" value="Undo" name="undo" /></form></div>
+        <?php endif ?>
+        <?php if ($redoEnabled) : ?>
+        <div style="display: inline"><form action="?food=list_food" method="post"><input type="submit" value="Redo" name="redo" /></form></div>
+        <?php endif ?>
         <div class="addCompositeForm" style="display:none">
         	<form action="?food=list_food" method="post">
 		        <table class="datatable" width="80%">

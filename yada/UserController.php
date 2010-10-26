@@ -21,6 +21,11 @@ class UserController {
     }
 
     public function login() {
+        if (SessionManager::getInstance()->isLoggedIn()) {
+            Utils::getInstance()->redirect('index.php?user=profile');
+            return;
+        }
+
         $username = '';
         if ($_POST) {
             $username = $_POST['username'];
@@ -51,6 +56,10 @@ class UserController {
     }
 
     public function register() {
+        if (SessionManager::getInstance()->isLoggedIn()) {
+            Utils::getInstance()->redirect('index.php?user=profile');
+            return;
+        }
         $username = '';
 
         if ($_POST) {

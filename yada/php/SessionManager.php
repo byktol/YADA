@@ -83,36 +83,12 @@ class SessionManager {
         return $key;
     }
 
-    public function getUndoStack() {
-      $undoStack = $this->get('undoStack');
-      if (is_null($undoStack)) {
-        $undoStack = array();
-      }
-      return $undoStack;
+    public function getFoodCareTaker() {
+      return $this->get('foodCareTaker');
     }
 
-    public function setUndoStack($undoStack) {
-      $this->set('undoStack', $undoStack);
-    }
-
-    public function setRedoStack($redoStack) {
-      $this->set('redoStack', $redoStack);
-    }
-
-    public function getRedoStack() {
-      $redoStack = $this->get('redoStack');
-      if (is_null($redoStack)) {
-        $redoStack = array();
-      }
-      return $redoStack;
-    }
-
-    public function getCurrentUndo() {
-      return $this->get('currentUndo');
-    }
-
-    public function setCurrentUndo(Memento $m) {
-      return $this->set('currentUndo', $m);
+    public function setFoodCareTaker(FoodCareTaker $fct) {
+      return $this->set('foodCareTaker', $fct);
     }
 
     private function flash($type) {

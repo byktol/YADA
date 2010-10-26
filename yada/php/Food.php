@@ -121,12 +121,17 @@ abstract class Food implements Clonable
 
   public function clones() {
     $clone = clone $this;
+    return $clone;
+  }
+
+
+  function __clone() {
     $arrayOfFacts = array();
     foreach ($this->facts as $f) {
       $arrayOfFacts[] = clone $f;
     }
-    $clone->facts = $arrayOfFacts;
-    return $clone;
+
+    $this->facts = $arrayOfFacts;
   }
 }
 

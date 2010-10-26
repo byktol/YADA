@@ -87,10 +87,11 @@ class UserDAO {
     public function saveLog($username, Log $log) {
         // first read the whole of the log
         $arrExsitingLog = $this->getLog($username);
-        if (!is_array($arrExsitingLog))
+        if (!is_array($arrExsitingLog)) {
             $arrExsitingLog = $log->toArray();
-        else
+        } else {
             array_push($arrExsitingLog, $log->toArray());
+        }
 
         $db = JSONDatabase::getInstance();
 
@@ -99,7 +100,7 @@ class UserDAO {
             $f = fopen($filepath, 'w');
             fclose($f);
         }
-        return $db->saveData($filepath, $arrExsitingLog);
+        return $db->saveData($filepath, array($arrExsitingLog));
     }
 
     public function updateLog($username, Log $log) {
@@ -133,16 +134,16 @@ class UserDAO {
                 $log = new Log();
                 $log->setDate($date);
 
-                $dao = new DAO();                   
+                $dao = new DAO();
                 $arrConsumptioObj = $dao->getComsumption($oldLog['consumption'], $foodData);
                 $log->setConsumption($arrConsumptioObj);
-                
+
 
                 // we have our Log so just get out!
                 break;
             }
         }
-        
+
         return $log;
     }
 
@@ -161,7 +162,6 @@ class UserDAO {
         // find the key i.e. the date on which the log is to be changed
         foreach ($arrExsitingLog as $arrLog) {
             $log = new Log();
-            echo $arrLog['date'];
             $log->setDate($arrLog['date']);
 
             $arrConsumptioObj = $dao->getComsumption($arrLog['consumption'], $foodData);
@@ -170,6 +170,21 @@ class UserDAO {
             $arrLogs[] = $log;
         }
         return $arrLogs;
+    }
+
+    public function updateLogByDate($username, $foodData, $date, $arrNewCnsmp) {
+        // first read the whole of the log
+        $arrExsitingLog = $this->getLog($username);
+
+        $arrLogs = array();
+        $dao = new DAO();
+
+        $log = new Log();
+        $log->setDate($date);        
+        $changedCnsmp = $dao->getComsumption($arrNewCnsmp, $foodData);
+        $log->setConsumption($changedCnsmp);
+        
+        $this->updateLog($username, $log);
     }
 
     public function delConsumption($date, $consumpFoodId, $username, $foodData) {

@@ -15,8 +15,9 @@ class JSONDatabase implements TextDatabase {
     public function getData($filePath) {
         $file = file($filePath);
         $jsonData = '';
-        if(count($file)==0)
-        	return null;
+        if (count($file) == 0) {
+            return null;
+        }
         foreach ($file as $line) {
             $jsonData .= $line;
         }
@@ -30,8 +31,8 @@ class JSONDatabase implements TextDatabase {
         $jsonData = json_encode($data);
         $file = fopen($filePath, 'w'); // replaces the whole content
 
-        $data = json_encode($data);
 
+        $data = json_encode($data);
         if (fwrite($file, $data)) {
             $isSaved = TRUE;
         }

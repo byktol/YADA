@@ -131,13 +131,34 @@ class UserController {
         if (isset($_GET['for']) && $_GET['for'] != '') {
             $date = $_GET['for'];
             $log = $userDao->getLogByDate($user->getUsername(), $date, $foodData);
-            
+
             include 'views/editLog.php';
         } else {
             $arrLogs = $userDao->getAllLog($user->getUsername(), $foodData);
 
             include 'views/dailyLog.php';
         }
+    }
+
+    public function updatelog() {
+        $sessMgr = SessionManager::getInstance();
+        $user = $sessMgr->getUser();
+        $foodData = $sessMgr->getFoodData();
+
+        if (isset($_POST['task']) == 'updateLog') {
+            $date = $_POST['log_date'];
+            $cnt = count($_POST['foods']);
+
+            $arrNewCnsmp = array();
+            for ($i = 0; $i < $cnt; $i++) {
+                $arrNewCnsmp[] = array('food_id' => $_POST['foods'][$i], 'qty' => $_POST['qty'][$i]);
+            }
+
+            $userDao = new UserDAO();
+            $userDao->updateLogByDate($user->getUsername(), $foodData, $date, $arrNewCnsmp);
+        }
+        $utils = Utils::getInstance();
+        $utils->redirect(HOST.'index.php?user=today&for=' . $date);
     }
 
     public function deletelog() {
@@ -169,13 +190,17 @@ class UserController {
 
     public static function addLogEntry() {
         $l = new Log();
-        if (!empty($_POST['logDate']))
+
+        if (!empty($_POST['logDate'])) {
             $l->setDate($_POST['logDate']);
-        else
+        } else {
             $l->setDate(date('Y-m-d'));
+        }
+
         $arrConsumptions = array();
         $maxIndex = (int) $_POST['maxIndex'];
         $foodData = SessionManager::getInstance()->getFoodData();
+
         for ($i = 0; $i < $maxIndex; $i++) {
             if (!empty($_POST['id' . ($i + 1)])) {
                 $f = FoodData::findFood($foodData, $_POST['id' . ($i + 1)]);
@@ -184,18 +209,16 @@ class UserController {
                         $consum = new Consumption();
                         $consum->setFood($f);
                         $consum->setQuantity($_POST['servings' . ($i + 1)]);
+
                         array_push($arrConsumptions, $consum);
                     }
                 }
             }
         }
         $l->setConsumption($arrConsumptions);
+        //print_r($l);
         $dao = new UserDAO();
         $dao->saveLog(SessionManager::getInstance()->getUser()->getUsername(), $l);
-    }
-
-    public function saveLog() {
-        // TODO: save
     }
 
     public function memento() {

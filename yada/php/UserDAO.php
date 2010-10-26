@@ -100,7 +100,9 @@ class UserDAO {
             $f = fopen($filepath, 'w');
             fclose($f);
         }
-        return $db->saveData($filepath, array($arrExsitingLog));
+        if (isset($arrExsitingLog['date']))
+        	$arrExsitingLog = array($arrExsitingLog);
+        return $db->saveData($filepath, $arrExsitingLog);
     }
 
     public function updateLog($username, Log $log) {

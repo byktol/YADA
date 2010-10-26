@@ -1,5 +1,5 @@
 <?php
-define('DEBUG', true);
+define('DEBUG', false);
 $INCLUDE_PATH = dirname(dirname(__FILE__));
 $INCLUDE_PATH_2 = dirname(__FILE__);
 

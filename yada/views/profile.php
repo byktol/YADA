@@ -32,9 +32,11 @@
         <td>Activity Level:</td>
         <td>
             <select name="activity_level" id="activity_level">
-                <option value="1" <?php echo $user->getActivityLevel() == 1? 'selected="selected"' : '' ?> >Highly Active</option>
-                <option value="2" <?php echo $user->getActivityLevel() == 2? 'selected="selected"' : '' ?> >Active</option>
-                <option value="3" <?php echo $user->getActivityLevel() == 3? 'selected="selected"' : '' ?> >Sedentary</option>
+                <option value="1.9" <?php echo $user->getActivityLevel() == 1? 'selected="selected"' : '' ?> >Extra Active</option>
+                <option value="1.725" <?php echo $user->getActivityLevel() == 2? 'selected="selected"' : '' ?> >Highly Active</option>
+                <option value="1.55" <?php echo $user->getActivityLevel() == 3? 'selected="selected"' : '' ?> >Active</option>
+                <option value="1.375" <?php echo $user->getActivityLevel() == 4? 'selected="selected"' : '' ?> >Moderately Active</option>
+                <option value="1.2" <?php echo $user->getActivityLevel() == 5? 'selected="selected"' : '' ?> >Sedentary</option>
             </select>
         </td>
     </tr>

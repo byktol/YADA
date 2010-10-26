@@ -35,6 +35,7 @@ class UserController {
 
                 $udao = new UserDAO();
                 $user = $udao->getUser($username);
+                
                 if ($password != $user->getPassword()) {
                     SessionManager::getInstance()->error('Password invalid!');
                 } else {
@@ -99,6 +100,7 @@ class UserController {
 
     public function profile() {
         $user = SessionManager::getInstance()->getUser();
+        
         if ($_POST) {
             $udao = new UserDAO();
             $user->setFirstname($_POST['firstname']);
@@ -140,13 +142,34 @@ class UserController {
         if (isset($_GET['for']) && $_GET['for'] != '') {
             $date = $_GET['for'];
             $log = $userDao->getLogByDate($user->getUsername(), $date, $foodData);
-            
+
             include 'views/editLog.php';
         } else {
             $arrLogs = $userDao->getAllLog($user->getUsername(), $foodData);
 
             include 'views/dailyLog.php';
         }
+    }
+
+    public function updatelog() {
+        $sessMgr = SessionManager::getInstance();
+        $user = $sessMgr->getUser();
+        $foodData = $sessMgr->getFoodData();
+
+        if (isset($_POST['task']) == 'updateLog') {
+            $date = $_POST['log_date'];
+            $cnt = count($_POST['foods']);
+
+            $arrNewCnsmp = array();
+            for ($i = 0; $i < $cnt; $i++) {
+                $arrNewCnsmp[] = array('food_id' => $_POST['foods'][$i], 'qty' => $_POST['qty'][$i]);
+            }
+
+            $userDao = new UserDAO();
+            $userDao->updateLogByDate($user->getUsername(), $foodData, $date, $arrNewCnsmp);
+        }
+        $utils = Utils::getInstance();
+        $utils->redirect(HOST . 'index.php?user=today&for=' . $date);
     }
 
     public function deletelog() {
@@ -178,13 +201,17 @@ class UserController {
 
     public static function addLogEntry() {
         $l = new Log();
-        if (!empty($_POST['logDate']))
+
+        if (!empty($_POST['logDate'])) {
             $l->setDate($_POST['logDate']);
-        else
+        } else {
             $l->setDate(date('Y-m-d'));
+        }
+
         $arrConsumptions = array();
         $maxIndex = (int) $_POST['maxIndex'];
         $foodData = SessionManager::getInstance()->getFoodData();
+
         for ($i = 0; $i < $maxIndex; $i++) {
             if (!empty($_POST['id' . ($i + 1)])) {
                 $f = FoodData::findFood($foodData, $_POST['id' . ($i + 1)]);
@@ -193,18 +220,49 @@ class UserController {
                         $consum = new Consumption();
                         $consum->setFood($f);
                         $consum->setQuantity($_POST['servings' . ($i + 1)]);
+
                         array_push($arrConsumptions, $consum);
                     }
                 }
             }
         }
         $l->setConsumption($arrConsumptions);
+        //print_r($l);
         $dao = new UserDAO();
         $dao->saveLog(SessionManager::getInstance()->getUser()->getUsername(), $l);
     }
 
-    public function saveLog() {
-        // TODO: save
+    public function memento() {
+        $arrayOfood = array(new BasicFood('pickle'));
+
+        $data = new FoodData();
+        $data->setFoods($arrayOfood);
+
+        $data->addFood(new BasicFood('tomato'));
+        $composite = new CompositeFood('picklemato');
+        $composite->setChildren(array(new BasicFood('tomato'), new BasicFood('pickle')));
+        FoodCareTaker::getInstance()->record($data->createMemento());
+        $data->addFood($composite);
+        FoodCareTaker::getInstance()->record($data->createMemento());
+
+        echo '<pre>FIRST';
+        print_r($data);
+        echo '<br />Undo 1: ';
+        echo FoodCareTaker::getInstance()->countUndo();
+        echo '<br />';
+        print_r(FoodCareTaker::getInstance()->undo());
+        echo '<br />Undo 2: ';
+        echo FoodCareTaker::getInstance()->countUndo();
+        echo '<br />';
+        print_r(FoodCareTaker::getInstance()->undo());
+        echo '<br />Redo<br />';
+        echo 'Count: ' . FoodCareTaker::getInstance()->countRedo();
+        print_r(FoodCareTaker::getInstance()->redo());
+        echo 'Count: ' . FoodCareTaker::getInstance()->countRedo();
+        print_r(FoodCareTaker::getInstance()->redo());
+        echo '<br />Forward<br />';
+        FoodCareTaker::getInstance()->record($data->createMemento());
+        FoodCareTaker::getInstance()->countRedo();
     }
 
     public function logout() {

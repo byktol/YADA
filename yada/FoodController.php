@@ -118,6 +118,7 @@ class FoodController {
 
     private static function editBasic() {
         $foods = &self::getFoodData()->getFoods();
+
         for ($i = 0; $i < count($foods); $i++) {
             if ($foods[$i]->getId() == $_POST['foodId']) {
                 $foods[$i]->setName($_POST['foodName']);
@@ -125,6 +126,7 @@ class FoodController {
                 $foods[$i]->setNutritionFact('calories', $_POST['calories']);
             }
         }
+
         self::$tab = false;
         FoodCareTaker::getInstance()->record(self::getFoodData()->createMemento());
     }

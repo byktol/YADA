@@ -23,6 +23,7 @@
     $(function(){
         $('#tabs').tabs({"selected":<?php echo (FoodController::$tab?'1':'0'); ?>});
         $('#bfood_list').tablesorter();
+        $('#cfood_list').tablesorter();
     });
     $(document).ready(function(){
         $('.addBasicButton').click(function(){

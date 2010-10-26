@@ -30,7 +30,7 @@ class UserController {
 
                 $udao = new UserDAO();
                 $user = $udao->getUser($username);
-                
+
                 if ($password != $user->getPassword()) {
                     SessionManager::getInstance()->error('Password invalid!');
                 } else {
@@ -91,7 +91,7 @@ class UserController {
 
     public function profile() {
         $user = SessionManager::getInstance()->getUser();
-        
+
         if ($_POST) {
             $udao = new UserDAO();
             $user->setFirstname($_POST['firstname']);
@@ -106,6 +106,7 @@ class UserController {
 
             SessionManager::getInstance()->info('Your profile has been updated.');
         }
+        $calories = $this->getCalNeeded($user);
         include 'views/profile.php';
     }
 
@@ -136,6 +137,7 @@ class UserController {
 
             include 'views/editLog.php';
         } else {
+            $calories = $this->getCalNeeded($user);
             $arrLogs = $userDao->getAllLog($user->getUsername(), $foodData);
 
             include 'views/dailyLog.php';
@@ -273,6 +275,15 @@ class UserController {
 
     public function getDelURI($id, $date) {
         return '?user=deletelog&for=' . $date . '&del=' . $id;
+    }
+
+    private function getCalNeeded(User $user) {
+        $calculator = CalorieCalculatorFactory::getInstance();
+        $calcMethod = $calculator->createCalculator($user->getCalculatorId());
+
+        $calories = $calcMethod->calculateCalories($user);
+
+        return $calories;
     }
 
 }

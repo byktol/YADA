@@ -2,11 +2,11 @@
 
 abstract class CalorieCalcTemplate {
 
-    public function calculateNutritionFact(CalorieMetrics $calMetrics) {
-        return $this->doCalculateBMR($calMetrics) * $calMetrics->getActivityLevel();
+    public function calculateNutritionFact(User $user) {
+        return $this->doCalculateBMR($user) * $user->getActivityLevel();
     }
 
-    abstract protected function doCalculateBMR(CalorieMetrics $calMetrics);
+    abstract protected function doCalculateBMR(User $user);
 }
 
 ?>

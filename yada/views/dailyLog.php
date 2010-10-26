@@ -4,6 +4,7 @@
         $('#daily_log').tablesorter();
     });
 </script>
+<div>Your required calories for the day: <?php echo $calories;?></div>
 <table id="daily_log" class="datatable tablesorter" width="70%">
     <thead>
         <tr><th>S.N.</th><th>Date</th><th>Food</th><th>Calories Consumed</th><th>Actions</th></tr>

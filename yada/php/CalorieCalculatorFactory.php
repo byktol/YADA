@@ -4,28 +4,38 @@
  * A simple factory for instantiating a specified Calorie Calculator
  */
 class CalorieCalculatorFactory {
-  private static $instance;
 
-  private function __construct() { }
+    private static $instance;
 
-  public static function getInstance() {
-    if (is_null(self::$instance)) {
-      self::$instance = new CalorieCalculatorFactory();
+    private function __construct() {
+        
     }
 
-    return self::$instance;
-  }
+    public static function getInstance() {
+        if (is_null(self::$instance)) {
+            self::$instance = new CalorieCalculatorFactory();
+        }
 
-  public function createCalculator($cid) {
-    switch ($cid) {
-      case CalorieCalculatorEnum::MifflinJerror:
-        return new MifflinJerrorCalculator();
-
-      case CalorieCalculatorEnum::HarrisBenedict:
-        ;
-      default:
-        return new HarrisBenedictCalculator();
+        return self::$instance;
     }
-  }
+
+    public function createCalculator($cid) {
+        $calculator = null;
+        switch ($cid) {
+            case CalorieCalculatorEnum::MifflinJerror:
+                $calculator = new MifflinJerrorCalculator();
+                break;
+
+            case CalorieCalculatorEnum::HarrisBenedict:
+                $calculator = new HarrisBenedictCalculator();
+                break;
+
+            default:
+                $calculator = new HarrisBenedictCalculator();
+        }
+        return $calculator;
+    }
+
 }
+
 ?>

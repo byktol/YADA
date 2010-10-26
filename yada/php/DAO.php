@@ -9,7 +9,7 @@ class DAO {
             if (count($arrCnsmp['consumption']) == 1) {
                 $consumption = new Consumption();
                 $food = FoodData::findFood($foodData, $arrCnsmp['food_id']);
-                
+
                 $food->setId($arrCnsmp['food_id']);
 
                 $consumption->setQuantity($arrCnsmp['qty']);
@@ -30,6 +30,7 @@ class DAO {
         }
         return $arrComsmp;
     }
+
 }
 
 ?>

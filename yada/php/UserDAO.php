@@ -41,37 +41,37 @@ class UserDAO {
         $fh = fopen($filePath, 'r');
         $data = fgets($fh);
         fclose($fh);
-        $data = json_decode($data);
+        $data = json_decode($data, 1);
 
         $user = new User();
-        $user->setUsername($data->username);
-        $user->setPassword($data->password);
+        $user->setUsername($data['username']);
+        $user->setPassword($data['password']);
 
-        if (isset($data->firstname)) {
-            $user->setUsername($data->firstname);
+        if (isset($data['firstname'])) {
+            $user->setFirstname($data['firstname']);
         }
-        if (isset($data->lastname)) {
-            $user->setUsername($data->lastname);
+        if (isset($data['lastname'])) {
+            $user->setLastname($data['lastname']);
         }
-        if (isset($data->gender)) {
-            $user->setGender($data->gender);
+        if (isset($data['gender'])) {
+            $user->setGender($data['gender']);
         }
-        if (isset($data->age)) {
-            $user->setGender($data->age);
+        if (isset($data['age'])) {
+            $user->setAge($data['age']);
         }
-        if (isset($data->height)) {
-            $user->setHeight($data->height);
+        if (isset($data['height'])) {
+            $user->setHeight($data['height']);
         }
-        if (isset($data->weight)) {
-            $user->setWeight($data->weight);
+        if (isset($data['weight'])) {
+            $user->setWeight($data['weight']);
         }
-        if (isset($data->activity_level)) {
-            $user->setActivityLevel($data->activity_level);
+        if (isset($data['activity_level'])) {
+            $user->setActivityLevel($data['activity_level']);
         }
-        if (isset($data->calculator_id)) {
-            $user->setCalculatorId($data->calculator_id);
+        if (isset($data['calculator_id'])) {
+            $user->setCalculatorId($data['calculator_id']);
         }
-
+        
         return $user;
     }
 
@@ -180,10 +180,10 @@ class UserDAO {
         $dao = new DAO();
 
         $log = new Log();
-        $log->setDate($date);        
+        $log->setDate($date);
         $changedCnsmp = $dao->getComsumption($arrNewCnsmp, $foodData);
         $log->setConsumption($changedCnsmp);
-        
+
         $this->updateLog($username, $log);
     }
 

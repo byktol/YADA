@@ -30,6 +30,7 @@ class UserController {
 
                 $udao = new UserDAO();
                 $user = $udao->getUser($username);
+                
                 if ($password != $user->getPassword()) {
                     SessionManager::getInstance()->error('Password invalid!');
                 } else {
@@ -90,6 +91,7 @@ class UserController {
 
     public function profile() {
         $user = SessionManager::getInstance()->getUser();
+        
         if ($_POST) {
             $udao = new UserDAO();
             $user->setFirstname($_POST['firstname']);
@@ -158,7 +160,7 @@ class UserController {
             $userDao->updateLogByDate($user->getUsername(), $foodData, $date, $arrNewCnsmp);
         }
         $utils = Utils::getInstance();
-        $utils->redirect(HOST.'index.php?user=today&for=' . $date);
+        $utils->redirect(HOST . 'index.php?user=today&for=' . $date);
     }
 
     public function deletelog() {

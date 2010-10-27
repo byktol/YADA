@@ -162,14 +162,16 @@ class UserDAO {
         $dao = new DAO();
 
         // find the key i.e. the date on which the log is to be changed
-        foreach ($arrExsitingLog as $arrLog) {
-            $log = new Log();
-            $log->setDate($arrLog['date']);
+        if ( !is_null($arrExsitingLog) ) {
+            foreach ($arrExsitingLog as $arrLog) {
+                $log = new Log();
+                $log->setDate($arrLog['date']);
 
-            $arrConsumptioObj = $dao->getComsumption($arrLog['consumption'], $foodData);
+                $arrConsumptioObj = $dao->getComsumption($arrLog['consumption'], $foodData);
 
-            $log->setConsumption($arrConsumptioObj);
-            $arrLogs[] = $log;
+                $log->setConsumption($arrConsumptioObj);
+                $arrLogs[] = $log;
+            }
         }
         return $arrLogs;
     }

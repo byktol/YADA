@@ -77,7 +77,7 @@ class UserController {
                 // Registers a new user.
                 $userDir = DATA . $username . '/';
                 $success = mkdir($userDir, 0777);
-                if (true || $success) {
+                if ($success) {
                     $user = new User();
                     $user->setUsername($username);
                     $user->setPassword($password);
